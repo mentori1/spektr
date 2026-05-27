@@ -245,7 +245,7 @@ p{margin:0}
   min-height:100vh;
   display:flex;align-items:center;
 }
-.hero-inner{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;width:100%}
+.hero-inner{position:relative;display:block;width:100%;max-width:880px}
 .hero-text{position:relative;z-index:3}
 .hero-title{margin:22px 0 24px}
 .hero-title .accent{
@@ -788,14 +788,6 @@ p{margin:0}
 
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 
-<!-- floating WhatsApp -->
-<a class="fab" href="https://wa.me/74950000000?text=Здравствуйте,%20хочу%20рассчитать%20стоимость" target="_blank" rel="noopener" aria-label="Написать в WhatsApp">
-  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-    <path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.8 1 3.8 1.5 5.9 1.5h.4C24.6 28.7 30 23.3 30 16.7 30 9.4 24.6 3 16 3Zm0 23.5c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-4.6 1.1 1.1-4.5-.3-.4C5.6 19.6 5 17.3 5 15 5 9 10 4 16 4s11 4.9 11 11-5 11.5-11 11.5Zm6-8.2c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.7-1.6-1-.9-1.6-1.9-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2.1-.4 0-.5 0-.1-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6 2.5 1 3.5.5 4 .4.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.6-.3Z"/>
-  </svg>
-  <span class="label">WhatsApp</span>
-</a>
-
 <!-- HEADER -->
 <header class="header" id="header">
   <div class="container nav">
@@ -843,32 +835,7 @@ p{margin:0}
             Получить расчёт
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a href="https://wa.me/74950000000?text=Здравствуйте,%20хочу%20рассчитать%20стоимость" target="_blank" rel="noopener" class="btn btn-wa">
-            <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.8 1 3.8 1.5 5.9 1.5h.4C24.6 28.7 30 23.3 30 16.7 30 9.4 24.6 3 16 3Zm6 15.3c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.7-1.6-1-.9-1.6-1.9-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2.1-.4 0-.5 0-.1-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6 2.5 1 3.5.5 4 .4.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.6-.3Z"/></svg>
-            Написать в WhatsApp
-          </a>
         </div>
-      </div>
-
-      <div class="hero-stage reveal d2">
-        <div class="logo-stage">
-          <div class="rings">
-            <svg viewBox="0 0 200 200">
-              <circle class="ring solid" cx="100" cy="100" r="96"/>
-              <g class="r1"><circle class="ring" cx="100" cy="100" r="86"/></g>
-              <g class="r2"><circle class="ring" cx="100" cy="100" r="74"/></g>
-              <circle class="ring solid" cx="100" cy="100" r="62"/>
-              <g class="r3"><circle class="ring" cx="100" cy="100" r="52"/></g>
-            </svg>
-          </div>
-          <div class="logo-frame">
-            <img src="IMG_3685.JPG" alt="Спектр Металла" />
-          </div>
-        </div>
-        <span class="chip t1"><i></i> Гибка по размеру</span>
-        <span class="chip t2"><i></i> Полимер · оцинковка</span>
-        <span class="chip t3"><i></i> Расчёт за 30 минут</span>
-        <span class="chip t4"><i></i> Доставка по адресу</span>
       </div>
     </div>
   </section>
@@ -1036,176 +1003,6 @@ p{margin:0}
   </section>
 
 
-  <!-- POPULAR PRODUCTS -->
-  <section class="section container" id="popular">
-    <div class="section-head">
-      <div>
-        <div class="section-index">02 — Хиты продаж</div>
-        <h2 class="reveal">Что чаще всего<br/>заказывают для дома.</h2>
-      </div>
-      <p class="lead reveal d2">Проверенные покрытия, ходовые цвета, всё есть в наличии или быстро изготавливается.</p>
-    </div>
-
-    <div class="products">
-      <div class="product reveal">
-        <div class="product-visual">
-          <span class="product-tag">Хит</span>
-          <svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.4">
-            <path d="M10 100 L40 60 L70 100 L100 60 L130 100 L160 60 L190 100"/>
-            <path d="M10 80 L40 40 L70 80 L100 40 L130 80 L160 40 L190 80" stroke-opacity=".5"/>
-          </svg>
-        </div>
-        <div class="product-body">
-          <div class="product-name">Металлочерепица «Монтеррей»</div>
-          <div class="product-meta">Классическая волна. Polyester 25 мкм, любой RAL.</div>
-          <div class="product-specs">
-            <span>0.45 мм</span><span>RAL 3005</span><span>гарантия 10 лет</span>
-          </div>
-          <div class="product-price">
-            <span class="price-from">от</span>
-            <span class="price-val">540 ₽</span>
-            <span class="price-unit">/ м²</span>
-          </div>
-          <div class="product-actions">
-            <a href="#contacts" class="btn btn-primary btn-sm">Рассчитать</a>
-            <a href="https://wa.me/74950000000?text=Здравствуйте,%20интересует%20Монтеррей" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="product reveal d1">
-        <div class="product-visual">
-          <span class="product-tag">Топ</span>
-          <svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.4">
-            <path d="M10 100 L10 30 L30 30 L30 90 L50 90 L50 30 L70 30 L70 100"/>
-            <path d="M70 100 L70 30 L90 30 L90 90 L110 90 L110 30 L130 30 L130 100"/>
-            <path d="M130 100 L130 30 L150 30 L150 90 L170 90 L170 30 L190 30 L190 100"/>
-          </svg>
-        </div>
-        <div class="product-body">
-          <div class="product-name">Профнастил С8</div>
-          <div class="product-meta">Универсальный лист для забора и фасада. На длину по запросу.</div>
-          <div class="product-specs">
-            <span>0.45 мм</span><span>любая длина</span><span>11 цветов</span>
-          </div>
-          <div class="product-price">
-            <span class="price-from">от</span>
-            <span class="price-val">380 ₽</span>
-            <span class="price-unit">/ м²</span>
-          </div>
-          <div class="product-actions">
-            <a href="#contacts" class="btn btn-primary btn-sm">Рассчитать</a>
-            <a href="https://wa.me/74950000000?text=Здравствуйте,%20интересует%20профнастил%20С8" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="product reveal d2">
-        <div class="product-visual">
-          <span class="product-tag">Новинка</span>
-          <svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.4">
-            <path d="M30 10 L30 110 M50 10 L50 110 M70 10 L70 110 M90 10 L90 110 M110 10 L110 110 M130 10 L130 110 M150 10 L150 110 M170 10 L170 110"/>
-            <path d="M30 10 L35 5 L45 5 L50 10 M70 10 L75 5 L85 5 L90 10 M110 10 L115 5 L125 5 L130 10 M150 10 L155 5 L165 5 L170 10" stroke-opacity=".6"/>
-          </svg>
-        </div>
-        <div class="product-body">
-          <div class="product-name">Евроштакетник «Премиум»</div>
-          <div class="product-meta">М-профиль, двустороннее покрытие RAL. Срок службы 25+ лет.</div>
-          <div class="product-specs">
-            <span>0.5 мм</span><span>2 стороны</span><span>любая высота</span>
-          </div>
-          <div class="product-price">
-            <span class="price-from">от</span>
-            <span class="price-val">75 ₽</span>
-            <span class="price-unit">/ шт</span>
-          </div>
-          <div class="product-actions">
-            <a href="#contacts" class="btn btn-primary btn-sm">Рассчитать</a>
-            <a href="https://wa.me/74950000000?text=Здравствуйте,%20интересует%20евроштакетник" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="product reveal">
-        <div class="product-visual">
-          <svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.4">
-            <path d="M20 20 H180 V100 H20 Z"/>
-            <path d="M20 50 H180 M20 80 H180 M70 20 V100 M120 20 V100" stroke-opacity=".5"/>
-          </svg>
-        </div>
-        <div class="product-body">
-          <div class="product-name">Сайдинг «Корабельная доска»</div>
-          <div class="product-meta">Универсальный фасадный профиль с замком, идеален для частного дома.</div>
-          <div class="product-specs">
-            <span>0.5 мм</span><span>RAL/Printech</span><span>длина под заказ</span>
-          </div>
-          <div class="product-price">
-            <span class="price-from">от</span>
-            <span class="price-val">690 ₽</span>
-            <span class="price-unit">/ м²</span>
-          </div>
-          <div class="product-actions">
-            <a href="#contacts" class="btn btn-primary btn-sm">Рассчитать</a>
-            <a href="https://wa.me/74950000000?text=Здравствуйте,%20интересует%20сайдинг" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="product reveal d1">
-        <div class="product-visual">
-          <svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.4">
-            <path d="M50 10 C50 10 50 70 50 90 C50 105 70 110 90 110"/>
-            <path d="M90 110 L160 110"/>
-            <circle cx="50" cy="14" r="3" fill="currentColor"/>
-          </svg>
-        </div>
-        <div class="product-body">
-          <div class="product-name">Водосточная система</div>
-          <div class="product-meta">Комплект на крышу: труба, желоб, воронка, крепления, любой цвет.</div>
-          <div class="product-specs">
-            <span>Ø 125 мм</span><span>под покраску</span><span>гарантия 15 лет</span>
-          </div>
-          <div class="product-price">
-            <span class="price-from">от</span>
-            <span class="price-val">290 ₽</span>
-            <span class="price-unit">/ м.п.</span>
-          </div>
-          <div class="product-actions">
-            <a href="#contacts" class="btn btn-primary btn-sm">Рассчитать</a>
-            <a href="https://wa.me/74950000000?text=Здравствуйте,%20интересует%20водосток" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="product reveal d2">
-        <div class="product-visual">
-          <span class="product-tag">Под размер</span>
-          <svg viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.4">
-            <path d="M20 90 L60 30 L100 90 L140 30 L180 90"/>
-            <path d="M20 60 L60 60 M100 60 L140 60" stroke-dasharray="3 3" stroke-opacity=".6"/>
-            <path d="M10 20 L20 10 L30 20 M170 20 L180 10 L190 20" stroke-opacity=".7"/>
-          </svg>
-        </div>
-        <div class="product-body">
-          <div class="product-name">Доборные элементы</div>
-          <div class="product-meta">Конёк, отлив, ендова, планки примыкания — гнём по вашим размерам.</div>
-          <div class="product-specs">
-            <span>от 30 минут</span><span>любая длина</span><span>в цвет кровли</span>
-          </div>
-          <div class="product-price">
-            <span class="price-from">от</span>
-            <span class="price-val">120 ₽</span>
-            <span class="price-unit">/ м.п.</span>
-          </div>
-          <div class="product-actions">
-            <a href="#contacts" class="btn btn-primary btn-sm">Рассчитать</a>
-            <a href="https://wa.me/74950000000?text=Здравствуйте,%20интересует%20доборка" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
 
   <!-- CUSTOM SIZING -->
   <section class="section container" id="custom">
@@ -1246,41 +1043,6 @@ p{margin:0}
           <path d="M40 100 A20 20 0 0 1 60 80" stroke-opacity=".6"/>
           <text x="46" y="98" font-family="JetBrains Mono" font-size="9" fill="currentColor" stroke="none">45°</text>
         </svg>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- HOW TO ORDER -->
-  <section class="section container" id="how">
-    <div class="section-head">
-      <div>
-        <div class="section-index">03 — Как заказать</div>
-        <h2 class="reveal">Четыре шага<br/>до металла на участке.</h2>
-      </div>
-      <p class="lead reveal d2">Расчёт — производство — доставка. Менеджер ведёт заказ от первой заявки до разгрузки.</p>
-    </div>
-
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <h3>Оставьте заявку</h3>
-        <p>Через форму, WhatsApp или звонком. Чертёж не нужен — менеджер уточнит размеры.</p>
-      </div>
-      <div class="step reveal d1">
-        <div class="step-num">02</div>
-        <h3>Получите расчёт</h3>
-        <p>В течение 30 минут — цена, сроки, варианты покрытий и цветов.</p>
-      </div>
-      <div class="step reveal d2">
-        <div class="step-num">03</div>
-        <h3>Изготовление</h3>
-        <p>Из наличия или от 30 минут — для позиций под размер.</p>
-      </div>
-      <div class="step reveal d3">
-        <div class="step-num">04</div>
-        <h3>Доставка</h3>
-        <p>Привезём на участок, поможем разгрузить в удобное время.</p>
       </div>
     </div>
   </section>
@@ -1565,25 +1327,6 @@ const io = new IntersectionObserver((entries)=>{
   }
 },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-/* Parallax tilt on hero logo */
-(function(){
-  const stage = document.querySelector('.hero-stage');
-  const frame = document.querySelector('.logo-frame');
-  if(!stage || !frame) return;
-  let raf = 0, tx = 0, ty = 0;
-  stage.addEventListener('mousemove',(e)=>{
-    const r = stage.getBoundingClientRect();
-    tx = ((e.clientX - r.left)/r.width - .5) * 6;
-    ty = ((e.clientY - r.top)/r.height - .5) * -6;
-    if(!raf) raf = requestAnimationFrame(apply);
-  });
-  stage.addEventListener('mouseleave',()=>{ tx = 0; ty = 0; if(!raf) raf = requestAnimationFrame(apply); });
-  function apply(){
-    raf = 0;
-    frame.style.transform = `perspective(900px) rotateY(${tx}deg) rotateX(${ty}deg)`;
-  }
-})();
 
 /* FAQ: только один открытый одновременно */
 document.querySelectorAll('.faq-item').forEach(item=>{
