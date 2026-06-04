@@ -375,6 +375,16 @@ p{margin:0}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
 }
+
+/* === МОБИЛЬНЫЙ ФИКС ЗАГОЛОВКОВ (inline, не кэшируется) === */
+@media (max-width:600px){
+  h1{font-size:clamp(26px, 7vw, 36px) !important;line-height:1.05 !important;word-break:normal !important;overflow-wrap:normal !important}
+  h2{font-size:clamp(22px, 6vw, 32px) !important}
+}
+@media (max-width:380px){
+  h1{font-size:clamp(22px, 7vw, 30px) !important}
+  h2{font-size:clamp(19px, 5.5vw, 26px) !important}
+}
 </style>
 
 <!-- ═══ SEO: OG + Schema.org — вставлено site-bootstrap ═══ -->
@@ -421,7 +431,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=3">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -703,7 +713,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   </div>
 </aside>
 
-<script src="assets/site.js" defer></script>
+<script src="assets/site.js?v=3" defer></script>
 
 </body>
 </html>

@@ -58,8 +58,18 @@ article ul,article ol{padding-left:22px;margin:0 0 18px;color:var(--text-on-dark
 .progress{position:fixed;top:0;left:0;right:0;height:1px;z-index:60;pointer-events:none}.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .15s linear}
 
 @media (max-width:720px){.nav-list,.nav-tel{display:none}.burger{display:inline-flex}.footer-row{flex-direction:column;align-items:flex-start;gap:20px}}
+
+/* === МОБИЛЬНЫЙ ФИКС ЗАГОЛОВКОВ (inline, не кэшируется) === */
+@media (max-width:600px){
+  h1{font-size:clamp(26px, 7vw, 36px) !important;line-height:1.05 !important;word-break:normal !important;overflow-wrap:normal !important}
+  h2{font-size:clamp(22px, 6vw, 32px) !important}
+}
+@media (max-width:380px){
+  h1{font-size:clamp(22px, 7vw, 30px) !important}
+  h2{font-size:clamp(19px, 5.5vw, 26px) !important}
+}
 </style>
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=3">
 </head>
 
 <body>
@@ -173,6 +183,6 @@ article ul,article ol{padding-left:22px;margin:0 0 18px;color:var(--text-on-dark
 </footer>
 
 <script>document.getElementById('yr').textContent=new Date().getFullYear();const b=document.getElementById('progressBar'),h=document.getElementById('header');addEventListener('scroll',()=>{const d=document.documentElement,m=d.scrollHeight-d.clientHeight,p=m>0?d.scrollTop/m:0;b.style.width=(p*100).toFixed(2)+'%';h.classList.toggle('scrolled',d.scrollTop>20)},{passive:true});</script>
-<script src="assets/site.js" defer></script>
+<script src="assets/site.js?v=3" defer></script>
 </body>
 </html>
