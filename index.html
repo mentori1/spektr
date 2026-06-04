@@ -120,7 +120,7 @@
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden;max-width:100vw;width:100%}
 body{
   font-family:var(--f-body);
   font-weight:400;
@@ -131,6 +131,9 @@ body{
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
+  max-width:100vw;
+  width:100%;
+  position:relative;
   text-rendering:optimizeLegibility;
 }
 img{max-width:100%;display:block}
@@ -999,11 +1002,12 @@ p{margin:0}
 }
 @media (max-width:1024px){
   .hero-inner,.custom-grid,.contact-wrap,.section-head{grid-template-columns:1fr;gap:48px}
-  .hero-product{justify-self:center;max-width:520px;margin-top:0}
-  .hp-card.c1{left:-4%}
-  .hp-card.c2{right:-4%}
-  .hp-card.c3{left:-6%}
-  .hp-card.c4{right:-4%}
+  /* убираем выпирание на 108% и отрицательный margin — на планшетах и мобилках страница не уезжает */
+  .hero-product{justify-self:center;max-width:520px;margin-top:0;width:100%;margin-right:0}
+  .hp-card.c1{left:0}
+  .hp-card.c2{right:0}
+  .hp-card.c3{left:0}
+  .hp-card.c4{right:0}
   .usp-grid{grid-template-columns:repeat(2,1fr);gap:36px}
   .usp-cell:nth-child(2n+1){border-left:1px solid var(--line-dark)}
   .cats{grid-template-columns:repeat(2,1fr)}
@@ -1030,7 +1034,7 @@ p{margin:0}
   .hero-actions .btn svg{width:13px;height:13px}
   .hero{padding-top:96px;min-height:auto}
   .hero-info{flex-direction:column;gap:14px}
-  .hero-product{max-width:100%}
+  .hero-product{max-width:100%;width:100%;margin-right:0;margin-left:0}
   /* на мобилке оставим только 2 информационные карточки — без перегруза */
   .hp-card.c2,.hp-card.c3{display:none}
   .hp-card.c1{left:0}
@@ -1217,7 +1221,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=14">
+<link rel="stylesheet" href="assets/site.css?v=15">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1741,7 +1745,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=14
+// FAQ smooth-open handled by assets/site.js?v=15
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1852,7 +1856,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=14" defer></script>
+<script src="assets/site.js?v=15" defer></script>
 
 </body>
 </html>
