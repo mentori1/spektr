@@ -398,12 +398,14 @@ p{margin:0}
 .hero-info{
   margin-top:64px;padding-top:24px;
   border-top:1px solid var(--line-dark);
-  display:flex;flex-wrap:wrap;gap:24px 48px;
+  display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:24px;
   font-family:var(--f-mono);font-size:11px;
   letter-spacing:.18em;color:var(--text-on-dark-dim);text-transform:uppercase;
   opacity:0;animation:heroFadeIn 1s var(--ease) forwards;animation-delay:1s;
 }
+.hero-info-left{display:flex;flex-wrap:wrap;gap:24px 48px;align-items:flex-start}
 .hero-info span{display:flex;flex-direction:column;gap:6px}
+.hero-info-right{text-align:right;align-items:flex-end}
 .hero-info b{
   font-family:var(--f-display);font-weight:800;font-size:18px;
   letter-spacing:-.005em;color:var(--text-on-dark-bright);text-transform:none;
@@ -1258,7 +1260,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=22">
+<link rel="stylesheet" href="assets/site.css?v=23">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1340,9 +1342,11 @@ p{margin:0}
         </div>
 
         <div class="hero-info">
-          <span><b>30&nbsp;мин</b>срок изготовления под размер</span>
-          <span><b>15+ лет</b>на рынке металлопроката</span>
-          <span><b>МО · РФ</b>доставка по области и стране</span>
+          <div class="hero-info-left">
+            <span><b>30&nbsp;мин</b>срок изготовления под размер</span>
+            <span><b>15+ лет</b>на рынке металлопроката</span>
+          </div>
+          <span class="hero-info-right"><b>Омск · область</b>своя доставка по адресу</span>
         </div>
       </div>
 
@@ -1786,7 +1790,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=22
+// FAQ smooth-open handled by assets/site.js?v=23
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1897,7 +1901,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=22" defer></script>
+<script src="assets/site.js?v=23" defer></script>
 
 </body>
 </html>
