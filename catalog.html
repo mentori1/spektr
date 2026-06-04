@@ -530,7 +530,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=8">
+<link rel="stylesheet" href="assets/site.css?v=13">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -901,9 +901,6 @@ function renderProducts(){
   }
 
   // кликабельные элементы
-  $grid.querySelectorAll('.heart').forEach(h => {
-    h.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); h.classList.toggle('liked'); });
-  });
   $grid.querySelectorAll('.add-to-cart, .add-to-cart-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault(); e.stopPropagation();
@@ -937,7 +934,6 @@ function productCard(p, pat){
       <div class="product-image">
         ${photoHTML}
         ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
-        <span class="heart" aria-label="В избранное">${HEART_SVG}</span>
       </div>
       <div class="product-body">
         <div class="product-name">${p.name}</div>
@@ -1129,7 +1125,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=8" defer></script>
+<script src="assets/site.js?v=13" defer></script>
 
 </body>
 </html>
