@@ -538,10 +538,10 @@ p{margin:0}
    ════════════════════════════════════════════════════════════════ */
 
 .usp{
-  background:var(--bg-dark);
+  background:transparent;
   padding:clamp(48px, 6vw, 80px) 0;
-  border-top:1px solid var(--line-dark);
-  border-bottom:1px solid var(--line-dark);
+  border-top:none;
+  border-bottom:none;
 }
 .usp-grid{
   display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px, 3vw, 48px);
@@ -1016,7 +1016,16 @@ p{margin:0}
   .burger{display:inline-flex}
   .usp-grid,.cats,.custom-points,.del-cards,.del-extras{grid-template-columns:1fr}
   .cat--featured{grid-column:span 1}
-  .usp-cell{border-left:1px solid var(--line-dark);padding-left:18px}
+  .usp-cell{border-left:2px solid var(--accent);padding-left:18px}
+  /* hero: две кнопки в ряд, не вертикально — экономим место */
+  .hero-actions{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-wrap:initial;
+  }
+  .hero-actions .btn{
+    width:100%;padding:14px 12px;font-size:11px;letter-spacing:.04em;
+    justify-content:center;gap:6px;
+  }
+  .hero-actions .btn svg{width:13px;height:13px}
   .hero{padding-top:96px;min-height:auto}
   .hero-info{flex-direction:column;gap:14px}
   .hero-product{max-width:100%}
@@ -1206,7 +1215,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=11">
+<link rel="stylesheet" href="assets/site.css?v=12">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1730,7 +1739,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=11
+// FAQ smooth-open handled by assets/site.js?v=12
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1841,7 +1850,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=11" defer></script>
+<script src="assets/site.js?v=12" defer></script>
 
 </body>
 </html>
