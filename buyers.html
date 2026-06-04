@@ -29,12 +29,12 @@
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden;max-width:100vw;width:100%}
 body{
   font-family:var(--f-body);font-size:16px;line-height:1.55;color:var(--text-on-dark);
   background:var(--bg-dark);
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;text-rendering:optimizeLegibility;
+  overflow-x:hidden;max-width:100vw;width:100%;position:relative;text-rendering:optimizeLegibility;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none;transition:color .25s var(--ease)}
@@ -370,7 +370,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=17">
+<link rel="stylesheet" href="assets/site.css?v=19">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -734,7 +734,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=17
+// FAQ smooth-open handled by assets/site.js?v=19
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', (e) => {
@@ -773,7 +773,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   </div>
 </aside>
 
-<script src="assets/site.js?v=17" defer></script>
+<script src="assets/site.js?v=19" defer></script>
 
 </body>
 </html>

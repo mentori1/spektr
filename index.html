@@ -1186,11 +1186,22 @@ p{margin:0}
     animation:none !important;
   }
   /* hero и контейнер не должны давать горизонтальный overflow */
-  .hero,.hero-inner,.container{max-width:100% !important;overflow-x:clip}
+  .hero,.hero-inner,.container,.hero-text,.hero-actions,.hero-desc{
+    max-width:100% !important;overflow-x:clip;min-width:0 !important;
+  }
+  .hero-inner{grid-template-columns:1fr !important;width:100% !important}
+  /* кнопки hero — каждая не шире половины родителя */
+  .hero-actions .btn{min-width:0 !important;max-width:100% !important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* описание hero — переносится */
+  .hero-desc{word-wrap:break-word !important;overflow-wrap:anywhere !important;max-width:100% !important}
+  /* картинка hero — никогда не выпирает */
+  .hero-product{width:100% !important;max-width:100% !important;margin:0 !important;justify-self:stretch !important}
+  .hp-card{left:auto !important;right:auto !important;position:static !important;display:none !important}
 }
 @media (max-width:380px){
   h1{font-size:clamp(20px, 6.5vw, 28px) !important}
   h2{font-size:clamp(19px, 5.5vw, 26px) !important}
+  .hero-actions .btn{font-size:10px !important;padding:12px 8px !important}
 }
 </style>
 
@@ -1238,7 +1249,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=18">
+<link rel="stylesheet" href="assets/site.css?v=19">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1762,7 +1773,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=18
+// FAQ smooth-open handled by assets/site.js?v=19
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1873,7 +1884,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=18" defer></script>
+<script src="assets/site.js?v=19" defer></script>
 
 </body>
 </html>
