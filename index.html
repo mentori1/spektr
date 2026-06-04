@@ -538,7 +538,7 @@ p{margin:0}
    ════════════════════════════════════════════════════════════════ */
 
 .usp{
-  background:var(--bg-graphite);
+  background:var(--bg-dark);
   padding:clamp(48px, 6vw, 80px) 0;
   border-top:1px solid var(--line-dark);
   border-bottom:1px solid var(--line-dark);
@@ -549,11 +549,11 @@ p{margin:0}
 .usp-cell{
   display:flex;flex-direction:column;gap:14px;
   padding-left:24px;
-  border-left:1px solid var(--line-dark);
+  border-left:2px solid var(--accent);
 }
 .usp-num{
   font-family:var(--f-mono);font-size:11px;letter-spacing:.24em;
-  color:var(--text-on-dark-dim);text-transform:uppercase;
+  color:var(--accent);text-transform:uppercase;font-weight:600;
 }
 .usp-title{
   font-family:var(--f-display);font-weight:700;font-size:clamp(18px, 1.6vw, 22px);
@@ -1206,7 +1206,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=9">
+<link rel="stylesheet" href="assets/site.css?v=11">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1730,7 +1730,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=9
+// FAQ smooth-open handled by assets/site.js?v=11
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1841,7 +1841,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=9" defer></script>
+<script src="assets/site.js?v=11" defer></script>
 
 </body>
 </html>
