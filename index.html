@@ -899,6 +899,15 @@ p{margin:0}
   display:grid;grid-template-columns:1.1fr .9fr;gap:48px;
   align-items:start;
 }
+/* блок «Свяжитесь с производством» — особое выравнивание */
+.contacts-head{align-items:flex-start !important}
+.contacts-head h2 em{color:var(--accent);font-style:normal;font-weight:inherit}
+.contacts-head .lead{
+  margin-top:48px;       /* сдвигает выше */
+  margin-left:auto;      /* прижимает к правому краю */
+  max-width:46ch;
+  text-align:right;
+}
 
 .contact-card{
   display:flex;flex-direction:column;gap:24px;
@@ -1277,7 +1286,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=27">
+<link rel="stylesheet" href="assets/site.css?v=29">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1672,10 +1681,10 @@ p{margin:0}
   <section class="section section--dark" id="contacts">
     <div class="container">
 
-      <div class="section-head">
+      <div class="section-head contacts-head">
         <div>
           <div class="section-index">05 — Контакты</div>
-          <h2 class="reveal">Свяжитесь<br/>с производством.</h2>
+          <h2 class="reveal">Свяжитесь<br/><em>с</em> производством.</h2>
         </div>
         <p class="lead reveal d2">Менеджер на связи в рабочее время. Опишите задачу — пришлём расчёт в течение 30 минут.</p>
       </div>
@@ -1784,7 +1793,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=27
+// FAQ smooth-open handled by assets/site.js?v=29
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1895,7 +1904,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=27" defer></script>
+<script src="assets/site.js?v=29" defer></script>
 
 </body>
 </html>
