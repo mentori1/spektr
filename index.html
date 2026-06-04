@@ -694,12 +694,12 @@ p{margin:0}
   align-items:flex-start;
 }
 .custom-grid .section-head h2{margin:24px 0 0}
-/* описание справа — заполняет всю правую колонку, поднято к верху */
+/* описание справа — на уровне «РЕЖЕМ, КРАСИМ», шире для заполнения колонки */
 .custom-grid .section-head .lead{
   max-width:none;
   font-size:clamp(16px, 1.3vw, 20px);
   line-height:1.5;
-  margin-top:14px;
+  margin-top:clamp(80px, 8vw, 130px);
 }
 .custom-text{max-width:880px;margin:0 auto;text-align:center}
 .custom-points{margin-left:auto;margin-right:auto;text-align:left}
@@ -1296,7 +1296,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=30">
+<link rel="stylesheet" href="assets/site.css?v=31">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1803,7 +1803,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=30
+// FAQ smooth-open handled by assets/site.js?v=31
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1914,7 +1914,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=30" defer></script>
+<script src="assets/site.js?v=31" defer></script>
 
 </body>
 </html>
