@@ -141,8 +141,8 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
 
 .calc-breakdown{padding-top:16px;border-top:1px solid rgba(255,255,255,.08);display:grid;gap:10px}
 .calc-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-family:var(--f-mono);font-size:12px;color:var(--text-on-dark)}
-.calc-row .key{color:var(--text-on-dark-dim);letter-spacing:.06em}
-.calc-row .val{color:var(--text-on-dark-bright);font-weight:500}
+.calc-row .key{color:var(--text-on-dark-dim);letter-spacing:.06em;min-width:0;flex:1 1 auto}
+.calc-row .val{color:var(--text-on-dark-bright);font-weight:500;flex:0 0 auto;white-space:nowrap;text-align:right}
 
 .calc-note{font-size:11.5px;color:var(--text-on-dark-dim);line-height:1.55;padding:14px 16px;background:rgba(0,0,0,.3);border-radius:8px;border-left:2px solid var(--accent)}
 
@@ -169,6 +169,10 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
   .calc-result{padding:24px 18px 26px}
   .calc-result .label{font-size:10.5px;letter-spacing:.22em}
   .calc-result .unit{font-size:11.5px}
+  .calc-result .price{font-size:clamp(34px,11vw,48px)}
+  .calc-row{font-size:11.5px;gap:10px}
+  /* плавающая корзина не нужна на калькуляторе — мешает читать результат */
+  .cart-fab{display:none !important}
 }
 
 /* === МОБИЛЬНЫЙ ФИКС ЗАГОЛОВКОВ (inline, не кэшируется) === */
@@ -182,7 +186,7 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
 }
 </style>
 
-<link rel="stylesheet" href="assets/site.css?v=4">
+<link rel="stylesheet" href="assets/site.css?v=5">
 
 <!-- Schema.org Organization + LocalBusiness -->
 <script type="application/ld+json">
@@ -465,7 +469,7 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
     <button class="mobile-menu-close" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M6 18L18 6"/></svg></button>
   </div>
   <ul class="mobile-menu-list">
-    <li><a href="catalog.html">Каталог<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+    <li><a href="catalog.html">Каталог</a></li>
     <li><a href="calculator.html" class="active">Калькулятор</a></li>
     <li><a href="buyers.html">Покупателям</a></li>
     <li><a href="delivery.html">Доставка</a></li>
@@ -590,7 +594,7 @@ function calcGutter(){
 calcGutter();
 </script>
 
-<script src="assets/site.js?v=4" defer></script>
+<script src="assets/site.js?v=5" defer></script>
 
 </body>
 </html>
