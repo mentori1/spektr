@@ -1201,8 +1201,11 @@ p{margin:0}
   /* описание hero — переносится */
   .hero-desc{word-wrap:break-word !important;overflow-wrap:anywhere !important;max-width:100% !important}
   /* картинка hero — никогда не выпирает */
-  .hero-product{width:100% !important;max-width:100% !important;margin:0 !important;justify-self:stretch !important}
-  .hp-card{left:auto !important;right:auto !important;position:static !important;display:none !important}
+  .hero-product{width:100% !important;max-width:100% !important;margin:0 !important;justify-self:stretch !important;overflow:visible !important}
+  /* плашки с характеристиками: c1 (толщина) и c4 (ГОСТ) — видны, без отрицательных отступов */
+  .hp-card.c1{left:8px !important;right:auto !important;display:block !important;position:absolute !important;animation:hpCardIn .9s var(--ease-out) forwards !important}
+  .hp-card.c4{right:8px !important;left:auto !important;display:block !important;position:absolute !important;animation:hpCardIn .9s var(--ease-out) forwards !important}
+  .hp-card.c2,.hp-card.c3{display:none !important}
 }
 @media (max-width:380px){
   h1{font-size:clamp(20px, 6.5vw, 28px) !important}
@@ -1255,7 +1258,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=20">
+<link rel="stylesheet" href="assets/site.css?v=21">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1783,7 +1786,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=20
+// FAQ smooth-open handled by assets/site.js?v=21
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1894,7 +1897,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=20" defer></script>
+<script src="assets/site.js?v=21" defer></script>
 
 </body>
 </html>
