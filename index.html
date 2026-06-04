@@ -355,16 +355,21 @@ p{margin:0}
 .hero-label .dot{width:6px;height:6px;background:var(--accent);border-radius:50%}
 .hero-label .bar{width:40px;height:1px;background:var(--line-dark-strong)}
 
-.hero-title{margin:0 0 36px;color:var(--text-on-dark-bright)}
-.hero-title .line{display:block;overflow:hidden}
-.hero-title .line span{
-  display:inline-block;
-  transform:translateY(110%);
-  animation:heroLineUp .9s var(--ease-out) forwards;
+.hero-title{margin:0 0 36px;color:var(--text-on-dark-bright);word-wrap:break-word;overflow-wrap:break-word;max-width:100%}
+.hero-title .line{display:block;overflow:visible}
+.hero-title .line span{display:inline}
+/* Анимация «строки выезжают снизу» только на широких десктопах, где текст гарантированно влезает */
+@media (min-width:1100px){
+  .hero-title .line{overflow:hidden}
+  .hero-title .line span{
+    display:inline-block;
+    transform:translateY(110%);
+    animation:heroLineUp .9s var(--ease-out) forwards;
+  }
+  .hero-title .line.l1 span{animation-delay:.15s}
+  .hero-title .line.l2 span{animation-delay:.30s}
+  .hero-title .line.l3 span{animation-delay:.45s}
 }
-.hero-title .line.l1 span{animation-delay:.15s}
-.hero-title .line.l2 span{animation-delay:.30s}
-.hero-title .line.l3 span{animation-delay:.45s}
 @keyframes heroLineUp{
   to{transform:translateY(0)}
 }
@@ -1233,7 +1238,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=17">
+<link rel="stylesheet" href="assets/site.css?v=18">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1757,7 +1762,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=17
+// FAQ smooth-open handled by assets/site.js?v=18
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1868,7 +1873,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=17" defer></script>
+<script src="assets/site.js?v=18" defer></script>
 
 </body>
 </html>
