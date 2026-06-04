@@ -302,9 +302,9 @@ p{margin:0}
 
 .nav-list{display:flex;align-items:center;gap:2px;list-style:none;margin:0;padding:0}
 .nav-list a{
-  display:inline-block;padding:10px 18px;
+  display:inline-flex;align-items:center;min-height:44px;padding:12px 18px;
   font-family:var(--f-secondary);
-  font-size:12.5px;font-weight:500;color:var(--text-on-dark-dim);
+  font-size:12.5px;font-weight:500;color:var(--text-on-dark);
   letter-spacing:.12em;text-transform:uppercase;
   position:relative;
 }
@@ -975,7 +975,7 @@ p{margin:0}
   display:flex;gap:32px;flex-wrap:wrap;list-style:none;padding:0;margin:0;
   font-family:var(--f-secondary);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
 }
-.footer-nav a{color:var(--text-on-dark-dim)}
+.footer-nav a{color:var(--text-on-dark);display:inline-block;padding:8px 0;min-height:32px;line-height:1.4}
 .footer-nav a:hover{color:var(--text-on-dark-bright)}
 .footer-bot{
   margin-top:32px;padding-top:20px;border-top:1px solid var(--line-dark);
@@ -1093,7 +1093,7 @@ p{margin:0}
 .section--dark .cat-name{color:var(--text-on-dark-bright)}
 .section--dark .cat-desc{color:var(--text-on-dark-dim)}
 .section--dark .cat-foot{border-top-color:rgba(255,255,255,.08)}
-.section--dark .cat-price{color:var(--text-on-dark)}
+.section--dark .cat-price{color:var(--text-on-dark-bright);font-weight:600}
 .section--dark .cat-arrow{color:var(--text-on-dark-dim)}
 .section--dark .cat:hover .cat-arrow{color:var(--accent-hover)}
 /* featured-тайл уже тёмный — оставляем как есть */
@@ -1258,7 +1258,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=21">
+<link rel="stylesheet" href="assets/site.css?v=22">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1786,7 +1786,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=21
+// FAQ smooth-open handled by assets/site.js?v=22
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1897,7 +1897,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=21" defer></script>
+<script src="assets/site.js?v=22" defer></script>
 
 </body>
 </html>
