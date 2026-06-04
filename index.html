@@ -1,0 +1,1845 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<!-- Цвет панели браузера на мобильных. CSS-переменные тут не работают —
+     синхронизируй вручную со значением --bg-dark в :root ниже. -->
+<meta name="theme-color" content="#111111" />
+<title>Спектр Металла — кровля, фасад и металлоизделия по вашим размерам</title>
+<meta name="description" content="Производство кровельных и фасадных систем, профнастил, металлочерепица, евроштакетник, водостоки и металлоизделия по размерам клиента. Изготовление от 30 минут." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Unbounded:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║                                                              ║
+   ║   🎨   ТЕМА САЙТА  ·  ПАНЕЛЬ УПРАВЛЕНИЯ ЦВЕТАМИ И ШРИФТАМИ   ║
+   ║                                                              ║
+   ║   Меняй ТОЛЬКО значения ниже (после двоеточия).              ║
+   ║   Все цвета и шрифты по сайту берутся отсюда — поправил      ║
+   ║   здесь, обновилось везде. Хардкодов в коде ниже почти НЕТ.  ║
+   ║                                                              ║
+   ║   После правки — обнови вкладку браузера (Cmd/Ctrl + R).     ║
+   ║                                                              ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+:root{
+
+  /* ── 1. ТЁМНЫЕ ПОВЕРХНОСТИ ───────────────────────────────────
+     Используются в hero, custom-production, contacts, footer. */
+
+  --bg-dark:           #111111;   /* основной тёмный (hero, contacts) */
+  --bg-graphite:       #1f2937;   /* вторичный тёмный (USP-полоса)   */
+  --bg-steel:          #374151;   /* стальной (карточки на тёмном)   */
+  --bg-near-black:     #0a0a0a;   /* почти чёрный (footer)            */
+
+
+  /* ── 2. СВЕТЛЫЕ ПОВЕРХНОСТИ ──────────────────────────────────
+     Используются в catalog, delivery, faq. */
+
+  --bg-light:          #f3f4f6;   /* основной светлый фон секций     */
+  --bg-light-2:        #e5e7eb;   /* вторичный светлый (разделители) */
+  --bg-white:          #ffffff;   /* белые карточки                  */
+
+
+  /* ── 3. ТЕКСТ ────────────────────────────────────────────────
+     Парные группы: на тёмном фоне → светлые; на светлом → тёмные. */
+
+  /* На тёмных секциях */
+  --text-on-dark:        #d1d5db;   /* основной текст на тёмном  */
+  --text-on-dark-bright: #f3f4f6;   /* заголовки на тёмном        */
+  --text-on-dark-dim:    #9ca3af;   /* приглушённый на тёмном     */
+
+  /* На светлых секциях */
+  --text-on-light:       #111827;   /* основной/заголовки на светлом */
+  --text-on-light-soft:  #4b5563;   /* пояснения на светлом          */
+  --text-on-light-dim:   #6b7280;   /* приглушённый на светлом       */
+
+
+  /* ── 4. КРАСНЫЙ АКЦЕНТ ───────────────────────────────────────
+     Используется ТОЧЕЧНО — вертикальная полоса в hero, hover,
+     активный FAQ-вопрос, маленькие индикаторы. */
+
+  --accent:            #b91c1c;   /* основной красный            */
+  --accent-hover:      #dc2626;   /* при hover                    */
+  --accent-deep:       #991b1b;   /* тёмная вариация              */
+
+
+  /* ── 5. ЛИНИИ И ГРАНИЦЫ ──────────────────────────────────────
+     Отдельные наборы для тёмных и светлых секций. */
+
+  --line-dark:           rgba(255,255,255,.08);
+  --line-dark-strong:    rgba(255,255,255,.18);
+  --line-light:          rgba(17,24,39,.08);
+  --line-light-strong:   rgba(17,24,39,.16);
+
+
+  /* ── 6. ШРИФТЫ ───────────────────────────────────────────────
+     Подключаются в <link> в <head>. */
+
+  --f-display:        "Big Shoulders Display", "Unbounded", system-ui, sans-serif;  /* огромные h1, h2 */
+  --f-secondary:      "Unbounded", "Manrope", system-ui, sans-serif;                /* меньшие h3, h4   */
+  --f-body:           "Manrope", system-ui, sans-serif;                             /* основной текст   */
+  --f-mono:           "JetBrains Mono", ui-monospace, monospace;                    /* labels, цифры    */
+
+
+  /* ── 7. ОТСТУПЫ И РАЗМЕРЫ ────────────────────────────────────  */
+
+  --gut:              clamp(20px, 4vw, 80px);
+  --section-y:        clamp(80px, 11vw, 180px);
+
+  --r-sm:             4px;
+  --r-md:             8px;
+  --r-lg:             14px;
+
+
+  /* ── 8. АНИМАЦИЯ ─────────────────────────────────────────────  */
+
+  --ease:             cubic-bezier(.2,.7,.2,1);
+  --ease-out:         cubic-bezier(.16, 1, .3, 1);
+
+
+  /* ── 9. СЛУЖЕБНЫЕ (МЕНЯТЬ НЕ НУЖНО) ─────────────────────────  */
+
+  --accent-08:        color-mix(in srgb, var(--accent) 8%,  transparent);
+  --accent-15:        color-mix(in srgb, var(--accent) 15%, transparent);
+  --accent-25:        color-mix(in srgb, var(--accent) 25%, transparent);
+  --accent-40:        color-mix(in srgb, var(--accent) 40%, transparent);
+
+  --shadow-card:        0 4px 24px rgba(17,24,39,.05), 0 1px 2px rgba(17,24,39,.04);
+  --shadow-card-hover:  0 18px 48px rgba(17,24,39,.12), 0 4px 12px rgba(17,24,39,.06);
+  --shadow-deep-dark:   0 30px 80px -40px rgba(0,0,0,.6);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ↑↑↑  ПАЛИТРА КОНЧИЛАСЬ. Ниже — стили, в них ничего не правь.  ↑↑↑
+   ════════════════════════════════════════════════════════════════ */
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--f-body);
+  font-weight:400;
+  font-size:16px;
+  line-height:1.55;
+  color:var(--text-on-dark);
+  background:var(--bg-dark);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none;transition:color .25s var(--ease)}
+button{font-family:inherit;cursor:pointer}
+
+/* очень тонкий grain поверх всего, для cinematic feel */
+body::before{
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+  opacity:.06;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .85 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+}
+
+.shell{position:relative;z-index:2}
+.container{max-width:1440px;margin:0 auto;padding:0 var(--gut)}
+
+/* ─── TYPE ─── */
+h1,h2,h3,h4{margin:0;color:var(--text-on-dark-bright);font-weight:600;letter-spacing:-.015em}
+h1{
+  font-family:var(--f-display);font-weight:900;
+  font-size:clamp(40px, 7vw, 104px);
+  line-height:.92;letter-spacing:-.03em;text-transform:uppercase;
+}
+h2{
+  font-family:var(--f-display);font-weight:800;
+  font-size:clamp(28px, 3.6vw, 56px);
+  line-height:1;letter-spacing:-.015em;text-transform:uppercase;
+}
+h3{font-family:var(--f-secondary);font-size:clamp(16px, 1.4vw, 19px);line-height:1.25;font-weight:500}
+h4{font-family:var(--f-secondary);font-size:15px;font-weight:500}
+p{margin:0}
+
+.section--light h1,
+.section--light h2,
+.section--light h3,
+.section--light h4{color:var(--text-on-light)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--f-mono);text-transform:uppercase;
+  font-size:11px;letter-spacing:.28em;
+  color:var(--text-on-dark-dim);
+  font-weight:500;
+}
+.eyebrow::before{content:"";width:24px;height:1px;background:var(--accent)}
+.section--light .eyebrow{color:var(--text-on-light-dim)}
+
+.lead{
+  font-size:clamp(13.5px, 1vw, 15.5px);line-height:1.65;max-width:54ch;font-weight:400;
+  color:var(--text-on-dark);
+}
+.section--light .lead{color:var(--text-on-light-soft)}
+
+/* ─── BUTTONS ─── */
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:12px;
+  padding:14px 28px;border-radius:999px;
+  font-family:var(--f-secondary);font-weight:500;font-size:12.5px;letter-spacing:.04em;
+  border:1px solid transparent;outline:none;
+  transition:background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease), transform .3s var(--ease), box-shadow .35s var(--ease);
+  white-space:nowrap;text-decoration:none;text-transform:uppercase;
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+}
+.btn svg{width:15px;height:15px;flex:0 0 auto;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+
+/* primary — glass-white pill */
+.btn-primary{
+  background:rgba(243,244,246,.14);
+  color:var(--text-on-dark-bright);
+  border-color:rgba(255,255,255,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 6px 24px rgba(0,0,0,.25);
+}
+.btn-primary:hover{
+  background:rgba(243,244,246,.24);
+  border-color:rgba(255,255,255,.4);
+  transform:translateY(-1px);
+}
+
+/* на светлой секции (на главной) — тёмная стеклянная вместо светлой */
+.section--light .btn-primary{
+  background:rgba(17,24,39,.78);
+  color:var(--text-on-dark-bright);
+  border-color:rgba(17,24,39,.25);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 6px 24px rgba(17,24,39,.18);
+}
+.section--light .btn-primary:hover{
+  background:rgba(17,24,39,.92);
+  border-color:rgba(17,24,39,.4);
+}
+
+/* accent — warm-red glass pill (для «Получить расчёт» и подобных) */
+.btn-accent{
+  background:color-mix(in srgb, var(--accent) 65%, transparent);
+  color:#fff;
+  border-color:color-mix(in srgb, var(--accent) 80%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 8px 28px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.btn-accent:hover{
+  background:color-mix(in srgb, var(--accent-hover) 80%, transparent);
+  border-color:var(--accent-hover);
+  transform:translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    0 12px 32px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* ghost — almost-transparent glass pill */
+.btn-ghost{
+  background:rgba(255,255,255,.04);
+  color:var(--text-on-dark-bright);
+  border-color:rgba(255,255,255,.16);
+}
+.btn-ghost:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.32);
+}
+
+/* на светлой секции — ghost адаптируется */
+.section--light .btn-ghost{
+  background:rgba(17,24,39,.04);
+  color:var(--text-on-light, var(--text-on-dark-bright));
+  border-color:rgba(17,24,39,.18);
+}
+.section--light .btn-ghost:hover{
+  background:rgba(17,24,39,.08);
+  border-color:rgba(17,24,39,.4);
+}
+
+.btn-sm{padding:11px 22px;font-size:11.5px}
+.btn-block{width:100%;justify-content:center}
+
+/* ─── HEADER ─── */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  padding:16px 0;
+  background:transparent;
+  transition:padding .3s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.header.scrolled{
+  padding:10px 0;
+  background:rgba(17,17,17,.85);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border-bottom-color:var(--line-dark);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
+
+.wordmark{
+  font-family:var(--f-display);font-weight:800;
+  font-size:14px;letter-spacing:.22em;color:var(--text-on-dark-bright);
+  text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.wordmark::before{
+  content:"";width:8px;height:8px;background:var(--accent);
+  display:inline-block;
+}
+
+.nav-list{display:flex;align-items:center;gap:2px;list-style:none;margin:0;padding:0}
+.nav-list a{
+  display:inline-block;padding:10px 18px;
+  font-family:var(--f-secondary);
+  font-size:12.5px;font-weight:500;color:var(--text-on-dark-dim);
+  letter-spacing:.12em;text-transform:uppercase;
+  position:relative;
+}
+.nav-list a:hover{color:var(--text-on-dark-bright)}
+
+.nav-tel{
+  font-family:var(--f-mono);font-size:13px;color:var(--text-on-dark);
+  letter-spacing:.04em;
+}
+.nav-tel:hover{color:var(--text-on-dark-bright)}
+
+.burger{
+  display:none;background:transparent;border:1px solid var(--line-dark-strong);
+  width:42px;height:42px;border-radius:var(--r-sm);color:var(--text-on-dark-bright);
+  align-items:center;justify-content:center;
+}
+.burger svg{width:18px;height:18px}
+
+/* ════════════════════════════════════════════════════════════════
+   HERO — DARK CINEMATIC
+   ════════════════════════════════════════════════════════════════ */
+
+.hero{
+  position:relative;
+  padding:clamp(96px, 11vw, 160px) 0 clamp(56px, 8vw, 100px);
+  min-height:92vh;
+  display:flex;align-items:center;
+  background:
+    radial-gradient(80% 100% at 10% 20%, color-mix(in srgb, var(--bg-graphite) 70%, transparent) 0%, transparent 60%),
+    radial-gradient(50% 70% at 78% 30%, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 60%),
+    radial-gradient(60% 80% at 100% 100%, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 50%),
+    var(--bg-dark);
+  overflow:hidden;
+}
+
+.hero-inner{
+  position:relative;display:grid;grid-template-columns:1.15fr .85fr;
+  gap:clamp(40px, 8vw, 120px);align-items:center;width:100%;
+}
+
+.hero-text{position:relative;z-index:3}
+
+.hero-label{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;
+  color:var(--text-on-dark-dim);text-transform:uppercase;margin-bottom:32px;
+}
+.hero-label .dot{width:6px;height:6px;background:var(--accent);border-radius:50%}
+.hero-label .bar{width:40px;height:1px;background:var(--line-dark-strong)}
+
+.hero-title{margin:0 0 36px;color:var(--text-on-dark-bright)}
+.hero-title .line{display:block;overflow:hidden}
+.hero-title .line span{
+  display:inline-block;
+  transform:translateY(110%);
+  animation:heroLineUp .9s var(--ease-out) forwards;
+}
+.hero-title .line.l1 span{animation-delay:.15s}
+.hero-title .line.l2 span{animation-delay:.30s}
+.hero-title .line.l3 span{animation-delay:.45s}
+@keyframes heroLineUp{
+  to{transform:translateY(0)}
+}
+
+/* красная подсветка одной части заголовка */
+.hero-title em{
+  font-style:normal;color:var(--accent);
+  font-weight:900;
+}
+
+.hero-desc{
+  font-family:var(--f-body);font-size:clamp(14px, .95vw, 16px);
+  color:var(--text-on-dark);max-width:46ch;line-height:1.6;
+  margin-bottom:40px;
+  opacity:0;animation:heroFadeIn 1s var(--ease) forwards;animation-delay:.7s;
+}
+@keyframes heroFadeIn{to{opacity:1}}
+
+.hero-actions{
+  display:flex;flex-wrap:wrap;gap:14px;
+  opacity:0;animation:heroFadeIn 1s var(--ease) forwards;animation-delay:.85s;
+}
+
+.hero-info{
+  margin-top:64px;padding-top:24px;
+  border-top:1px solid var(--line-dark);
+  display:flex;flex-wrap:wrap;gap:24px 48px;
+  font-family:var(--f-mono);font-size:11px;
+  letter-spacing:.18em;color:var(--text-on-dark-dim);text-transform:uppercase;
+  opacity:0;animation:heroFadeIn 1s var(--ease) forwards;animation-delay:1s;
+}
+.hero-info span{display:flex;flex-direction:column;gap:6px}
+.hero-info b{
+  font-family:var(--f-display);font-weight:800;font-size:18px;
+  letter-spacing:-.005em;color:var(--text-on-dark-bright);text-transform:none;
+}
+
+/* ─── HERO PRODUCT — premium industrial product render ─── */
+.hero-product{
+  position:relative;
+  width:108%;max-width:780px;
+  justify-self:end;
+  aspect-ratio:1/1;
+  /* поднимаем композицию выше */
+  margin-top:-40px;margin-right:-4%;
+  /* для 3D-tilt */
+  perspective:1400px;
+  transform-style:preserve-3d;
+  opacity:0;
+  animation:heroFadeIn 1.4s var(--ease) forwards;
+  animation-delay:.3s;
+}
+
+/* ambient red glow позади продукта */
+.hp-glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(50% 45% at 55% 50%, color-mix(in srgb, var(--accent) 32%, transparent), transparent 65%),
+    radial-gradient(70% 50% at 50% 55%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%);
+  filter:blur(30px);
+  z-index:0;
+  animation:hpPulse 6s ease-in-out infinite;
+}
+@keyframes hpPulse{
+  0%,100%{opacity:.85;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.04)}
+}
+/* вторичный белый rim — даёт объём */
+.hp-rim{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(40% 25% at 50% 28%, rgba(255,255,255,.06), transparent 60%);
+  filter:blur(20px);
+  z-index:0;
+}
+
+/* мягкая тень-платформа под изделием */
+.hp-platform{
+  position:absolute;
+  left:6%;right:6%;
+  bottom:18%;height:70px;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,.7) 0%, rgba(0,0,0,.45) 30%, transparent 70%);
+  filter:blur(24px);
+  pointer-events:none;
+  z-index:1;
+}
+
+/* лазерная линия пола — тонкая, под продуктом */
+.hp-laser{
+  position:absolute;
+  left:14%;right:14%;
+  bottom:22%;height:1px;
+  background:linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 80%, transparent) 30%, color-mix(in srgb, var(--accent) 80%, transparent) 70%, transparent);
+  box-shadow:0 0 18px var(--accent-glow), 0 0 38px color-mix(in srgb, var(--accent) 40%, transparent);
+  z-index:1;opacity:.7;
+}
+
+/* сам продукт */
+.hp-image-wrap{
+  position:relative;
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  z-index:2;
+  /* лёгкий наклон + плавный transition к мышиному tilt */
+  transition:transform 1.2s var(--ease-out);
+  will-change:transform;
+}
+.hp-image{
+  width:118%;height:auto;
+  max-width:none;
+  /* выпрыгивает за края — premium feel */
+  transform:translateX(2%) rotate(-2.5deg);
+  /* реалистичные тени и подсветка */
+  filter:
+    drop-shadow(0 30px 40px rgba(0,0,0,.55))
+    drop-shadow(0 60px 90px rgba(0,0,0,.4))
+    drop-shadow(0 0 60px color-mix(in srgb, var(--accent) 22%, transparent));
+}
+
+/* ─── floating info cards ─── */
+.hp-card{
+  position:absolute;z-index:4;
+  background:rgba(20,23,28,.55);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-md);
+  padding:11px 16px 12px;
+  min-width:140px;
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.02) inset;
+  opacity:0;
+  animation:hpCardIn .9s var(--ease-out) forwards;
+}
+@keyframes hpCardIn{
+  from{opacity:0;transform:translateY(8px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.hp-card .lbl{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.22em;
+  color:var(--text-on-dark-dim);text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:6px;
+}
+.hp-card .lbl::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 10px var(--accent-glow);
+}
+.hp-card b{
+  display:block;
+  font-family:var(--f-display);font-weight:700;font-size:16px;
+  color:var(--text-on-dark-bright);letter-spacing:-.005em;
+  text-transform:none;line-height:1.15;
+}
+.hp-card small{
+  display:block;margin-top:3px;
+  font-size:11.5px;color:var(--text-on-dark-dim);letter-spacing:.01em;
+}
+
+/* положения карточек — раскиданы вокруг продукта, не перекрывают */
+.hp-card.c1{top:6%;left:-10%;animation-delay:.7s}
+.hp-card.c2{top:26%;right:-8%;animation-delay:.95s}
+.hp-card.c3{bottom:30%;left:-12%;animation-delay:1.2s}
+.hp-card.c4{bottom:8%;right:-6%;animation-delay:1.45s}
+
+/* лёгкая дрейфующая анимация после появления */
+.hp-card.c1{animation:hpCardIn .9s var(--ease-out) forwards, hpFloat 9s ease-in-out infinite 2s}
+.hp-card.c2{animation:hpCardIn .9s var(--ease-out) forwards, hpFloat 11s ease-in-out infinite 2.4s}
+.hp-card.c3{animation:hpCardIn .9s var(--ease-out) forwards, hpFloat 13s ease-in-out infinite 2.8s}
+.hp-card.c4{animation:hpCardIn .9s var(--ease-out) forwards, hpFloat 10s ease-in-out infinite 3.2s}
+@keyframes hpFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   USP — GRAPHITE BAND (между hero и каталогом)
+   ════════════════════════════════════════════════════════════════ */
+
+.usp{
+  background:var(--bg-graphite);
+  padding:clamp(48px, 6vw, 80px) 0;
+  border-top:1px solid var(--line-dark);
+  border-bottom:1px solid var(--line-dark);
+}
+.usp-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px, 3vw, 48px);
+}
+.usp-cell{
+  display:flex;flex-direction:column;gap:14px;
+  padding-left:24px;
+  border-left:1px solid var(--line-dark);
+}
+.usp-num{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.24em;
+  color:var(--text-on-dark-dim);text-transform:uppercase;
+}
+.usp-title{
+  font-family:var(--f-display);font-weight:700;font-size:clamp(18px, 1.6vw, 22px);
+  line-height:1.15;color:var(--text-on-dark-bright);text-transform:uppercase;letter-spacing:-.01em;
+}
+.usp-desc{
+  font-size:13.5px;color:var(--text-on-dark-dim);line-height:1.6;
+  max-width:30ch;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SECTION BASE
+   ════════════════════════════════════════════════════════════════ */
+
+.section{position:relative;padding:var(--section-y) 0}
+.section--dark{background:var(--bg-dark);color:var(--text-on-dark)}
+.section--light{background:var(--bg-light);color:var(--text-on-light)}
+
+.section-head{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);
+  align-items:end;margin-bottom:clamp(48px, 7vw, 96px);
+}
+.section-head h2{max-width:14ch}
+.section-head .lead{max-width:46ch}
+.section-index{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;
+  color:var(--text-on-dark-dim);text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:14px;margin-bottom:24px;
+}
+.section-index::before{content:"";width:32px;height:1px;background:var(--accent)}
+.section--light .section-index{color:var(--text-on-light-dim)}
+
+/* ════════════════════════════════════════════════════════════════
+   CATALOG — LIGHT, EDITORIAL
+   ════════════════════════════════════════════════════════════════ */
+
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+.cat{
+  position:relative;
+  background:var(--bg-white);
+  border-radius:var(--r-md);
+  padding:28px 26px 24px;
+  min-height:280px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:18px;
+  transition:transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
+  text-decoration:none;color:inherit;
+  border:1px solid transparent;
+  overflow:hidden;
+}
+.cat:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-card-hover);
+}
+.cat-num{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
+  color:var(--text-on-light-dim);
+}
+.cat-name{
+  font-family:var(--f-display);font-weight:800;font-size:clamp(17px, 1.35vw, 21px);
+  line-height:1.1;color:var(--text-on-light);text-transform:uppercase;letter-spacing:-.01em;
+  margin-top:6px;
+}
+.cat-desc{
+  font-size:13.5px;color:var(--text-on-light-soft);line-height:1.55;margin-top:8px;
+}
+.cat-foot{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:14px;
+  padding-top:18px;border-top:1px solid var(--line-light);
+}
+.cat-price{font-family:var(--f-mono);font-size:12px;color:var(--text-on-light);letter-spacing:.05em}
+.cat-arrow{
+  width:28px;height:28px;display:flex;align-items:center;justify-content:flex-end;
+  color:var(--text-on-light-dim);transition:color .3s var(--ease), transform .3s var(--ease);
+}
+.cat:hover .cat-arrow{color:var(--accent);transform:translateX(4px)}
+.cat-arrow svg{width:18px;height:18px}
+
+/* первая карточка — full-row featured */
+.cat--featured{
+  grid-column:span 2;grid-row:span 2;
+  background:var(--bg-dark);color:var(--text-on-dark);
+  min-height:auto;
+  padding:40px 36px 36px;
+  position:relative;overflow:hidden;
+}
+.cat--featured::after{
+  content:"";position:absolute;right:-20%;top:-20%;width:80%;height:140%;
+  background:radial-gradient(circle at center, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%);
+  pointer-events:none;
+}
+.cat--featured .cat-num{color:var(--text-on-dark-dim)}
+.cat--featured .cat-name{color:var(--text-on-dark-bright);font-size:clamp(22px, 2.4vw, 34px)}
+.cat--featured .cat-desc{color:var(--text-on-dark);font-size:15px;max-width:36ch}
+.cat--featured .cat-foot{border-top-color:var(--line-dark)}
+.cat--featured .cat-price{color:var(--text-on-dark-bright)}
+.cat--featured .cat-arrow{color:var(--text-on-dark)}
+.cat--featured:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.cat--featured:hover .cat-arrow{color:var(--accent-hover)}
+
+/* визуальный «штамп»-логотип в углу featured */
+.cat-stamp{
+  position:absolute;right:24px;top:24px;
+  font-family:var(--f-display);font-weight:900;font-size:clamp(60px, 7vw, 110px);
+  line-height:.85;
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.12);
+  text-stroke:1px rgba(255,255,255,.12);
+  letter-spacing:-.03em;
+  z-index:1;pointer-events:none;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CUSTOM PRODUCTION — DARK, CINEMATIC SPLIT
+   ════════════════════════════════════════════════════════════════ */
+
+.custom-grid{
+  display:block;
+  max-width:880px;margin:0 auto;
+  text-align:center;
+}
+.custom-text h2{margin:24px 0 32px}
+.custom-text .lead{margin-bottom:40px;margin-left:auto;margin-right:auto}
+.custom-text .section-index{justify-content:center}
+.custom-points{margin-left:auto;margin-right:auto;max-width:680px;text-align:left}
+.custom-actions{justify-content:center;display:flex;flex-wrap:wrap;gap:12px}
+
+.custom-points{
+  list-style:none;padding:0;margin:0 0 48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;
+}
+.custom-points li{
+  display:flex;gap:14px;align-items:flex-start;
+  font-size:14px;color:var(--text-on-dark);
+}
+.custom-points li::before{
+  content:"";width:8px;height:1px;background:var(--accent);
+  margin-top:11px;flex:0 0 auto;
+}
+
+.custom-actions{display:flex;flex-wrap:wrap;gap:14px}
+
+/* правый виз — индустриальный угловой профиль с размерной линией */
+.custom-viz{
+  position:relative;aspect-ratio:1/1;max-width:520px;justify-self:end;
+  border:1px solid var(--line-dark);border-radius:var(--r-sm);
+  overflow:hidden;
+  background:
+    radial-gradient(60% 60% at 40% 35%, color-mix(in srgb, var(--bg-graphite) 80%, transparent), transparent 70%),
+    var(--bg-dark);
+}
+.custom-viz::before{
+  /* размерная риска снизу */
+  content:"";position:absolute;left:0;right:0;bottom:60px;height:32px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.5) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.2) 0 1px, transparent 1px 6px);
+  -webkit-mask:linear-gradient(180deg, transparent, #000 30%, #000 80%, transparent);
+  mask:linear-gradient(180deg, transparent, #000 30%, #000 80%, transparent);
+}
+.custom-viz::after{
+  content:attr(data-dim);
+  position:absolute;left:50%;bottom:114px;transform:translateX(-50%);
+  font-family:var(--f-mono);font-size:12px;color:var(--text-on-dark-bright);letter-spacing:.18em;
+  padding:6px 14px;background:var(--bg-dark);border:1px solid var(--line-dark-strong);
+}
+.custom-viz svg{
+  position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);
+  width:72%;height:auto;color:var(--text-on-dark-dim);
+}
+
+/* corner labels на custom-viz */
+.custom-viz .viz-meta{color:rgba(255,255,255,.4)}
+
+/* ════════════════════════════════════════════════════════════════
+   DELIVERY — LIGHT, MINIMAL, BREATHING
+   ════════════════════════════════════════════════════════════════ */
+
+.delivery-grid{
+  display:grid;grid-template-columns:1.3fr .7fr;gap:24px;
+}
+
+/* hero-карточка доставки на белом фоне */
+.del-feature{
+  position:relative;
+  background:var(--bg-white);
+  border-radius:var(--r-md);
+  padding:clamp(36px, 5vw, 64px);
+  display:flex;flex-direction:column;justify-content:space-between;gap:48px;
+  min-height:440px;overflow:hidden;
+}
+.del-feature::before{
+  /* большая цифра-водяной знак */
+  content:"01";
+  position:absolute;right:-20px;bottom:-60px;
+  font-family:var(--f-display);font-weight:900;font-size:clamp(180px, 22vw, 340px);
+  line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(17,24,39,.06);text-stroke:1px rgba(17,24,39,.06);
+  letter-spacing:-.05em;
+  pointer-events:none;
+}
+.del-feature-top h3{
+  font-family:var(--f-display);font-weight:800;
+  font-size:clamp(22px, 2.4vw, 32px);line-height:1.1;
+  color:var(--text-on-light);text-transform:uppercase;letter-spacing:-.015em;
+  max-width:14ch;margin:18px 0 18px;
+}
+.del-feature-top p{font-size:13.5px;color:var(--text-on-light-soft);max-width:42ch;line-height:1.65}
+.del-feature-bot{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.del-price{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
+  color:var(--text-on-light-dim);text-transform:uppercase;
+}
+.del-price strong{
+  font-family:var(--f-display);font-weight:800;font-size:24px;
+  color:var(--text-on-light);letter-spacing:-.015em;
+  display:inline-block;margin-right:10px;
+}
+
+/* правый столбец карточек */
+.del-cards{display:grid;gap:14px}
+.del-card{
+  position:relative;padding:24px 26px;border-radius:var(--r-md);
+  background:var(--bg-white);
+  transition:transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
+}
+.del-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-card-hover)}
+.del-card-num{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
+  color:var(--text-on-light-dim);text-transform:uppercase;
+}
+.del-card h4{
+  font-family:var(--f-display);font-weight:700;font-size:15px;
+  color:var(--text-on-light);text-transform:uppercase;letter-spacing:-.005em;
+  margin:8px 0 6px;
+}
+.del-card p{font-size:12.5px;color:var(--text-on-light-soft);line-height:1.55}
+
+/* нижняя сетка из 3 карточек — единый стиль с верхними */
+.del-extras{
+  margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  padding-top:0;border-top:none;
+}
+.del-extra-item{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:24px 22px;
+  background:rgba(255,255,255,.025);
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-md);
+  transition:transform .35s var(--ease-out), border-color .35s var(--ease-out);
+}
+.del-extra-item:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.18)}
+.del-extra-num{
+  font-family:var(--f-display);font-weight:800;font-size:18px;
+  color:var(--accent);line-height:1;letter-spacing:-.015em;flex:0 0 auto;width:30px;
+}
+.del-extra-item h4{
+  font-family:var(--f-secondary);font-size:14px;font-weight:600;
+  color:var(--text-on-dark-bright);margin-bottom:6px;letter-spacing:-.005em;
+}
+.del-extra-item p{font-size:12.5px;color:var(--text-on-dark-dim);line-height:1.55}
+
+/* ════════════════════════════════════════════════════════════════
+   FAQ — LIGHT, EDITORIAL
+   ════════════════════════════════════════════════════════════════ */
+
+.faq{display:grid;gap:12px;max-width:1000px;margin:0 auto;background:transparent}
+.faq-item{
+  position:relative;
+  background:rgba(255,255,255,.025);
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-md);
+  transition:border-color .3s var(--ease), background .3s var(--ease);
+  overflow:hidden;
+}
+.faq-item:hover{border-color:rgba(255,255,255,.18)}
+.faq-item[open]{
+  background:rgba(255,255,255,.04);
+  border-color:color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.faq-item summary{
+  list-style:none;cursor:pointer;
+  padding:22px 26px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  font-family:var(--f-display);font-weight:700;color:var(--text-on-dark-bright);
+  font-size:clamp(15px, 1.25vw, 17px);text-transform:uppercase;
+  letter-spacing:-.005em;line-height:1.3;
+  transition:color .25s var(--ease);
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:hover{color:var(--accent-hover)}
+.faq-item[open] summary{color:var(--accent);padding-bottom:14px}
+
+.faq-item .plus{
+  width:32px;height:32px;
+  display:grid;place-items:center;color:currentColor;
+  position:relative;flex:0 0 auto;
+  border:1px solid currentColor;border-radius:50%;
+  transition:transform .35s var(--ease);
+}
+.faq-item .plus::before,
+.faq-item .plus::after{
+  content:"";position:absolute;background:currentColor;
+  transition:opacity .3s var(--ease);
+}
+.faq-item .plus::before{width:12px;height:1.4px}
+.faq-item .plus::after{width:1.4px;height:12px}
+.faq-item[open] .plus{transform:rotate(135deg)}
+
+.faq-item .answer{
+  padding:0 26px 24px;
+  font-size:14.5px;color:var(--text-on-dark);line-height:1.7;max-width:72ch;
+}
+.faq-item .answer strong{color:var(--text-on-dark-bright);font-weight:600}
+@media (max-width:720px){
+  .faq-item summary{padding:18px 20px;font-size:14.5px;gap:14px}
+  .faq-item[open] summary{padding-bottom:12px}
+  .faq-item .answer{padding:0 20px 20px;font-size:14px}
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACTS — DARK, PREMIUM
+   ════════════════════════════════════════════════════════════════ */
+
+.contact-wrap{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:48px;
+  align-items:start;
+}
+
+.contact-card{
+  display:flex;flex-direction:column;gap:24px;
+}
+
+.contact-row{
+  display:flex;justify-content:space-between;align-items:baseline;gap:24px;
+  padding:32px 0;
+  border-bottom:1px solid var(--line-dark);
+  transition:padding .3s var(--ease);
+}
+.contact-row:first-child{padding-top:0}
+.contact-row:hover{padding-left:8px}
+
+.contact-row .label{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;
+  color:var(--text-on-dark-dim);text-transform:uppercase;
+  flex:0 0 auto;width:140px;
+}
+.contact-row .value{
+  font-family:var(--f-display);font-weight:700;font-size:clamp(17px, 1.5vw, 22px);
+  color:var(--text-on-dark-bright);text-align:right;letter-spacing:-.005em;
+  text-transform:none;
+  flex:1;
+}
+.contact-row .value-sub{
+  display:block;
+  font-family:var(--f-body);font-size:12px;font-weight:400;
+  color:var(--text-on-dark-dim);margin-top:4px;letter-spacing:0;
+}
+.contact-row a.value:hover{color:var(--accent-hover)}
+
+.contact-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px}
+
+.form{
+  border:1px solid var(--line-dark);
+  border-radius:var(--r-md);
+  padding:clamp(28px, 3vw, 40px);
+  background:color-mix(in srgb, var(--bg-graphite) 50%, transparent);
+}
+.form h3{
+  font-family:var(--f-display);font-weight:700;font-size:18px;
+  margin-bottom:8px;letter-spacing:-.005em;color:var(--text-on-dark-bright);
+  text-transform:uppercase;
+}
+.form > p{font-size:13px;color:var(--text-on-dark-dim);margin-bottom:24px;line-height:1.55}
+.field{margin-bottom:16px}
+.field label{
+  display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.24em;
+  color:var(--text-on-dark-dim);text-transform:uppercase;margin-bottom:8px;
+}
+.field input,.field textarea{
+  width:100%;background:var(--bg-near-black);
+  border:1px solid var(--line-dark-strong);
+  border-radius:var(--r-sm);padding:14px 16px;
+  color:var(--text-on-dark-bright);font-family:var(--f-body);font-size:14px;
+  transition:border-color .25s var(--ease);outline:none;
+}
+.field textarea{min-height:96px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.form-hint{font-size:11px;color:var(--text-on-dark-dim);margin-top:14px;line-height:1.55}
+.form-hint a{color:var(--text-on-dark);text-decoration:underline;text-underline-offset:2px}
+
+/* ════════════════════════════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════════════════════════════ */
+
+.footer{
+  background:var(--bg-near-black);color:var(--text-on-dark-dim);
+  padding:48px 0 32px;
+}
+.footer-row{
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+}
+.footer-nav{
+  display:flex;gap:32px;flex-wrap:wrap;list-style:none;padding:0;margin:0;
+  font-family:var(--f-secondary);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+}
+.footer-nav a{color:var(--text-on-dark-dim)}
+.footer-nav a:hover{color:var(--text-on-dark-bright)}
+.footer-bot{
+  margin-top:32px;padding-top:20px;border-top:1px solid var(--line-dark);
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+  font-size:11px;color:var(--text-on-dark-dim);font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANIMATIONS — reveal on scroll (медленные, плавные, без bounce)
+   ════════════════════════════════════════════════════════════════ */
+
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.12s}
+.reveal.d2{transition-delay:.22s}
+.reveal.d3{transition-delay:.32s}
+.reveal.d4{transition-delay:.42s}
+.reveal.d5{transition-delay:.52s}
+
+/* SCROLL PROGRESS — тонкая красная линия */
+.progress{position:fixed;top:0;left:0;right:0;height:1px;z-index:60;pointer-events:none}
+.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .15s linear}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════════ */
+
+@media (max-width:1200px){
+  .cats{grid-template-columns:repeat(3,1fr)}
+  .cat--featured{grid-column:span 3}
+}
+@media (max-width:1024px){
+  .hero-inner,.custom-grid,.contact-wrap,.section-head{grid-template-columns:1fr;gap:48px}
+  .hero-product{justify-self:center;max-width:520px;margin-top:0}
+  .hp-card.c1{left:-4%}
+  .hp-card.c2{right:-4%}
+  .hp-card.c3{left:-6%}
+  .hp-card.c4{right:-4%}
+  .usp-grid{grid-template-columns:repeat(2,1fr);gap:36px}
+  .usp-cell:nth-child(2n+1){border-left:1px solid var(--line-dark)}
+  .cats{grid-template-columns:repeat(2,1fr)}
+  .cat--featured{grid-column:span 2}
+  .delivery-grid{grid-template-columns:1fr}
+  .del-extras{grid-template-columns:repeat(2,1fr)}
+  .custom-viz{max-width:100%;justify-self:stretch}
+  .contact-row .value{font-size:20px}
+}
+@media (max-width:720px){
+  .nav-list,.nav-tel{display:none}
+  .burger{display:inline-flex}
+  .usp-grid,.cats,.custom-points,.del-cards,.del-extras{grid-template-columns:1fr}
+  .cat--featured{grid-column:span 1}
+  .usp-cell{border-left:1px solid var(--line-dark);padding-left:18px}
+  .hero{padding-top:96px;min-height:auto}
+  .hero-info{flex-direction:column;gap:14px}
+  .hero-product{max-width:100%}
+  /* на мобилке оставим только 2 информационные карточки — без перегруза */
+  .hp-card.c2,.hp-card.c3{display:none}
+  .hp-card.c1{left:0}
+  .hp-card.c4{right:0}
+  .section{padding:clamp(72px, 12vw, 120px) 0}
+  .contact-row{flex-direction:column;align-items:flex-start;gap:8px;padding:24px 0}
+  .contact-row .value{text-align:left;font-size:22px}
+  .faq-item summary{font-size:16px;gap:16px;padding:22px 0}
+  .faq-item .answer{padding-bottom:24px;font-size:14px}
+  .footer-row{flex-direction:column;align-items:flex-start;gap:20px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    transition-duration:.001ms !important;
+  }
+  .hero-title .line span{transform:translateY(0)}
+  .hero-desc,.hero-actions,.hero-info,.hero-product,.hp-card{opacity:1;animation:none}
+}
+
+/* ════════ DARK MODE OVERRIDES — главная в едином тёмном стиле ════════ */
+/* Перекрашиваем все элементы, которые были спроектированы под светлый фон,
+   в тёмный glassmorphism — как на catalog/buyers/delivery/contacts. */
+
+/* секция теперь тёмная */
+.section--dark{background:transparent;color:var(--text-on-dark)}
+.section--dark h1,.section--dark h2,.section--dark h3,.section--dark h4{color:var(--text-on-dark-bright)}
+.section--dark .eyebrow{color:var(--text-on-dark-dim)}
+.section--dark .lead{color:var(--text-on-dark)}
+.section--dark .section-index{color:var(--text-on-dark-dim)}
+
+/* CATALOG — карточки .cat теперь тёмные glassmorphism */
+.section--dark .cats{border-color:rgba(255,255,255,.08)}
+.section--dark .cat{
+  background:rgba(255,255,255,.025);
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border-color:rgba(255,255,255,.08);
+  box-shadow:none;
+  color:var(--text-on-dark);
+}
+.section--dark .cat:hover{
+  background:rgba(255,255,255,.05);
+  border-color:rgba(255,255,255,.22);
+  box-shadow:0 24px 50px rgba(0,0,0,.4);
+}
+.section--dark .cat-num{color:var(--text-on-dark-dim)}
+.section--dark .cat-name{color:var(--text-on-dark-bright)}
+.section--dark .cat-desc{color:var(--text-on-dark-dim)}
+.section--dark .cat-foot{border-top-color:rgba(255,255,255,.08)}
+.section--dark .cat-price{color:var(--text-on-dark)}
+.section--dark .cat-arrow{color:var(--text-on-dark-dim)}
+.section--dark .cat:hover .cat-arrow{color:var(--accent-hover)}
+/* featured-тайл уже тёмный — оставляем как есть */
+
+/* DELIVERY — карточки на тёмном */
+.section--dark .del-feature{
+  background:rgba(255,255,255,.025);
+  backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--text-on-dark);
+}
+.section--dark .del-feature::before{
+  /* большая цифра-водяной знак — делаем красноватый stroke вместо тёмного */
+  -webkit-text-stroke:1px rgba(255,255,255,.05) !important;
+  text-stroke:1px rgba(255,255,255,.05) !important;
+  color:transparent;
+}
+.section--dark .del-feature-top h3{color:var(--text-on-dark-bright)}
+.section--dark .del-feature-top p{color:var(--text-on-dark)}
+.section--dark .del-price{color:var(--text-on-dark-dim)}
+.section--dark .del-price strong{color:var(--text-on-dark-bright)}
+.section--dark .del-card{
+  background:rgba(255,255,255,.025);
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:none;
+}
+.section--dark .del-card:hover{
+  background:rgba(255,255,255,.05);
+  border-color:rgba(255,255,255,.22);
+  box-shadow:0 16px 40px rgba(0,0,0,.4);
+}
+.section--dark .del-card-num{color:var(--text-on-dark-dim)}
+.section--dark .del-card h4{color:var(--text-on-dark-bright)}
+.section--dark .del-card p{color:var(--text-on-dark-dim)}
+.section--dark .del-extras{border-top-color:rgba(255,255,255,.08)}
+.section--dark .del-extra-num{color:var(--accent-hover)}
+.section--dark .del-extra-item h4{color:var(--text-on-dark-bright)}
+.section--dark .del-extra-item p{color:var(--text-on-dark-dim)}
+
+/* FAQ — на тёмном */
+.section--dark .faq{
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:transparent;
+}
+.section--dark .faq-item{
+  background:transparent;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.section--dark .faq-item:first-child{border-top:none}
+.section--dark .faq-item[open]{background:rgba(255,255,255,.02)}
+.section--dark .faq-item summary{color:var(--text-on-dark-bright)}
+.section--dark .faq-item summary:hover{color:var(--accent-hover)}
+.section--dark .faq-item[open] summary{color:var(--accent)}
+.section--dark .faq-item .plus{color:var(--text-on-dark-dim);border-color:rgba(255,255,255,.18)}
+.section--dark .faq-item[open] .plus{color:var(--accent);border-color:var(--accent)}
+.section--dark .faq-item .answer{color:var(--text-on-dark)}
+.section--dark .faq-item .answer strong{color:var(--text-on-dark-bright)}
+
+/* кнопки на тёмных секциях — переключение со светлой логики на дефолт */
+.section--dark .btn-primary{
+  background:rgba(243,244,246,.14);
+  color:var(--text-on-dark-bright);
+  border-color:rgba(255,255,255,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 6px 24px rgba(0,0,0,.25);
+}
+.section--dark .btn-primary:hover{
+  background:rgba(243,244,246,.24);
+  border-color:rgba(255,255,255,.4);
+}
+.section--dark .btn-ghost{
+  background:rgba(255,255,255,.04);
+  color:var(--text-on-dark-bright);
+  border-color:rgba(255,255,255,.16);
+}
+.section--dark .btn-ghost:hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.32);
+}
+
+</style>
+
+<!-- ═══ SEO: OG + Schema.org — вставлено site-bootstrap ═══ -->
+<link rel="canonical" href="https://spectr-metalla.ru/index.html" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:site_name" content="Спектр Металла" />
+<meta property="og:title" content="Спектр Металла — кровля, фасад, металлоизделия в Омске" />
+<meta property="og:description" content="Производство и продажа кровельных и фасадных материалов в Омске. Изготовление по размерам — от 30 минут." />
+<meta property="og:url" content="https://spectr-metalla.ru/index.html" />
+<meta property="og:image" content="https://spectr-metalla.ru/roof-tile.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://spectr-metalla.ru/#org",
+  "name": "Спектр Металла",
+  "description": "Производство и продажа кровельных, фасадных материалов, профнастила, металлочерепицы, водосточных систем, доборных элементов. Изготовление металлоизделий по размерам клиента.",
+  "image": "https://spectr-metalla.ru/roof-tile.png",
+  "url": "https://spectr-metalla.ru/",
+  "telephone": ["+7 923 681-97-09","+7 929 360-80-30"],
+  "priceRange": "₽₽",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "проспект Мира, 191",
+    "addressLocality": "Омск",
+    "postalCode": "644085",
+    "addressRegion": "Омская область",
+    "addressCountry": "RU"
+  },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "opens": "09:00",
+    "closes": "19:00"
+  }],
+  "areaServed": [
+    {"@type":"City","name":"Омск"},
+    {"@type":"State","name":"Омская область"},
+    {"@type":"Country","name":"Россия"}
+  ],
+  "sameAs": []
+}
+</script>
+<link rel="stylesheet" href="assets/site.css">
+<!-- ═══ end SEO ═══ -->
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="container nav">
+    <a href="#top" class="wordmark">Спектр Металла</a>
+
+    <nav>
+      <ul class="nav-list">
+        <li><a href="catalog.html">Каталог</a></li>
+        <li><a href="calculator.html">Калькулятор</a></li><li><a href="buyers.html">Покупателям</a></li>
+        <li><a href="delivery.html">Доставка</a></li>
+        <li><a href="blog.html">Статьи</a></li><li><a href="contacts.html">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:20px">
+      <a href="tel:+79236819709" class="nav-tel">+7 923 681-97-09</a>
+      <button class="burger" aria-label="Открыть меню">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ Mobile menu (site-bootstrap) ═══ -->
+<aside class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <a href="index.html" class="wordmark">Спектр Металла</a>
+    <button class="mobile-menu-close" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M6 18L18 6"/></svg></button>
+  </div>
+  <ul class="mobile-menu-list">
+    <li><a href="catalog.html">Каталог</a></li>
+    <li><a href="calculator.html">Калькулятор</a></li>
+    <li><a href="buyers.html">Покупателям</a></li>
+    <li><a href="delivery.html">Доставка</a></li>
+    <li><a href="blog.html">Статьи</a></li>
+    <li><a href="contacts.html">Контакты</a></li>
+    </ul>
+  <div class="mobile-menu-foot">
+    <a href="tel:+79236819709" class="phone">+7 923 681-97-09</a>
+    <span class="addr">г. Омск, пр. Мира, 191 · Пн–Сб · 09:00–19:00</span>
+  </div>
+</aside>
+
+
+
+<main class="shell" id="top">
+
+  <!-- ════════ HERO ════════ -->
+  <section class="hero">
+    <div class="container hero-inner">
+
+      <div class="hero-text">
+        <h1 class="hero-title">
+          <span class="line l1"><span>Металл</span></span>
+          <span class="line l2"><span>для&nbsp;дома —</span></span>
+          <span class="line l3"><span>по&nbsp;<em>вашим</em> размерам.</span></span>
+        </h1>
+
+        <p class="hero-desc">
+          Производим кровельные и фасадные системы, водостоки и металлоизделия на заказ. Свой цех, точная гибка, доставка по адресу.
+        </p>
+
+        <div class="hero-actions">
+          <a href="catalog.html" class="btn btn-primary">
+            Каталог продукции
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#contacts" class="btn btn-ghost">Получить расчёт</a>
+        </div>
+
+        <div class="hero-info">
+          <span><b>30&nbsp;мин</b>срок изготовления под размер</span>
+          <span><b>15+ лет</b>на рынке металлопроката</span>
+          <span><b>МО · РФ</b>доставка по области и стране</span>
+        </div>
+      </div>
+
+      <!-- premium industrial product render -->
+      <div class="hero-product" id="heroProduct">
+        <div class="hp-glow"></div>
+        <div class="hp-rim"></div>
+        <div class="hp-platform"></div>
+        <div class="hp-laser"></div>
+
+        <div class="hp-image-wrap" id="heroProductImage">
+          <img class="hp-image" src="roof-tile.png" alt="Металлочерепица — премиум-кровельный профиль производства Спектр Металла" />
+        </div>
+
+        <!-- floating spec cards -->
+        <span class="hp-card c1">
+          <span class="lbl">Толщина</span>
+          <b>0.45 мм</b>
+          <small>проверено микрометром</small>
+        </span>
+        <span class="hp-card c2">
+          <span class="lbl">Покрытие</span>
+          <b>Polyester · PURAL</b>
+          <small>стойкость до 25 лет</small>
+        </span>
+        <span class="hp-card c3">
+          <span class="lbl">Размер</span>
+          <b>Под заказ</b>
+          <small>длина до 12 м</small>
+        </span>
+        <span class="hp-card c4">
+          <span class="lbl">Сталь</span>
+          <b>ГОСТ 14918</b>
+          <small>Россия, сертификат</small>
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════ USP — Graphite band ════════ -->
+  <section class="usp">
+    <div class="container usp-grid">
+      <div class="usp-cell reveal">
+        <div class="usp-num">— 01</div>
+        <div class="usp-title">От 30 минут</div>
+        <div class="usp-desc">Свой цех. Изготавливаем нестандартные позиции без ожидания склада.</div>
+      </div>
+      <div class="usp-cell reveal d1">
+        <div class="usp-num">— 02</div>
+        <div class="usp-title">Честная толщина</div>
+        <div class="usp-desc">0.45 — это 0.45, а не 0.4 «с минусом». Проверяется микрометром.</div>
+      </div>
+      <div class="usp-cell reveal d2">
+        <div class="usp-num">— 03</div>
+        <div class="usp-title">Под ваш размер</div>
+        <div class="usp-desc">Любая длина листа, индивидуальная гибка, точно по проекту.</div>
+      </div>
+      <div class="usp-cell reveal d3">
+        <div class="usp-num">— 04</div>
+        <div class="usp-title">Доставка на участок</div>
+        <div class="usp-desc">Привезём, разгрузим, оформим документы — без накруток.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════ CATALOG — Light section ════════ -->
+  <section class="section section--dark" id="catalog">
+    <div class="container">
+
+      <div class="section-head">
+        <div>
+          <div class="section-index">01 — Каталог</div>
+          <h2 class="reveal">Кровля, фасад<br/>и доборка.</h2>
+        </div>
+        <p class="lead reveal d2">Семь направлений под один проект — от листа профнастила до металлоизделия по чертежу заказчика.</p>
+      </div>
+
+      <div class="cats">
+
+        <!-- featured dark tile -->
+        <a href="#contacts" class="cat cat--featured reveal">
+          <span class="cat-stamp">01</span>
+          <div>
+            <div class="cat-num">— Хит сезона</div>
+            <div class="cat-name">Профнастил<br/>С8 / С21</div>
+            <div class="cat-desc">Универсальный лист для кровли и забора. Любая длина, 11 цветов RAL. Изготовление из наличия.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 380 ₽/м²</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#contacts" class="cat reveal d1">
+          <div>
+            <div class="cat-num">— 02</div>
+            <div class="cat-name">Металло-<br/>черепица</div>
+            <div class="cat-desc">Монтеррей, Каскад, Модерн — Polyester, MAT, PURAL.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 540 ₽/м²</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#contacts" class="cat reveal d2">
+          <div>
+            <div class="cat-num">— 03</div>
+            <div class="cat-name">Фасадные<br/>панели</div>
+            <div class="cat-desc">Сайдинг, линеарные панели, металлокассеты.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 690 ₽/м²</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#contacts" class="cat reveal d1">
+          <div>
+            <div class="cat-num">— 04</div>
+            <div class="cat-name">Доборные<br/>элементы</div>
+            <div class="cat-desc">Коньки, ендовы, отливы, планки — точная гибка ±0.5°.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 120 ₽/м.п.</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#contacts" class="cat reveal d2">
+          <div>
+            <div class="cat-num">— 05</div>
+            <div class="cat-name">Водо-<br/>сточные<br/>системы</div>
+            <div class="cat-desc">Полукруглые и прямоугольные — Ø 125–150.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 290 ₽/м.п.</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#contacts" class="cat reveal d3">
+          <div>
+            <div class="cat-num">— 06</div>
+            <div class="cat-name">Евро-<br/>штакетник</div>
+            <div class="cat-desc">М, П, Т-профиль · одно- и двустороннее покрытие.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 65 ₽/шт</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#custom" class="cat reveal d3">
+          <div>
+            <div class="cat-num">— 07</div>
+            <div class="cat-name">Изделия<br/>под заказ</div>
+            <div class="cat-desc">По вашим размерам и чертежу — за 30 минут.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">расчёт за 30 мин</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════ CUSTOM PRODUCTION — Dark cinematic ════════ -->
+  <section class="section section--dark" id="custom">
+    <div class="container">
+      <div class="custom-grid">
+        <div class="custom-text reveal">
+          <div class="section-index">02 — Производство под размер</div>
+          <h2>Гнём, режем,<br/>красим сами.</h2>
+          <p class="lead">Свой цех — это значит, мы не «ждём поставку». Делаем нужную длину, угол и цвет сразу. Большинство нестандартных позиций готовы за 30 минут от подтверждения.</p>
+
+          <ul class="custom-points">
+            <li>Любая длина листа до 12 метров</li>
+            <li>Гибка по чертежу заказчика</li>
+            <li>Цвет точно по RAL</li>
+            <li>Точность ±0.5° и ±1 мм</li>
+            <li>Без минимальной партии</li>
+            <li>Изготовление от 30 минут</li>
+          </ul>
+
+          <div class="custom-actions">
+            <a href="#contacts" class="btn btn-accent">Заказать по размерам
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#contacts" class="btn btn-ghost">Скинуть чертёж</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════ DELIVERY — Light minimal ════════ -->
+  <section class="section section--dark" id="delivery">
+    <div class="container">
+
+      <div class="section-head">
+        <div>
+          <div class="section-index">03 — Доставка</div>
+          <h2 class="reveal">Привозим металл<br/>на ваш участок.</h2>
+        </div>
+        <p class="lead reveal d2">Доставляем по Омску и области своим транспортом, по России — проверенными ТК. Цену называем до оплаты — без сюрпризов на адресе.</p>
+      </div>
+
+      <div class="delivery-grid reveal">
+
+        <div class="del-feature">
+          <div class="del-feature-top">
+            <div class="cat-num">— Зона МО</div>
+            <h3>Своя логистика<br/>под любой объём.</h3>
+            <p>Газель, бортовой манипулятор или фура — выбираем транспорт под объём заказа и подъезд к участку. Согласуем удобное время разгрузки.</p>
+          </div>
+          <div class="del-feature-bot">
+            <div class="del-price">
+              <strong>от 1 500 ₽</strong>по Омску и области
+            </div>
+            <a href="#contacts" class="btn btn-primary btn-sm">Рассчитать доставку</a>
+          </div>
+        </div>
+
+        <div class="del-cards">
+          <div class="del-card">
+            <div class="del-card-num">— 01</div>
+            <h4>Быстрая отправка</h4>
+            <p>Из наличия — день в день. Под размер — от 30 минут после согласования.</p>
+          </div>
+          <div class="del-card">
+            <div class="del-card-num">— 02</div>
+            <h4>Крупные заказы</h4>
+            <p>Длинномеры до 12 м фурой или манипулятором. Без доплат за тоннаж.</p>
+          </div>
+          <div class="del-card">
+            <div class="del-card-num">— 03</div>
+            <h4>Удобно клиенту</h4>
+            <p>Привезём в указанное время, разгрузим вручную или манипулятором.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="del-extras reveal d2">
+        <div class="del-extra-item">
+          <span class="del-extra-num">04</span>
+          <div>
+            <h4>Помощь с расчётом</h4>
+            <p>Назовите адрес — посчитаем стоимость доставки до заказа.</p>
+          </div>
+        </div>
+        <div class="del-extra-item">
+          <span class="del-extra-num">05</span>
+          <div>
+            <h4>Самовывоз со склада</h4>
+            <p>Подготовим заказ к приезду и поможем загрузить.</p>
+          </div>
+        </div>
+        <div class="del-extra-item">
+          <span class="del-extra-num">06</span>
+          <div>
+            <h4>Доставка по России</h4>
+            <p>Работаем с проверенными ТК. Отправим в любой город.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════ FAQ — Light minimal ════════ -->
+  <section class="section section--dark" id="faq">
+    <div class="container">
+
+      <div class="section-head">
+        <div>
+          <div class="section-index">04 — Вопросы</div>
+          <h2 class="reveal">Часто<br/>спрашивают.</h2>
+        </div>
+        <p class="lead reveal d2">Не нашли свой вопрос — напишите в мессенджер, ответим за пару минут.</p>
+      </div>
+
+      <div class="faq reveal">
+        <details class="faq-item" open>
+          <summary>Есть ли доставка по области?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>Да, доставляем по <strong>Омску и Омской области</strong> своим транспортом — Газель, бортовой манипулятор или фура в зависимости от объёма. Цену называем заранее, до оплаты заказа. По России отправляем проверенными транспортными компаниями.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Можно ли изготовить изделия по своим размерам?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>Конечно — это <strong>наше основное направление</strong>. Делаем профнастил любой длины, доборные элементы, отливы, коньки, ендовы и металлоизделия по вашему чертежу. Точность гибки ±0.5°, без минимальной партии.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Сколько занимает производство?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>Стандартные позиции отгружаем <strong>из наличия в день обращения</strong>. Изготовление под размер — <strong>от 30 минут</strong> после подтверждения заявки. Большие партии (от 1000 м²) — 1–3 рабочих дня.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Помогаете ли с расчётом материалов?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>Да, расчёт — <strong>бесплатно</strong>. Достаточно прислать размеры кровли или забора (можно от руки или фото с участка). Менеджер посчитает количество листов, доборку и крепёж, чтобы вы не покупали лишнего.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Есть ли самовывоз?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>Да, можно <strong>забрать самостоятельно</strong> со склада. Мы подготовим заказ к вашему приезду, поможем загрузить, выдадим документы. График работы склада — Пн–Сб, 09:00–19:00.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════ CONTACTS — Dark premium ════════ -->
+  <section class="section section--dark" id="contacts">
+    <div class="container">
+
+      <div class="section-head">
+        <div>
+          <div class="section-index">05 — Контакты</div>
+          <h2 class="reveal">Свяжитесь<br/>с производством.</h2>
+        </div>
+        <p class="lead reveal d2">Менеджер на связи в рабочее время. Опишите задачу — пришлём расчёт в течение 30 минут.</p>
+      </div>
+
+      <div class="contact-wrap reveal">
+
+        <div class="contact-card">
+          <div class="contact-row">
+            <span class="label">Телефон</span>
+            <a href="tel:+79236819709" class="value">+7 923 681-97-09
+              <span class="value-sub">Звонок бесплатный</span>
+            </a>
+          </div>
+          <div class="contact-row">
+            <span class="label">Мессенджеры</span>
+            <a href="https://wa.me/79236819709" target="_blank" rel="noopener" class="value">WhatsApp · Telegram
+              <span class="value-sub">Ответим в течение 10 минут</span>
+            </a>
+          </div>
+          <div class="contact-row">
+            <span class="label">Адрес</span>
+            <span class="value">644085, г. Омск, проспект Мира, 191
+              <span class="value-sub">Производство и склад в одном месте</span>
+            </span>
+          </div>
+          <div class="contact-row">
+            <span class="label">Часы работы</span>
+            <span class="value">Пн–Сб · 09:00 — 19:00
+              <span class="value-sub">Воскресенье — по согласованию</span>
+            </span>
+          </div>
+
+          <div class="contact-cta">
+            <a href="https://wa.me/79236819709" target="_blank" rel="noopener" class="btn btn-accent">Написать в WhatsApp</a>
+            <a href="tel:+79236819709" class="btn btn-ghost">Позвонить</a>
+          </div>
+        </div>
+
+        <form class="form" id="leadForm" onsubmit="event.preventDefault();this.querySelector('button[type=submit]').innerHTML='✓ Заявка отправлена'">
+          <h3>Получить расчёт</h3>
+          <p>Заполните форму — перезвоним в течение 30 минут с готовой ценой.</p>
+          <div class="field">
+            <label for="f-name">Имя</label>
+            <input id="f-name" type="text" placeholder="Как к Вам обращаться" required />
+          </div>
+          <div class="field">
+            <label for="f-phone">Телефон</label>
+            <input id="f-phone" type="tel" placeholder="+7 ___ ___-__-__" required />
+          </div>
+          <div class="field">
+            <label for="f-msg">Что считаем?</label>
+            <textarea id="f-msg" placeholder="Например: профнастил С8, забор 40 м, высота 2 м, RAL 6005"></textarea>
+          </div>
+          <button type="submit" class="btn btn-accent btn-block">
+            Рассчитать стоимость
+          </button>
+          <p class="form-hint">Отправляя форму, вы соглашаетесь с <a href="#">политикой обработки персональных данных</a>.</p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <span class="wordmark">Спектр Металла</span>
+        <ul class="footer-nav">
+          <li><a href="catalog.html">Каталог</a></li>
+        <li><a href="buyers.html">Покупателям</a></li>
+        <li><a href="delivery.html">Доставка</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="policy-personal-data.html">Политика ПД</a></li>
+          <li><a href="policy-privacy.html">Конфиденциальность</a></li>
+        </ul>
+      </div>
+      <div class="footer-bot">
+        <span>© <span id="yr">2026</span> · Спектр Металла</span>
+        <span>SM // SPECTRUM·METAL // ENGINEERED IN RU</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+/* год в футере */
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* scroll progress + sticky header state */
+const bar = document.getElementById('progressBar');
+const header = document.getElementById('header');
+function onScroll(){
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  const p = max > 0 ? (h.scrollTop / max) : 0;
+  bar.style.width = (p*100).toFixed(2) + '%';
+  if(h.scrollTop > 20) header.classList.add('scrolled'); else header.classList.remove('scrolled');
+}
+document.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* reveal on scroll — медленные cinematic появления */
+const io = new IntersectionObserver((entries)=>{
+  for(const e of entries){
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  }
+}, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// FAQ smooth-open handled by assets/site.js
+
+/* плавный скролл к якорю с учётом высоты header */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',(e)=>{
+    const id = a.getAttribute('href');
+    if(id.length < 2) return;
+    const el = document.querySelector(id);
+    if(!el) return;
+    e.preventDefault();
+    const y = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({top:y, behavior:'smooth'});
+  });
+});
+
+/* subtle hover-tilt на карточках каталога — очень лёгкий 3D */
+document.querySelectorAll('.cat').forEach(card=>{
+  card.addEventListener('mousemove',(e)=>{
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5;
+    const y = (e.clientY - r.top) / r.height - .5;
+    card.style.transform = `translateY(-6px) perspective(800px) rotateY(${x * 2}deg) rotateX(${-y * 2}deg)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform = '';
+  });
+});
+
+/* ─── Hero product: премиум cinematic mouse-tilt ─── */
+(function(){
+  const stage = document.getElementById('heroProduct');
+  const img   = document.getElementById('heroProductImage');
+  if (!stage || !img) return;
+
+  // базовый наклон (соответствует CSS rotate(-2.5deg))
+  const baseRot = -2.5;
+
+  let rafId = 0;
+  let targetRX = 0, targetRY = baseRot, targetTY = 0;
+  let curRX = 0,   curRY = baseRot,    curTY = 0;
+  let mouseInside = false;
+
+  function loop(){
+    // плавная интерполяция — медленно, дорого, без рывков
+    const ease = 0.085;
+    curRX += (targetRX - curRX) * ease;
+    curRY += (targetRY - curRY) * ease;
+    curTY += (targetTY - curTY) * ease;
+    img.style.transform =
+      `translateX(2%) translateY(${curTY.toFixed(2)}px) rotateX(${curRX.toFixed(2)}deg) rotateY(${curRY.toFixed(2)}deg) rotateZ(${baseRot}deg)`;
+    if (Math.abs(targetRX - curRX) > .01 || Math.abs(targetRY - curRY) > .01 || Math.abs(targetTY - curTY) > .1) {
+      rafId = requestAnimationFrame(loop);
+    } else {
+      rafId = 0;
+    }
+  }
+  function trigger(){ if (!rafId) rafId = requestAnimationFrame(loop); }
+
+  // мышиный tilt в области hero (а не только над картинкой) — больше зона реакции
+  const hero = document.querySelector('.hero');
+  hero.addEventListener('mousemove', (e) => {
+    const r = stage.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width/2)  / r.width;
+    const y = (e.clientY - r.top  - r.height/2) / r.height;
+    // премиум поворот — заметнее, но без агрессии (макс ±8°)
+    targetRY = baseRot + x * 8;
+    targetRX = -y * 6;
+    mouseInside = true;
+    trigger();
+  });
+  hero.addEventListener('mouseleave', () => {
+    targetRX = 0; targetRY = baseRot; targetTY = 0;
+    mouseInside = false;
+    trigger();
+  });
+
+  // лёгкий scroll-parallax — продукт чуть «выезжает» вверх при скролле
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < 1000) {
+      targetTY = -y * 0.06;
+      trigger();
+    }
+  }, {passive: true});
+})();
+</script>
+
+
+<!-- ═══ Sticky bar (site-bootstrap) ═══ -->
+<div class="sticky-bar" aria-hidden="false">
+  <div class="sticky-bar-inner">
+    <a class="sb-btn sb-call" href="tel:+79236819709"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.11 1A19.86 19.86 0 0 1 2 4.11 1 1 0 0 1 3 3h4.09a1 1 0 0 1 1 .75l1 4a1 1 0 0 1-.27 1L7.21 10.79a16 16 0 0 0 6 6l2.06-1.61a1 1 0 0 1 1-.27l4 1a1 1 0 0 1 .75 1Z"/></svg>Звонок</a>
+    <a class="sb-btn sb-quote" href="calculator.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-3"/><path d="M9 3h6v4H9z"/><path d="M9 13h6M9 17h4"/></svg>Расчёт</a>
+  </div>
+</div>
+
+<!-- ═══ Cart (site-bootstrap) ═══ -->
+<button class="cart-fab" aria-label="Заявка"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg><span class="badge">0</span></button>
+<div class="cart-overlay" aria-hidden="true"></div>
+<aside class="cart-panel" aria-hidden="true">
+  <div class="cart-head"><h3>Заявка</h3><button class="cart-close" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M6 18L18 6"/></svg></button></div>
+  <div class="cart-body"></div>
+  <div class="cart-foot">
+    <div class="cart-summary"><span>Итого ориентировочно</span><b>0 ₽</b></div>
+    <div class="cart-actions">
+      <button class="btn btn-accent btn-block cart-send">Отправить в WhatsApp</button>
+      <button class="btn btn-ghost btn-block cart-clear">Очистить заявку</button>
+    </div>
+  </div>
+</aside>
+
+<script src="assets/site.js" defer></script>
+
+</body>
+</html>

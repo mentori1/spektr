@@ -1,0 +1,30 @@
+# Бэкапы локальной разработки
+backups/
+*.bak
+
+# Системное
+.DS_Store
+.idea/
+.vscode/
+*.swp
+node_modules/
+
+# Документация для разработчика
+PROJECT_MEMO.md
+SKILLS_GUIDE.md
+
+# Оригиналы клиента и копии (по русскому имени)
+сайт металл/
+тест/
+копии тестов/
+резерв сайта с белым/
+
+# Лишние копии HTML
+index — копия.html
+index — копия 2.html
+index — копия 3.html
+index гавно.html
+
+# Исходное PNG (используется только roof-tile.png)
+png-clipart-steel-metal-roof-sheet-metal-roof-tile-no-bg-HD (carve.photos).png
+IMG_3685.JPG

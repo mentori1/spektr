@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#06070a" />
+<title>Политика обработки персональных данных · Спектр Металла</title>
+<meta name="description" content="Политика обработки персональных данных пользователей сайта spectr-metalla.ru в соответствии с Федеральным законом № 152-ФЗ." />
+<link rel="canonical" href="https://spectr-metalla.ru/policy-personal-data.html" />
+<meta name="robots" content="index,follow" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Unbounded:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{--bg-dark:#06070a;--bg-near-black:#04050a;--text-on-dark:#c9ccd2;--text-on-dark-bright:#f3f4f6;--text-on-dark-dim:#7d828a;--text-on-dark-deep:#4a4f57;--accent:#b91c1c;--accent-hover:#dc2626;--line:rgba(255,255,255,.07);--line-strong:rgba(255,255,255,.14);--f-display:"Big Shoulders Display","Unbounded",system-ui,sans-serif;--f-secondary:"Unbounded","Manrope",system-ui,sans-serif;--f-body:"Manrope",system-ui,sans-serif;--f-mono:"JetBrains Mono",ui-monospace,monospace;--gut:clamp(20px,4vw,80px);--section-y:clamp(80px,11vw,180px);--r-sm:4px;--r-md:10px;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}html,body{margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:var(--f-body);font-size:16px;line-height:1.7;color:var(--text-on-dark);background:var(--bg-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}a{color:var(--accent-hover);text-decoration:underline;text-underline-offset:3px;transition:color .25s var(--ease)}a:hover{color:var(--text-on-dark-bright)}button{font-family:inherit;cursor:pointer}
+.bg-stage{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-stage .glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.25}
+.bg-stage .g1{width:55vw;height:55vw;top:-15vw;left:-15vw;background:radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%)}
+.bg-stage .g2{width:55vw;height:55vw;bottom:-15vw;right:-15vw;background:radial-gradient(circle, color-mix(in srgb, #4b5563 40%, transparent), transparent 60%)}
+.shell{position:relative;z-index:2}.container{max-width:880px;margin:0 auto;padding:0 var(--gut)}
+
+.header{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;background:transparent;border-bottom:1px solid transparent;transition:all .3s var(--ease)}
+.header.scrolled{padding:10px 0;background:rgba(6,7,10,.82);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:1440px;margin:0 auto;padding:0 var(--gut)}
+.wordmark{font-family:var(--f-display);font-weight:800;font-size:14px;letter-spacing:.22em;color:var(--text-on-dark-bright);text-transform:uppercase;display:inline-flex;align-items:center;gap:12px;text-decoration:none}
+.wordmark::before{content:"";width:8px;height:8px;background:var(--accent);display:inline-block}
+.nav-list{display:flex;align-items:center;gap:2px;list-style:none;margin:0;padding:0}
+.nav-list a{display:inline-block;padding:10px 18px;font-family:var(--f-secondary);font-size:12.5px;font-weight:500;color:var(--text-on-dark-dim);letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.nav-list a:hover{color:var(--text-on-dark-bright)}
+.nav-tel{font-family:var(--f-mono);font-size:13px;color:var(--text-on-dark);letter-spacing:.04em;text-decoration:none}
+.burger{display:none;background:transparent;border:1px solid var(--line-strong);width:42px;height:42px;border-radius:var(--r-sm);color:var(--text-on-dark-bright);align-items:center;justify-content:center;cursor:pointer}
+.burger svg{width:18px;height:18px}
+
+article{padding:clamp(120px,14vw,180px) 0 var(--section-y)}
+.crumbs{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;color:var(--text-on-dark-dim);text-transform:uppercase;margin-bottom:24px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.crumbs a{color:var(--text-on-dark-dim);text-decoration:none}.crumbs a:hover{color:var(--text-on-dark-bright)}
+.crumbs .sep{color:var(--text-on-dark-deep)}
+
+h1{font-family:var(--f-display);font-weight:900;font-size:clamp(28px,5vw,56px);line-height:1.05;letter-spacing:-.025em;text-transform:uppercase;color:var(--text-on-dark-bright);margin:0 0 24px;max-width:22ch}
+.meta{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;color:var(--text-on-dark-dim);text-transform:uppercase;padding-bottom:24px;border-bottom:1px solid var(--line);margin-bottom:40px}
+
+article h2{font-family:var(--f-display);font-weight:800;font-size:clamp(20px,2.4vw,28px);line-height:1.1;letter-spacing:-.01em;text-transform:uppercase;color:var(--text-on-dark-bright);margin:48px 0 16px}
+article h3{font-family:var(--f-secondary);font-weight:600;font-size:18px;color:var(--text-on-dark-bright);margin:32px 0 12px;letter-spacing:-.005em}
+article p{margin:0 0 14px;color:var(--text-on-dark)}article p strong{color:var(--text-on-dark-bright);font-weight:600}
+article ul,article ol{padding-left:22px;margin:0 0 18px;color:var(--text-on-dark)}article li{margin-bottom:6px}
+
+.footer{background:var(--bg-near-black);padding:48px 0 32px;position:relative;z-index:2;color:var(--text-on-dark-dim)}
+.footer .container{max-width:1440px}
+.footer-row{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.footer-nav{display:flex;gap:24px;flex-wrap:wrap;list-style:none;padding:0;margin:0;font-family:var(--f-secondary);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.footer-nav a{color:var(--text-on-dark-dim);text-decoration:none}.footer-nav a:hover{color:var(--text-on-dark-bright)}
+.footer-bot{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;font-size:11px;font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.progress{position:fixed;top:0;left:0;right:0;height:1px;z-index:60;pointer-events:none}.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .15s linear}
+
+@media (max-width:720px){.nav-list,.nav-tel{display:none}.burger{display:inline-flex}.footer-row{flex-direction:column;align-items:flex-start;gap:20px}}
+</style>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+
+<body>
+<div class="bg-stage" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<header class="header" id="header">
+  <div class="nav">
+    <a href="index.html" class="wordmark">Спектр Металла</a>
+    <nav>
+      <ul class="nav-list">
+        <li><a href="catalog.html">Каталог</a></li>
+        <li><a href="calculator.html">Калькулятор</a></li>
+        <li><a href="buyers.html">Покупателям</a></li>
+        <li><a href="delivery.html">Доставка</a></li>
+        <li><a href="blog.html">Статьи</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+      </ul>
+    </nav>
+    <div style="display:flex;align-items:center;gap:16px">
+      <a href="tel:+79236819709" class="nav-tel">+7 923 681-97-09</a>
+      <button class="burger" aria-label="Меню"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<article id="top">
+  <div class="container">
+    <nav class="crumbs"><a href="index.html">Главная</a><span class="sep">/</span><span>Политика обработки персональных данных</span></nav>
+
+    <h1>Политика обработки персональных данных</h1>
+    <div class="meta">Редакция от 28 мая 2026 г. · г. Омск</div>
+
+    <h2>1. Общие положения</h2>
+    <p>Настоящая Политика обработки персональных данных (далее — Политика) разработана в соответствии с Федеральным законом от 27.07.2006 г. № 152-ФЗ «О персональных данных» (далее — ФЗ-152) и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые <strong>«Спектр Металла»</strong> (далее — Оператор).</p>
+    <p>Оператор: <strong>«Спектр Металла»</strong>, адрес: 644085, г. Омск, проспект Мира, д. 191.</p>
+    <p>Контакты: телефон +7 923 681-97-09, e-mail info@spectr-metalla.ru.</p>
+    <p>ИНН: <em>__________</em> (заполняется Оператором).</p>
+    <p>Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.</p>
+
+    <h2>2. Основные понятия</h2>
+    <ul>
+      <li><strong>Персональные данные</strong> — любая информация, относящаяся прямо или косвенно к определённому или определяемому пользователю сайта <a href="https://spectr-metalla.ru">spectr-metalla.ru</a>.</li>
+      <li><strong>Обработка персональных данных</strong> — любое действие (операция) или совокупность действий с персональными данными, совершаемых с использованием средств автоматизации или без таковых.</li>
+      <li><strong>Пользователь</strong> — любой посетитель сайта <a href="https://spectr-metalla.ru">spectr-metalla.ru</a>.</li>
+      <li><strong>Cookies</strong> — небольшой фрагмент данных, отправленный веб-сервером и хранимый на компьютере пользователя.</li>
+    </ul>
+
+    <h2>3. Состав обрабатываемых персональных данных</h2>
+    <p>Оператор может обрабатывать следующие персональные данные Пользователя:</p>
+    <ul>
+      <li>Фамилия, имя, отчество (при добровольном предоставлении);</li>
+      <li>Номер телефона;</li>
+      <li>Адрес электронной почты (e-mail);</li>
+      <li>Адрес доставки заказа;</li>
+      <li>Сведения о заказе и предпочтениях;</li>
+      <li>Обезличенные данные, собираемые при помощи сервисов интернет-статистики (Яндекс.Метрика, Google Analytics): IP-адрес, файлы cookies, информация о браузере, время доступа, адрес запрашиваемой страницы, реферер.</li>
+    </ul>
+
+    <h2>4. Цели обработки персональных данных</h2>
+    <ul>
+      <li>Связь с пользователем для уточнения параметров заказа, согласования стоимости и условий доставки;</li>
+      <li>Информирование пользователя о статусе заказа;</li>
+      <li>Предоставление пользователю эффективной клиентской и технической поддержки при возникновении вопросов;</li>
+      <li>Заключение и исполнение договора с пользователем;</li>
+      <li>Улучшение качества работы сайта, удобства его использования;</li>
+      <li>Проведение статистических и иных исследований на основе обезличенных данных.</li>
+    </ul>
+
+    <h2>5. Правовые основания обработки персональных данных</h2>
+    <p>Оператор обрабатывает персональные данные Пользователя только в случае их добровольного предоставления при заполнении форм обратной связи, формы заказа, формы расчёта стоимости на сайте <a href="https://spectr-metalla.ru">spectr-metalla.ru</a>.</p>
+    <p>Оператор обрабатывает обезличенные данные о Пользователе в случае, если это разрешено в настройках браузера Пользователя (включено сохранение файлов cookies).</p>
+
+    <h2>6. Порядок сбора, хранения, передачи и других видов обработки персональных данных</h2>
+    <p>Безопасность персональных данных, которые обрабатываются Оператором, обеспечивается путём реализации правовых, организационных и технических мер, необходимых для выполнения в полном объёме требований действующего законодательства в области защиты персональных данных.</p>
+    <p>Оператор обеспечивает сохранность персональных данных и принимает все возможные меры, исключающие доступ к персональным данным неуполномоченных лиц.</p>
+    <p>Персональные данные Пользователя никогда, ни при каких условиях не будут переданы третьим лицам, за исключением случаев, связанных с исполнением действующего законодательства либо в случае, если субъектом персональных данных дано согласие Оператору на передачу данных третьему лицу для исполнения обязательств по гражданско-правовому договору.</p>
+    <p>В случае выявления неточностей в персональных данных, Пользователь может актуализировать их самостоятельно, путём направления Оператору уведомления на e-mail info@spectr-metalla.ru с пометкой «Актуализация персональных данных».</p>
+
+    <h2>7. Срок обработки персональных данных</h2>
+    <p>Срок обработки персональных данных является неограниченным. Пользователь может в любой момент отозвать своё согласие на обработку персональных данных, направив Оператору уведомление посредством электронной почты на электронный адрес Оператора info@spectr-metalla.ru с пометкой «Отзыв согласия на обработку персональных данных».</p>
+
+    <h2>8. Трансграничная передача персональных данных</h2>
+    <p>Оператор до начала осуществления трансграничной передачи персональных данных обязан убедиться в том, что иностранным государством, на территорию которого предполагается осуществлять передачу персональных данных, обеспечивается надёжная защита прав субъектов персональных данных.</p>
+    <p>Трансграничная передача персональных данных на территории иностранных государств, не отвечающих вышеуказанным требованиям, может осуществляться только в случае наличия согласия в письменной форме субъекта персональных данных.</p>
+
+    <h2>9. Заключительные положения</h2>
+    <p>Пользователь может получить любые разъяснения по интересующим вопросам, касающимся обработки его персональных данных, обратившись к Оператору с помощью электронной почты info@spectr-metalla.ru.</p>
+    <p>В данном документе будут отражены любые изменения политики обработки персональных данных Оператором. Политика действует бессрочно до замены её новой версией.</p>
+    <p>Актуальная версия Политики в свободном доступе расположена в сети Интернет по адресу <a href="https://spectr-metalla.ru/policy-personal-data.html">spectr-metalla.ru/policy-personal-data.html</a>.</p>
+  </div>
+</article>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <span class="wordmark">Спектр Металла</span>
+      <ul class="footer-nav">
+        <li><a href="catalog.html">Каталог</a></li>
+        <li><a href="buyers.html">Покупателям</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+        <li><a href="policy-personal-data.html">Политика ПД</a></li>
+        <li><a href="policy-privacy.html">Конфиденциальность</a></li>
+      </ul>
+    </div>
+    <div class="footer-bot">
+      <span>© <span id="yr">2026</span> · Спектр Металла · г. Омск</span>
+      <span>SM // SPECTRUM·METAL</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('yr').textContent=new Date().getFullYear();const b=document.getElementById('progressBar'),h=document.getElementById('header');addEventListener('scroll',()=>{const d=document.documentElement,m=d.scrollHeight-d.clientHeight,p=m>0?d.scrollTop/m:0;b.style.width=(p*100).toFixed(2)+'%';h.classList.toggle('scrolled',d.scrollTop>20)},{passive:true});</script>
+<script src="assets/site.js" defer></script>
+</body>
+</html>
