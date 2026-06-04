@@ -401,27 +401,39 @@ p{margin:0}
   }
   .filters-trigger .count[data-empty]{display:none}
 
-  /* drawer — выносится в body через JS, поэтому z-index перекрывает всё */
+  /* drawer — модалка с отступами от краёв (не на весь экран) */
   .sidebar.drawer-open{
     display:flex;flex-direction:column;
-    position:fixed;inset:0;z-index:9999;
+    position:fixed;z-index:9999;
+    top:max(56px, env(safe-area-inset-top) + 32px);
+    bottom:max(32px, env(safe-area-inset-bottom) + 16px);
+    left:16px;right:16px;
     max-height:none;overflow:hidden;
-    border:none;border-radius:0;padding:0;
-    background:rgba(8,9,13,.98);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;padding:0;
+    background:rgba(14,16,22,.98);
+    box-shadow:0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04) inset;
     backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  }
+  /* backdrop за модалкой — затемняет страницу */
+  body.drawer-active::before{
+    content:"";position:fixed;inset:0;z-index:9998;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
   }
   /* верхняя закреплённая панель с заголовком и крестиком */
   .sidebar.drawer-open .sidebar-head{
     position:relative;flex:0 0 auto;
     display:flex;align-items:center;gap:16px;
-    padding:max(18px, env(safe-area-inset-top)) 20px 16px;
-    border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:0;
-    background:rgba(8,9,13,.98);
+    padding:18px 20px 16px;
+    border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:0;
+    background:rgba(14,16,22,.98);
+    border-radius:20px 20px 0 0;
   }
   .sidebar.drawer-open .sidebar-title{margin-right:auto}
   /* прокручиваемая область с фильтрами */
   .sidebar.drawer-open .filter-group{
-    margin:0;padding:20px;border-bottom:1px solid rgba(255,255,255,.06);
+    margin:0;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.06);
   }
   .sidebar.drawer-open #filterSub,
   .sidebar.drawer-open #filterCoating,
@@ -429,20 +441,21 @@ p{margin:0}
   .sidebar.drawer-open #filterColor{margin:0}
   .drawer-close{
     position:relative;right:auto;top:auto;
-    width:40px;height:40px;border-radius:50%;
+    width:38px;height:38px;border-radius:50%;
     background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);
     color:#fff;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;
   }
-  .drawer-close svg{width:18px;height:18px}
+  .drawer-close svg{width:17px;height:17px}
   /* нижняя кнопка «Показать товары» */
   .drawer-apply{
     flex:0 0 auto;
-    padding:16px 20px max(16px, env(safe-area-inset-bottom));
-    border-top:1px solid rgba(255,255,255,.1);
-    background:rgba(8,9,13,.98);
+    padding:14px 18px 16px;
+    border-top:1px solid rgba(255,255,255,.08);
+    background:rgba(14,16,22,.98);
+    border-radius:0 0 20px 20px;
   }
   .drawer-apply button{
-    width:100%;padding:15px;border-radius:999px;
+    width:100%;padding:14px;border-radius:999px;
     background:var(--accent);color:#fff;border:none;
     font-family:var(--f-secondary);font-size:13px;font-weight:600;letter-spacing:.06em;
     text-transform:uppercase;cursor:pointer;
@@ -517,7 +530,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=7">
+<link rel="stylesheet" href="assets/site.css?v=8">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1009,12 +1022,14 @@ function openDrawer(){
   $sidebar.parentNode.insertBefore($sidebarHome, $sidebar);
   document.body.appendChild($sidebar);
   $sidebar.classList.add('drawer-open');
+  document.body.classList.add('drawer-active');
   document.body.style.overflow = 'hidden';
 }
 function closeDrawer(){
   if (!drawerOpen) return;
   drawerOpen = false;
   $sidebar.classList.remove('drawer-open');
+  document.body.classList.remove('drawer-active');
   // возвращаем sidebar на место
   if ($sidebarHome.parentNode){
     $sidebarHome.parentNode.insertBefore($sidebar, $sidebarHome);
@@ -1026,6 +1041,10 @@ $openF?.addEventListener('click', openDrawer);
 $closeF?.addEventListener('click', closeDrawer);
 $applyF?.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+// клик по затемнению вокруг модалки тоже закрывает
+document.addEventListener('click', e => {
+  if (drawerOpen && e.target === document.body) closeDrawer();
+});
 // если вернулись на десктоп с открытым drawer — закрываем
 window.addEventListener('resize', () => { if (window.innerWidth > 880 && drawerOpen) closeDrawer(); });
 function updateFilterCount(){
@@ -1110,7 +1129,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=7" defer></script>
+<script src="assets/site.js?v=8" defer></script>
 
 </body>
 </html>
