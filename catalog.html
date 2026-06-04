@@ -372,11 +372,17 @@ p{margin:0}
 
 /* ═══ FILTERS — кнопка-модал на мобиле ═══ */
 .filters-trigger{display:none}
+/* на десктопе обёртка прозрачна — sidebar выглядит как раньше */
+.filter-scroll{display:contents}
 
 @media (max-width:880px){
   /* скрываем sidebar — она будет в drawer */
   .sidebar{display:none}
   .catalog-layout{grid-template-columns:1fr}
+  /* в drawer обёртка становится скролл-областью */
+  .sidebar.drawer-open .filter-scroll{
+    display:block;flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  }
 
   /* кнопка-триггер фильтров */
   .filters-trigger{
@@ -395,22 +401,59 @@ p{margin:0}
   }
   .filters-trigger .count[data-empty]{display:none}
 
-  /* drawer */
+  /* drawer — выносится в body через JS, поэтому z-index перекрывает всё */
   .sidebar.drawer-open{
-    display:block;position:fixed;inset:0;z-index:200;
-    max-height:none;overflow-y:auto;
-    border-radius:0;padding:24px 22px 100px;
-    background:rgba(11,13,17,.97);
-    backdrop-filter:blur(20px);
+    display:flex;flex-direction:column;
+    position:fixed;inset:0;z-index:9999;
+    max-height:none;overflow:hidden;
+    border:none;border-radius:0;padding:0;
+    background:rgba(8,9,13,.98);
+    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   }
-  .sidebar.drawer-open .sidebar-head{position:sticky;top:0;background:rgba(11,13,17,.97);z-index:2;padding-bottom:16px}
+  /* верхняя закреплённая панель с заголовком и крестиком */
+  .sidebar.drawer-open .sidebar-head{
+    position:relative;flex:0 0 auto;
+    display:flex;align-items:center;gap:16px;
+    padding:max(18px, env(safe-area-inset-top)) 20px 16px;
+    border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:0;
+    background:rgba(8,9,13,.98);
+  }
+  .sidebar.drawer-open .sidebar-title{margin-right:auto}
+  /* прокручиваемая область с фильтрами */
+  .sidebar.drawer-open .filter-group{
+    margin:0;padding:20px;border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .sidebar.drawer-open #filterSub,
+  .sidebar.drawer-open #filterCoating,
+  .sidebar.drawer-open #filterThickness,
+  .sidebar.drawer-open #filterColor{margin:0}
   .drawer-close{
-    position:absolute;right:18px;top:18px;z-index:3;
-    width:38px;height:38px;border-radius:50%;
-    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
-    color:#fff;display:grid;place-items:center;cursor:pointer;
+    position:relative;right:auto;top:auto;
+    width:40px;height:40px;border-radius:50%;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);
+    color:#fff;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;
   }
   .drawer-close svg{width:18px;height:18px}
+  /* нижняя кнопка «Показать товары» */
+  .drawer-apply{
+    flex:0 0 auto;
+    padding:16px 20px max(16px, env(safe-area-inset-bottom));
+    border-top:1px solid rgba(255,255,255,.1);
+    background:rgba(8,9,13,.98);
+  }
+  .drawer-apply button{
+    width:100%;padding:15px;border-radius:999px;
+    background:var(--accent);color:#fff;border:none;
+    font-family:var(--f-secondary);font-size:13px;font-weight:600;letter-spacing:.06em;
+    text-transform:uppercase;cursor:pointer;
+  }
+}
+/* на десктопе кнопки drawer скрыты */
+.drawer-close{display:none}
+.drawer-apply{display:none}
+@media (max-width:880px){
+  .sidebar.drawer-open .drawer-close{display:grid}
+  .sidebar.drawer-open .drawer-apply{display:block}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
@@ -543,30 +586,36 @@ p{margin:0}
 
         <!-- SIDEBAR -->
         <aside class="sidebar reveal" id="sidebarFilters">
-          <button class="drawer-close" id="closeFilters" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M6 18L18 6"/></svg></button>
           <div class="sidebar-head">
             <span class="sidebar-title">Фильтры</span>
             <button class="sidebar-reset" id="resetFilters">сбросить</button>
+            <button class="drawer-close" id="closeFilters" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M6 18L18 6"/></svg></button>
           </div>
 
-          <div class="filter-group">
-            <div class="filter-title">Подкатегория</div>
-            <div class="filter-pills" id="filterSub"></div>
+          <div class="filter-scroll">
+            <div class="filter-group">
+              <div class="filter-title">Подкатегория</div>
+              <div class="filter-pills" id="filterSub"></div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-title">Вид покрытия</div>
+              <div class="filter-pills" id="filterCoating"></div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-title">Толщина металла</div>
+              <div class="filter-pills" id="filterThickness"></div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-title">Цвет RAL</div>
+              <div class="color-grid" id="filterColor"></div>
+            </div>
           </div>
 
-          <div class="filter-group">
-            <div class="filter-title">Вид покрытия</div>
-            <div class="filter-pills" id="filterCoating"></div>
-          </div>
-
-          <div class="filter-group">
-            <div class="filter-title">Толщина металла</div>
-            <div class="filter-pills" id="filterThickness"></div>
-          </div>
-
-          <div class="filter-group">
-            <div class="filter-title">Цвет RAL</div>
-            <div class="color-grid" id="filterColor"></div>
+          <div class="drawer-apply">
+            <button id="applyFilters">Показать товары</button>
           </div>
         </aside>
 
@@ -927,13 +976,45 @@ $reset.addEventListener('click', () => {
   renderFilters(); renderProducts(); updateFilterCount();
 });
 
-/* === DRAWER для фильтров на мобиле === */
+/* === DRAWER для фильтров на мобиле ===
+   Sidebar выносится в <body> (portal), чтобы перекрыть header/sticky-bar
+   и не оказаться под ними из-за stacking-контекста .shell */
 const $sidebar = document.getElementById('sidebarFilters');
 const $openF = document.getElementById('openFilters');
 const $closeF = document.getElementById('closeFilters');
+const $applyF = document.getElementById('applyFilters');
 const $fCount = document.getElementById('filtersCount');
-$openF?.addEventListener('click', () => { $sidebar.classList.add('drawer-open'); document.body.style.overflow = 'hidden'; });
-$closeF?.addEventListener('click', () => { $sidebar.classList.remove('drawer-open'); document.body.style.overflow = ''; });
+
+// запоминаем исходное место sidebar, чтобы вернуть на desktop
+const $sidebarHome = document.createComment('sidebar-placeholder');
+let drawerOpen = false;
+
+function openDrawer(){
+  if (drawerOpen) return;
+  drawerOpen = true;
+  // вставляем плейсхолдер и переносим sidebar в body
+  $sidebar.parentNode.insertBefore($sidebarHome, $sidebar);
+  document.body.appendChild($sidebar);
+  $sidebar.classList.add('drawer-open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer(){
+  if (!drawerOpen) return;
+  drawerOpen = false;
+  $sidebar.classList.remove('drawer-open');
+  // возвращаем sidebar на место
+  if ($sidebarHome.parentNode){
+    $sidebarHome.parentNode.insertBefore($sidebar, $sidebarHome);
+    $sidebarHome.remove();
+  }
+  document.body.style.overflow = '';
+}
+$openF?.addEventListener('click', openDrawer);
+$closeF?.addEventListener('click', closeDrawer);
+$applyF?.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+// если вернулись на десктоп с открытым drawer — закрываем
+window.addEventListener('resize', () => { if (window.innerWidth > 880 && drawerOpen) closeDrawer(); });
 function updateFilterCount(){
   let n = 0;
   if (state.sub) n++;
