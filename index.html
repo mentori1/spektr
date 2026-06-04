@@ -1071,15 +1071,22 @@ p{margin:0}
    в тёмный glassmorphism — как на catalog/buyers/delivery/contacts. */
 
 /* секция теперь тёмная — прозрачная чтобы фоновый красный glow проходил насквозь */
-.section--dark{background:transparent;color:var(--text-on-dark)}
-/* красный оттенок повторяется в каждой секции — без видимых переходов */
-.section--dark::before{
-  content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+.section--dark{background:transparent;color:var(--text-on-dark);position:relative}
+
+/* === Единый красный оттенок по ВСЕМУ фону страницы ===
+   Делаем повторяющийся радиальный паттерн прямо на .shell —
+   красные пятна распределены по всей длине страницы.
+   Никаких видимых переходов между секциями. */
+.shell{
   background:
-    radial-gradient(60% 80% at 90% 10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
-    radial-gradient(50% 70% at 10% 90%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 60%);
+    radial-gradient(45% 25% at 90% 5%,  color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+    radial-gradient(40% 20% at 5% 20%,  color-mix(in srgb, var(--accent) 8%,  transparent), transparent 70%),
+    radial-gradient(45% 22% at 95% 38%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
+    radial-gradient(40% 20% at 8% 55%,  color-mix(in srgb, var(--accent) 7%,  transparent), transparent 70%),
+    radial-gradient(45% 22% at 92% 72%, color-mix(in srgb, var(--accent) 9%,  transparent), transparent 70%),
+    radial-gradient(40% 20% at 10% 88%, color-mix(in srgb, var(--accent) 8%,  transparent), transparent 70%),
+    radial-gradient(50% 25% at 95% 98%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
 }
-.section--dark{position:relative;overflow:hidden}
 /* Уменьшаем огромную пустоту между секциями */
 .section{padding:clamp(60px,8vw,120px) 0}
 .section--dark h1,.section--dark h2,.section--dark h3,.section--dark h4{color:var(--text-on-dark-bright)}
@@ -1270,7 +1277,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=24">
+<link rel="stylesheet" href="assets/site.css?v=25">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1777,7 +1784,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=24
+// FAQ smooth-open handled by assets/site.js?v=25
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1888,7 +1895,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=24" defer></script>
+<script src="assets/site.js?v=25" defer></script>
 
 </body>
 </html>
