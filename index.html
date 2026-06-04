@@ -686,12 +686,12 @@ p{margin:0}
 
 .custom-grid{
   display:block;
-  max-width:880px;margin:0 auto;
+  max-width:100%;margin:0;
   text-align:left;
 }
-.custom-text h2{margin:24px 0 32px}
-.custom-text .lead{margin-bottom:40px}
-.custom-text .section-index{justify-content:flex-start}
+.custom-grid .section-head{max-width:none;margin-bottom:clamp(40px, 6vw, 72px)}
+.custom-grid .section-head h2{margin:24px 0 0}
+.custom-text{max-width:880px;margin:0 auto;text-align:center}
 .custom-points{margin-left:auto;margin-right:auto;text-align:left}
 .custom-actions{justify-content:center;display:flex;flex-wrap:wrap;gap:12px}
 
@@ -1277,7 +1277,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=25">
+<link rel="stylesheet" href="assets/site.css?v=26">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1517,11 +1517,15 @@ p{margin:0}
   <section class="section section--dark" id="custom">
     <div class="container">
       <div class="custom-grid">
-        <div class="custom-text reveal">
-          <div class="section-index">02 — Производство под размер</div>
-          <h2>Гнём, режем,<br/>красим сами.</h2>
+        <div class="section-head reveal">
+          <div>
+            <div class="section-index">02 — Производство под размер</div>
+            <h2>Гнём, режем,<br/>красим сами.</h2>
+          </div>
           <p class="lead">Свой цех — это значит, мы не «ждём поставку». Делаем нужную длину, угол и цвет сразу. Большинство нестандартных позиций готовы за 30 минут от подтверждения.</p>
+        </div>
 
+        <div class="custom-text reveal d2">
           <ul class="custom-points">
             <li>Любая длина листа до 12 метров</li>
             <li>Гибка по чертежу заказчика</li>
@@ -1784,7 +1788,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=25
+// FAQ smooth-open handled by assets/site.js?v=26
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1895,7 +1899,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=25" defer></script>
+<script src="assets/site.js?v=26" defer></script>
 
 </body>
 </html>
