@@ -687,11 +687,11 @@ p{margin:0}
 .custom-grid{
   display:block;
   max-width:880px;margin:0 auto;
-  text-align:center;
+  text-align:left;
 }
 .custom-text h2{margin:24px 0 32px}
-.custom-text .lead{margin-bottom:40px;margin-left:auto;margin-right:auto}
-.custom-text .section-index{justify-content:center}
+.custom-text .lead{margin-bottom:40px}
+.custom-text .section-index{justify-content:flex-start}
 .custom-points{margin-left:auto;margin-right:auto;text-align:left}
 .custom-actions{justify-content:center;display:flex;flex-wrap:wrap;gap:12px}
 
@@ -1070,8 +1070,18 @@ p{margin:0}
 /* Перекрашиваем все элементы, которые были спроектированы под светлый фон,
    в тёмный glassmorphism — как на catalog/buyers/delivery/contacts. */
 
-/* секция теперь тёмная */
+/* секция теперь тёмная — прозрачная чтобы фоновый красный glow проходил насквозь */
 .section--dark{background:transparent;color:var(--text-on-dark)}
+/* красный оттенок повторяется в каждой секции — без видимых переходов */
+.section--dark::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(60% 80% at 90% 10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+    radial-gradient(50% 70% at 10% 90%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 60%);
+}
+.section--dark{position:relative;overflow:hidden}
+/* Уменьшаем огромную пустоту между секциями */
+.section{padding:clamp(60px,8vw,120px) 0}
 .section--dark h1,.section--dark h2,.section--dark h3,.section--dark h4{color:var(--text-on-dark-bright)}
 .section--dark .eyebrow{color:var(--text-on-dark-dim)}
 .section--dark .lead{color:var(--text-on-dark)}
@@ -1260,7 +1270,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=23">
+<link rel="stylesheet" href="assets/site.css?v=24">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1491,29 +1501,6 @@ p{margin:0}
           </div>
         </a>
 
-        <a href="#contacts" class="cat reveal d3">
-          <div>
-            <div class="cat-num">— 06</div>
-            <div class="cat-name">Евро-<br/>штакетник</div>
-            <div class="cat-desc">М, П, Т-профиль · одно- и двустороннее покрытие.</div>
-          </div>
-          <div class="cat-foot">
-            <span class="cat-price">от 65 ₽/шт</span>
-            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </a>
-
-        <a href="#custom" class="cat reveal d3">
-          <div>
-            <div class="cat-num">— 07</div>
-            <div class="cat-name">Изделия<br/>под заказ</div>
-            <div class="cat-desc">По вашим размерам и чертежу — за 30 минут.</div>
-          </div>
-          <div class="cat-foot">
-            <span class="cat-price">расчёт за 30 мин</span>
-            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-        </a>
       </div>
     </div>
   </section>
@@ -1790,7 +1777,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=23
+// FAQ smooth-open handled by assets/site.js?v=24
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1901,7 +1888,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=23" defer></script>
+<script src="assets/site.js?v=24" defer></script>
 
 </body>
 </html>
