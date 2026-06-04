@@ -463,10 +463,13 @@ p{margin:0}
 @media (max-width:600px){
   h1{font-size:clamp(26px, 7vw, 36px) !important;line-height:1.05 !important;word-break:normal !important;overflow-wrap:normal !important}
   h2{font-size:clamp(22px, 6vw, 32px) !important}
+  /* у заголовка каталога длинное слово «металлоизделий» — делаем чуть меньше, чтобы влезало */
+  .hero-title{font-size:clamp(24px, 6.4vw, 33px) !important}
 }
 @media (max-width:380px){
   h1{font-size:clamp(22px, 7vw, 30px) !important}
   h2{font-size:clamp(19px, 5.5vw, 26px) !important}
+  .hero-title{font-size:clamp(21px, 6.4vw, 27px) !important}
 }
 </style>
 
@@ -514,7 +517,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=6">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -573,7 +576,7 @@ p{margin:0}
   <!-- ════════ HERO ════════ -->
   <section class="hero">
     <div class="container hero-inner reveal">
-        <h1 class="hero-title">Каталог<br/><em>изделий.</em></h1>
+        <h1 class="hero-title">Каталог<br/>металло<em>изделий.</em></h1>
       <p class="hero-desc">
         Кровля, фасад, профнастил, водостоки и изделия собственного производства. Изготовление по размерам клиента — от 30 минут от подтверждения заявки.
       </p>
@@ -1107,7 +1110,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=6" defer></script>
+<script src="assets/site.js?v=7" defer></script>
 
 </body>
 </html>
