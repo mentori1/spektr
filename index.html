@@ -392,6 +392,8 @@ p{margin:0}
   display:flex;flex-wrap:wrap;gap:14px;
   opacity:0;animation:heroFadeIn 1s var(--ease) forwards;animation-delay:.85s;
 }
+.hero-actions .btn-long{display:inline}
+.hero-actions .btn-short{display:none}
 
 .hero-info{
   margin-top:64px;padding-top:24px;
@@ -1191,7 +1193,11 @@ p{margin:0}
   }
   .hero-inner{grid-template-columns:1fr !important;width:100% !important}
   /* кнопки hero — каждая не шире половины родителя */
-  .hero-actions .btn{min-width:0 !important;max-width:100% !important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hero-actions .btn{min-width:0 !important;max-width:100% !important;white-space:nowrap}
+  /* на мобиле — короткий текст и без стрелки */
+  .hero-actions .btn-long{display:none}
+  .hero-actions .btn-short{display:inline}
+  .hero-actions .btn-arrow{display:none}
   /* описание hero — переносится */
   .hero-desc{word-wrap:break-word !important;overflow-wrap:anywhere !important;max-width:100% !important}
   /* картинка hero — никогда не выпирает */
@@ -1249,7 +1255,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=19">
+<link rel="stylesheet" href="assets/site.css?v=20">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1320,10 +1326,14 @@ p{margin:0}
 
         <div class="hero-actions">
           <a href="catalog.html" class="btn btn-primary">
-            Каталог продукции
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <span class="btn-long">Каталог продукции</span>
+            <span class="btn-short">Каталог</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a href="#contacts" class="btn btn-ghost">Получить расчёт</a>
+          <a href="#contacts" class="btn btn-ghost">
+            <span class="btn-long">Получить расчёт</span>
+            <span class="btn-short">Расчёт</span>
+          </a>
         </div>
 
         <div class="hero-info">
@@ -1773,7 +1783,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=19
+// FAQ smooth-open handled by assets/site.js?v=20
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1884,7 +1894,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=19" defer></script>
+<script src="assets/site.js?v=20" defer></script>
 
 </body>
 </html>
