@@ -677,12 +677,14 @@ p{margin:0}
 .custom-text h2{margin:24px 0 32px}
 .custom-text .lead{margin-bottom:40px;margin-left:auto;margin-right:auto}
 .custom-text .section-index{justify-content:center}
-.custom-points{margin-left:auto;margin-right:auto;max-width:680px;text-align:left}
+.custom-points{margin-left:auto;margin-right:auto;text-align:left}
 .custom-actions{justify-content:center;display:flex;flex-wrap:wrap;gap:12px}
 
 .custom-points{
-  list-style:none;padding:0;margin:0 0 48px;
-  display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;
+  list-style:none;padding:0;margin:0 auto 48px;
+  display:grid;grid-template-columns:auto auto;
+  justify-content:center;gap:18px 56px;
+  width:fit-content;max-width:100%;
 }
 .custom-points li{
   display:flex;gap:14px;align-items:flex-start;
@@ -1215,7 +1217,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=12">
+<link rel="stylesheet" href="assets/site.css?v=14">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1739,7 +1741,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=12
+// FAQ smooth-open handled by assets/site.js?v=14
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1850,7 +1852,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=12" defer></script>
+<script src="assets/site.js?v=14" defer></script>
 
 </body>
 </html>
