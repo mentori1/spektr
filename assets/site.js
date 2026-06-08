@@ -79,17 +79,23 @@
         $('.cart-summary b').textContent = '0 ₽';
         return;
       }
-      body.innerHTML = this.items.map(it => `
+      body.innerHTML = this.items.map(it => {
+        const colorChip = it.color
+          ? `<div class="cart-item-color"><span class="cart-item-color-label">Цвет:</span> RAL&nbsp;${escapeHtml(it.color)}${it.colorName ? ' · ' + escapeHtml(it.colorName) : ''}</div>`
+          : '';
+        return `
         <div class="cart-item">
           <div>
             <div class="cart-item-name">${escapeHtml(it.name)}</div>
             <div class="cart-item-meta">${escapeHtml(it.meta || '')}</div>
+            ${colorChip}
             <div class="cart-item-price">${formatPrice(it.price)} ₽ / ${escapeHtml(it.unit || 'шт')}</div>
           </div>
           <button class="cart-item-remove" data-remove="${escapeAttr(it.name)}" aria-label="Удалить">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
           </button>
-        </div>`).join('');
+        </div>`;
+      }).join('');
       $('.cart-summary b').textContent = formatPrice(this.sum()) + ' ₽';
       $$('button[data-remove]', body).forEach(b =>
         b.addEventListener('click', () => this.remove(b.dataset.remove))
@@ -99,7 +105,10 @@
       if (this.count() === 0) { toast('Заявка пуста — добавьте позиции из каталога'); return; }
       const text = encodeURIComponent(
         'Здравствуйте! Хочу рассчитать заказ:\n\n' +
-        this.items.map((i, idx) => `${idx+1}. ${i.name} — ${formatPrice(i.price)} ₽ / ${i.unit || 'шт'}\n   ${i.meta || ''}`).join('\n\n') +
+        this.items.map((i, idx) => {
+          const colorLine = i.color ? `\n   Цвет RAL ${i.color}${i.colorName ? ' (' + i.colorName + ')' : ''}` : '';
+          return `${idx+1}. ${i.name} — ${formatPrice(i.price)} ₽ / ${i.unit || 'шт'}\n   ${i.meta || ''}${colorLine}`;
+        }).join('\n\n') +
         `\n\nИтого ориентировочно: ${formatPrice(this.sum())} ₽`
       );
       window.open(`https://wa.me/79236819709?text=${text}`, '_blank');
