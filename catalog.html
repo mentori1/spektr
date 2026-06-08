@@ -242,6 +242,41 @@ p{margin:0}
 .product-meta{font-family:var(--f-body);font-size:12px;color:var(--text-on-dark-dim);line-height:1.5}
 
 .dropdowns{display:grid;gap:6px;margin-top:4px}
+
+/* ── ЦВЕТОВОЙ ПИКЕР НА КАРТОЧКЕ ─────────────────────────────── */
+.color-picker{margin:14px 0 4px;display:flex;flex-direction:column;gap:8px}
+.color-picker-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;
+  color:var(--text-on-dark-dim);text-transform:uppercase;
+}
+.color-picker-current{display:flex;align-items:baseline;gap:6px}
+.color-picker-current-code{color:var(--accent);font-weight:600}
+.color-picker-current-name{
+  text-transform:none;letter-spacing:.04em;font-size:11px;
+  color:var(--text-on-dark);font-family:var(--f-body);
+}
+.color-picker-swatches{
+  display:grid;grid-template-columns:repeat(11,1fr);gap:5px;
+}
+.color-swatch{
+  position:relative;aspect-ratio:1/1;border-radius:50%;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.18);padding:0;
+  transition:transform .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15), 0 2px 4px rgba(0,0,0,.4);
+}
+.color-swatch:hover{transform:scale(1.18);border-color:rgba(255,255,255,.45);z-index:2}
+.color-swatch.active{
+  border:2px solid var(--accent);
+  box-shadow:0 0 0 2px rgba(185,28,28,.25), inset 0 1px 0 rgba(255,255,255,.15);
+  transform:scale(1.12);
+}
+@media (max-width:880px){
+  .color-picker-swatches{grid-template-columns:repeat(11,1fr);gap:4px}
+}
+@media (max-width:480px){
+  .color-picker-swatches{grid-template-columns:repeat(7,1fr);gap:5px}
+}
 .dropdown{
   position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;
   padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.03);
@@ -530,7 +565,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=22">
+<link rel="stylesheet" href="assets/site.css?v=33">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -728,13 +763,29 @@ const CATEGORIES = [
 const COATINGS    = ['Полимер','Polyester','MAT','PUR','SteelArt','SteelWood'];
 const THICKNESSES = ['0.40','0.45','0.50','0.55','0.65','0.70'];
 
+/* Палитра RAL — синхронизирована с sib-profil.ru */
 const COLORS = [
-  { ral:'1014', hex:'#dfd1a7' }, { ral:'1015', hex:'#e6d4a2' },
-  { ral:'3005', hex:'#5e2129' }, { ral:'3011', hex:'#762228' },
-  { ral:'5005', hex:'#1f3a93' }, { ral:'6002', hex:'#3c6e2f' },
-  { ral:'6005', hex:'#2e4a36' }, { ral:'7024', hex:'#4a4d52' },
-  { ral:'8004', hex:'#7d3c2a' }, { ral:'8017', hex:'#3f2b22' },
-  { ral:'9003', hex:'#f4f6f4' }, { ral:'9005', hex:'#0d0d0d' },
+  { ral:'1014', name:'Бежевый',          hex:'#dfd1a7' },
+  { ral:'1015', name:'Слоновая кость',   hex:'#e6d4a2' },
+  { ral:'1018', name:'Ярко-жёлтый',      hex:'#f4c724' },
+  { ral:'3003', name:'Рубин',            hex:'#9b1b1f' },
+  { ral:'3005', name:'Тёмное вино',      hex:'#5e2129' },
+  { ral:'3009', name:'Оксид красный',    hex:'#7a352c' },
+  { ral:'3011', name:'Красно-коричневый',hex:'#762228' },
+  { ral:'5002', name:'Ультрамарин',      hex:'#1f3a83' },
+  { ral:'5005', name:'Сигнально-синий',  hex:'#1f5fa0' },
+  { ral:'5021', name:'Водная синь',      hex:'#1a6679' },
+  { ral:'6002', name:'Зелёная листва',   hex:'#3c6e2f' },
+  { ral:'6005', name:'Зелёный мох',      hex:'#2e4a36' },
+  { ral:'6029', name:'Мята',             hex:'#1a854a' },
+  { ral:'7004', name:'Серый',            hex:'#9a9a9c' },
+  { ral:'7024', name:'Графитовый серый', hex:'#4a4d52' },
+  { ral:'8016', name:'Коричневый',       hex:'#5a3327' },
+  { ral:'8017', name:'Шоколад',          hex:'#3f2b22' },
+  { ral:'9002', name:'Серо-белый',       hex:'#d6d3cb' },
+  { ral:'9003', name:'Белый',            hex:'#f4f6f4' },
+  { ral:'9005', name:'Чёрный янтарь',    hex:'#0d0d0d' },
+  { ral:'9006', name:'Белый алюминий',   hex:'#a6a8ab' },
 ];
 
 const PRODUCTS = [
@@ -912,22 +963,54 @@ function renderProducts(){
       if (window.SMGoal) SMGoal('cart_add', {product: item.name});
     });
   });
+
+  // Цветовой пикер — клик подсвечивает + обновляет данные карточки
+  $grid.querySelectorAll('.color-swatch').forEach(sw => {
+    sw.addEventListener('click', e => {
+      e.preventDefault(); e.stopPropagation();
+      const ral  = sw.dataset.ral;
+      const name = sw.dataset.name;
+      const card = sw.closest('.product');
+      // снимаем active со всех swatches этой карточки
+      card.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      // обновляем подпись с текущим цветом
+      const codeEl = card.querySelector('.color-picker-current-code');
+      const nameEl = card.querySelector('.color-picker-current-name');
+      if (codeEl) codeEl.textContent = ral;
+      if (nameEl) nameEl.textContent = name;
+      // обновляем data-item для корзины
+      const item = JSON.parse(card.dataset.item);
+      item.color = ral;
+      item.colorName = name;
+      card.dataset.item = JSON.stringify(item).replace(/"/g, '&quot;').replace(/&quot;/g, '"');
+    });
+  });
 }
 
 function productCard(p, pat){
-  const colorObj = COLORS.find(c => c.ral === p.color);
-  const swatch   = colorObj ? `<span class="swatch" style="background:${colorObj.hex}"></span>` : '';
-  const old      = p.priceOld ? `<span class="price-old">${p.priceOld} ₽</span>` : '';
+  const initialColor = COLORS.find(c => c.ral === p.color) || COLORS[14]; // 7024 fallback
+  const old          = p.priceOld ? `<span class="price-old">${p.priceOld} ₽</span>` : '';
 
-  // данные для корзины
+  // данные для корзины (цвет будет обновляться при клике)
   const itemJSON = JSON.stringify({
     name: p.name, meta: p.meta, price: p.priceNew, unit: p.unit,
+    color: initialColor.ral, colorName: initialColor.name
   }).replace(/"/g, '&quot;');
 
   // если есть photo — используем img, иначе паттерн
   const photoHTML = p.photo
     ? `<img src="${p.photo}" alt="${p.name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy">`
     : '';
+
+  // Цветовой пикер — все 21 цвет; активный = выбранный
+  const swatchesHTML = COLORS.map(c => `
+    <button type="button" class="color-swatch ${c.ral === initialColor.ral ? 'active' : ''}"
+      style="background:${c.hex}"
+      data-ral="${c.ral}" data-name="${c.name}"
+      title="RAL ${c.ral} · ${c.name}"
+      aria-label="Цвет RAL ${c.ral} ${c.name}"></button>
+  `).join('');
 
   return `
     <a href="contacts.html" class="product ${pat}" data-item="${itemJSON}">
@@ -942,7 +1025,17 @@ function productCard(p, pat){
         <div class="dropdowns">
           <span class="dropdown"><span class="key">Вид покрытия</span><span class="val">${p.coating}</span></span>
           <span class="dropdown"><span class="key">Толщина</span><span class="val">${p.thickness} мм</span></span>
-          <span class="dropdown"><span class="key">Цвет RAL</span><span class="val">${swatch}${p.color}</span></span>
+        </div>
+
+        <div class="color-picker">
+          <div class="color-picker-head">
+            <span class="color-picker-label">Цвет RAL</span>
+            <span class="color-picker-current">
+              <span class="color-picker-current-code">${initialColor.ral}</span>
+              <span class="color-picker-current-name">${initialColor.name}</span>
+            </span>
+          </div>
+          <div class="color-picker-swatches">${swatchesHTML}</div>
         </div>
 
         <div class="product-foot-row">
@@ -1125,7 +1218,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=22" defer></script>
+<script src="assets/site.js?v=33" defer></script>
 
 </body>
 </html>
