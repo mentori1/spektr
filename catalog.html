@@ -323,6 +323,50 @@ p{margin:0}
 .custom-banner > div{position:relative;z-index:1}
 .custom-banner .actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
 
+/* ════════ ДОБОРНЫЕ ЭЛЕМЕНТЫ — блок без цен ════════ */
+.dobor-block{
+  grid-column:1 / -1;
+  display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4vw,56px);
+  align-items:start;
+  border-radius:var(--r-md);
+  padding:clamp(28px,4vw,52px);
+  background:
+    radial-gradient(60% 90% at 92% 8%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+}
+.dobor-intro .eyebrow{margin-bottom:16px}
+.dobor-intro h3{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,3vw,40px);text-transform:uppercase;letter-spacing:-.02em;line-height:1.05;margin-bottom:16px;color:var(--text-on-dark-bright)}
+.dobor-intro p{font-size:14px;color:var(--text-on-dark);line-height:1.7;max-width:48ch}
+.dobor-intro p strong{color:var(--text-on-dark-bright);font-weight:600}
+.dobor-intro .actions{display:flex;flex-wrap:wrap;gap:12px}
+.dobor-list-wrap{
+  border-left:2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  padding-left:clamp(20px,2.5vw,32px);
+}
+.dobor-list-label{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
+  color:var(--text-on-dark-dim);text-transform:uppercase;margin-bottom:18px;
+}
+.dobor-list{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.dobor-list li{
+  position:relative;padding-left:20px;
+  font-size:14px;color:var(--text-on-dark);line-height:1.4;
+}
+.dobor-list li::before{
+  content:"";position:absolute;left:0;top:9px;
+  width:8px;height:1px;background:var(--accent);
+}
+.dobor-note{
+  margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);
+  font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--accent);text-transform:uppercase;
+}
+@media (max-width:880px){
+  .dobor-block{grid-template-columns:1fr;gap:32px}
+  .dobor-list-wrap{border-left:none;border-top:1px solid rgba(255,255,255,.08);padding-left:0;padding-top:28px}
+}
+
 /* ════════ PRODUCT IMAGE PATTERNS ════════ */
 .pat-roofing{--pattern:repeating-linear-gradient(0deg, transparent 0 14px, rgba(255,255,255,.4) 14px 15px, transparent 15px 16px),repeating-linear-gradient(90deg, transparent 0 36px, rgba(255,255,255,.3) 36px 37px, transparent 37px 38px);--pattern-size:72px 30px;--card-tint:#3a2c30}
 .pat-corrugated{--pattern:repeating-linear-gradient(90deg, rgba(255,255,255,.5) 0 1px, transparent 1px 14px);--card-tint:#2c2c30}
@@ -335,6 +379,7 @@ p{margin:0}
 .pat-rolled{--pattern:repeating-linear-gradient(0deg, transparent 0 25px, rgba(255,255,255,.4) 25px 27px, transparent 27px 35px),repeating-linear-gradient(90deg, transparent 0 30px, rgba(255,255,255,.4) 30px 32px, transparent 32px 40px);--pattern-size:auto;--card-tint:#26292d}
 .pat-garden{--pattern:repeating-linear-gradient(0deg, rgba(255,255,255,.32) 0 1px, transparent 1px 10px),repeating-linear-gradient(90deg, rgba(255,255,255,.32) 0 1px, transparent 1px 90px);--card-tint:#2a3a30}
 .pat-fence-jal{--pattern:repeating-linear-gradient(15deg, rgba(255,255,255,.4) 0 2px, transparent 2px 14px);--card-tint:#322a2a}
+.pat-soffit{--pattern:repeating-linear-gradient(0deg, transparent 0 18px, rgba(255,255,255,.4) 18px 19px, transparent 19px 20px),repeating-linear-gradient(0deg, transparent 0 4px, rgba(255,255,255,.12) 4px 5px, transparent 5px 9px);--pattern-size:auto;--card-tint:#2c2e33}
 
 /* ─── FOOTER ─── */
 .footer{background:var(--bg-near-black);color:var(--text-on-dark-dim);padding:48px 0 32px;position:relative;z-index:2}
@@ -565,7 +610,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=35">
+<link rel="stylesheet" href="assets/site.css?v=36">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -747,20 +792,20 @@ p{margin:0}
    ═══════════════════════════════════════════════════════════════════ */
 
 const CATEGORIES = [
-  { id:'corrugated', name:'Профнастил',           pat:'pat-corrugated', sub:['С8','С21','НС35','Н60','НС44'] },
-  { id:'roofing',    name:'Металлочерепица',      pat:'pat-roofing',    sub:['Монтеррей','Каскад','Андалузия','Модерн'] },
-  { id:'decorative', name:'Декоративный профиль', pat:'pat-decorative', sub:['Супер-Монтеррей','Каскад MAX','Премьера'] },
-  { id:'seam',       name:'Фальцевая кровля',     pat:'pat-seam',       sub:['Кликфальц','Двойной стоячий','Малый-Z'] },
-  { id:'siding',     name:'Сайдинг',              pat:'pat-siding',     sub:['Корабельная рейка','Блокхаус','Евробрус','L-панель'] },
-  { id:'gutter',     name:'Водосточные системы',  pat:'pat-gutter',     sub:['Полукруглая Ø125','Прямоугольная','Ø150'] },
-  { id:'fence',      name:'Евроштакетник',        pat:'pat-fence',      sub:['М-профиль','П-профиль','Т-профиль'] },
-  { id:'flatsheet',  name:'Плоский лист',         pat:'pat-flatsheet',  sub:['Оцинкованный','С полимером','PUR'] },
-  { id:'rolled',     name:'Чёрный металлопрокат', pat:'pat-rolled',     sub:['Труба прямоугольная','Труба квадратная','Уголок','Лист г/к'] },
-  { id:'garden',     name:'Грядки и клумбы',      pat:'pat-garden',     sub:['Прямоугольные','Высокие','Декоративные'] },
-  { id:'jaluzi',     name:'Забор «Еврожалюзи»',   pat:'pat-fence-jal',  sub:['Стандарт','Premium'] },
+  { id:'corrugated', name:'Профнастил',              pat:'pat-corrugated', sub:['С8','С10','МП-20','С21','НС35','НС44'] },
+  { id:'roofing',    name:'Металлочерепица',         pat:'pat-roofing',    sub:['Супер-Монтерей'] },
+  { id:'siding',     name:'Сайдинг',                 pat:'pat-siding',     sub:['Евро-брус','Блокхаус','Корабельная доска'] },
+  { id:'fence',      name:'Евроштакетник',           pat:'pat-fence',      sub:['Ш1','Ш2','Ш10','Ш18','Ш19'] },
+  { id:'flatsheet',  name:'Плоский лист',            pat:'pat-flatsheet',  sub:['В плёнке','Без плёнки'] },
+  { id:'rolled',     name:'Чёрный металл',           pat:'pat-rolled',     sub:['80×80','60×60','60×40','40×20','20×20'] },
+  { id:'jaluzi',     name:'Забор «Еврожалюзи»',      pat:'pat-fence-jal',  sub:['Ламель','П-профиль'] },
+  { id:'dobor',      name:'Доборные элементы',       pat:'pat-dobor',      sub:[] },
+  { id:'soffit',     name:'Софиты DOCKE',            pat:'pat-soffit',     sub:['Standart','Premium','Lux'] },
+  { id:'gutter',     name:'Водосточная система DOCKE',pat:'pat-gutter',    sub:['Lux','Premium'] },
+  { id:'garden',     name:'Грядки и клумбы',         pat:'pat-garden',     sub:['Грядка','Клумба'] },
 ];
 
-const COATINGS    = ['Полимер','Polyester','MAT','PUR','SteelArt','SteelWood'];
+const COATINGS    = ['Полимер','Полимер двусторонний','Под дерево','Велюр','Оцинковка','SteelWood'];
 const THICKNESSES = ['0.40','0.45','0.50','0.55','0.65','0.70'];
 
 /* Палитра RAL — синхронизирована с sib-profil.ru */
@@ -789,82 +834,83 @@ const COLORS = [
 ];
 
 /* === ПРАЙС-ЛИСТ (июнь 2026) ===
-   Источники: прайс «Сибтрансэфир» (клиент) + sib-profil.ru для позиций без прайса.
-   Чищено от дубликатов полей. */
+   Источники: прайс «Сибтрансэфир» (клиент) + sib-profil.ru + docke.ru (ориентиры).
+   Цены DOCKE и труб профильных — стартовые ориентиры, клиент корректирует. */
 const PRODUCTS = [
-  /* ── Профнастил (прайс клиента) ── */
-  { cat:'corrugated', sub:'С8',   name:'Профнастил С8 (0.45 полимер)',  meta:'Ширина 1200 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:694,  unit:'м²', tag:'Хит', stock:'in', photo:'assets/photo-profnastil.webp' },
-  { cat:'corrugated', sub:'С8',   name:'Профнастил С8 (0.45 велюр)',    meta:'Ширина 1200 мм · Велюр',       coating:'Велюр',   thickness:'0.45', color:'8017', priceNew:808,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'С10',  name:'Профнастил С10 (0.45 полимер)', meta:'Ширина 1146 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'6005', priceNew:710,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'МП20', name:'Профлист МП20 (0.45 полимер)',  meta:'Ширина 1130 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'3005', priceNew:766,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'МП20', name:'Профлист МП20 (0.45 под дерево)', meta:'Ширина 1130 мм · Под дерево', coating:'Под дерево', thickness:'0.45', color:'8017', priceNew:994,  unit:'м²' },
-  { cat:'corrugated', sub:'С21',  name:'Профнастил С21 (0.45 полимер)', meta:'Ширина 1051 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:863,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'НС35', name:'Профнастил НС35 (0.45 полимер)',meta:'Ширина 1060 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:844,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'НС44', name:'Профнастил НС44 (0.5 полимер)', meta:'Ширина 1045 мм · Полимер RAL', coating:'Полимер', thickness:'0.50', color:'3005', priceNew:919,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'Н60',  name:'Профнастил НС44 (0.7 полимер)', meta:'Аналог Н60 · Premium-серия',   coating:'Полимер', thickness:'0.70', color:'9005', priceNew:1036, unit:'м²', stock:'order' },
+  /* ── Профнастил (С8, С10, С10 обр, МП-20, МП-20 обр, С21, НС35, НС44) ── */
+  { cat:'corrugated', sub:'С8',    name:'Профнастил С8 (0.45 полимер)',   meta:'Ширина 1200 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'7024', priceNew:694,  unit:'м²', tag:'Хит', stock:'in', photo:'assets/photo-profnastil.webp' },
+  { cat:'corrugated', sub:'С10',   name:'Профнастил С10 (0.45 полимер)',  meta:'Ширина 1146 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'6005', priceNew:710,  unit:'м²', stock:'in' },
+  { cat:'corrugated', sub:'С10',   name:'Профнастил С10 обратный прокат', meta:'Ширина 1146 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:621,  unit:'м²' },
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 (0.45 полимер)',  meta:'Ширина 1130 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'3005', priceNew:766,  unit:'м²', stock:'in' },
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', meta:'Ширина 1130 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:630,  unit:'м²' },
+  { cat:'corrugated', sub:'С21',   name:'Профнастил С21 (0.45 полимер)',  meta:'Ширина 1051 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'7024', priceNew:863,  unit:'м²', stock:'in' },
+  { cat:'corrugated', sub:'НС35',  name:'Профнастил НС35 (0.45 полимер)', meta:'Ширина 1060 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'8017', priceNew:844,  unit:'м²', stock:'in' },
+  { cat:'corrugated', sub:'НС44',  name:'Профнастил НС44 (0.5 полимер)',  meta:'Ширина 1045 мм · Полимер RAL',  coating:'Полимер', thickness:'0.50', color:'3005', priceNew:919,  unit:'м²', stock:'in' },
 
-  /* ── Металлочерепица (прайс клиента) ── */
-  { cat:'roofing', sub:'Монтеррей', name:'Супер-Монтеррей (0.45 полимер)',     meta:'Ширина 1180/1100 · Полимер RAL',     coating:'Полимер', thickness:'0.45', color:'3005', priceNew:779, unit:'м²', tag:'Топ', stock:'in' },
-  { cat:'roofing', sub:'Монтеррей', name:'Супер-Монтеррей (0.5 полимер)',      meta:'Ширина 1180/1100 · Полимер RAL',     coating:'Полимер', thickness:'0.50', color:'8017', priceNew:890, unit:'м²', stock:'in' },
-  { cat:'roofing', sub:'Велюр',     name:'Супер-Монтеррей (0.45 велюр)',       meta:'Премиум-покрытие велюр',              coating:'Велюр',   thickness:'0.45', color:'6005', priceNew:878, unit:'м²', stock:'in' },
-  { cat:'roofing', sub:'Велюр',     name:'Супер-Монтеррей (0.5 велюр)',        meta:'Премиум велюр · полная толщина',      coating:'Велюр',   thickness:'0.50', color:'7024', priceNew:935, unit:'м²', stock:'in' },
+  /* ── Металлочерепица Супер-Монтерей ── */
+  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей (0.45 полимер)', meta:'Ширина 1180/1100 · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'3005', priceNew:779, unit:'м²', tag:'Топ', stock:'in' },
+  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей (0.5 полимер)',  meta:'Ширина 1180/1100 · Полимер RAL', coating:'Полимер', thickness:'0.50', color:'8017', priceNew:890, unit:'м²', stock:'in' },
+  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей (0.45 велюр)',   meta:'Премиум-покрытие велюр',          coating:'Велюр',   thickness:'0.45', color:'6005', priceNew:878, unit:'м²', stock:'in' },
+  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей (0.5 велюр)',    meta:'Премиум велюр · полная толщина',  coating:'Велюр',   thickness:'0.50', color:'7024', priceNew:935, unit:'м²' },
 
-  /* ── Декоративный профиль (sib-profil ориентир) ── */
-  { cat:'decorative', sub:'Супер-Монтеррей', name:'Профиль декоративный Супер-Монтеррей', meta:'Вес 3.97 · Полимер · фасад/забор',     coating:'Полимер', thickness:'0.45', color:'3005', priceNew:584.10, priceOld:649, unit:'м²' },
-  { cat:'decorative', sub:'Каскад MAX',      name:'Профиль декоративный Каскад MAX',      meta:'Полимер · повышенная жёсткость',        coating:'Полимер', thickness:'0.50', color:'8017', priceNew:720,    unit:'м²' },
-  { cat:'decorative', sub:'Премьера',        name:'Профиль декоративный Премьера',        meta:'PUR покрытие · гарантия 25 лет',         coating:'PUR',     thickness:'0.50', color:'7024', priceNew:910,    unit:'м²', tag:'Премиум' },
-
-  /* ── Фальцевая кровля (рыночные ориентиры) ── */
-  { cat:'seam', sub:'Кликфальц',       name:'Кликфальц',       meta:'Скрытый замок · Pural',           coating:'PUR',       thickness:'0.50', color:'7024', priceNew:920,  unit:'м²' },
-  { cat:'seam', sub:'Двойной стоячий', name:'Двойной стоячий', meta:'Pural Premium · гарантия 50 лет', coating:'PUR',       thickness:'0.50', color:'9005', priceNew:1240, unit:'м²', tag:'Премиум' },
-  { cat:'seam', sub:'Малый-Z',         name:'Малый-Z фальц',   meta:'Лёгкий · быстрый монтаж',         coating:'Polyester', thickness:'0.50', color:'8017', priceNew:780,  unit:'м²' },
-
-  /* ── Сайдинг (прайс клиента) ── */
-  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска (0.45 полимер)', meta:'Ширина 267/236 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'1014', priceNew:880,  unit:'м²', stock:'in' },
-  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска (0.45 под дерево)', meta:'Ширина 267/236 · Под дерево', coating:'Под дерево', thickness:'0.45', color:'8017', priceNew:1050, unit:'м²' },
+  /* ── Сайдинг (Евро-брус, Блокхаус, Корабельная доска) ── */
+  { cat:'siding', sub:'Евро-брус',         name:'Сайдинг Евро-брус (0.45 полимер)',          meta:'Ширина 258/232 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:896,  unit:'м²', stock:'in' },
+  { cat:'siding', sub:'Евро-брус',         name:'Сайдинг Евро-брус (0.45 под дерево)',        meta:'Ширина 258/232 · Под дерево',    coating:'Под дерево', thickness:'0.45', color:'8016', priceNew:1070, unit:'м²' },
   { cat:'siding', sub:'Блокхаус',          name:'Сайдинг Блокхаус (0.45 полимер)',           meta:'Ширина 383/362 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'1015', priceNew:906,  unit:'м²', stock:'in' },
   { cat:'siding', sub:'Блокхаус',          name:'Сайдинг Блокхаус (0.45 под дерево)',         meta:'Ширина 383/362 · Под дерево',    coating:'Под дерево', thickness:'0.45', color:'8017', priceNew:1050, unit:'м²' },
-  { cat:'siding', sub:'Евробрус',          name:'Сайдинг Евробрус (0.45 полимер)',           meta:'Ширина 258/232 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:896,  unit:'м²', stock:'in' },
-  { cat:'siding', sub:'Евробрус',          name:'Сайдинг Евробрус (0.45 под дерево)',         meta:'Ширина 258/232 · Под дерево',    coating:'Под дерево', thickness:'0.45', color:'8016', priceNew:1070, unit:'м²' },
-  { cat:'siding', sub:'L-панель',          name:'Сайдинг L-панель',                          meta:'Линеарная панель · SteelWood',    coating:'SteelWood',thickness:'0.50', color:'8016', priceNew:1090, unit:'м²' },
+  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска (0.45 полимер)',  meta:'Ширина 267/236 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'1014', priceNew:880,  unit:'м²', stock:'in' },
+  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска (0.45 под дерево)', meta:'Ширина 267/236 · Под дерево',  coating:'Под дерево', thickness:'0.45', color:'8017', priceNew:1050, unit:'м²' },
 
-  /* ── Водосточные системы Murol (sib-profil) ── */
-  { cat:'gutter', sub:'Желоб Ø130',  name:'Желоб водосточный Ø130 (2 м)',  meta:'Murol · полимер · в цвет кровли', coating:'Полимер', thickness:'0.50', color:'3005', priceNew:495, unit:'шт', stock:'in', photo:'assets/photo-gutter.webp' },
-  { cat:'gutter', sub:'Труба Ø100',  name:'Труба водосточная Ø100 (2 м)',  meta:'Murol · полимер · в цвет',         coating:'Полимер', thickness:'0.50', color:'8017', priceNew:564, unit:'шт' },
-  { cat:'gutter', sub:'Труба Ø80',   name:'Труба водосточная Ø80 (2 м)',   meta:'Murol · полимер · мини-серия',     coating:'Полимер', thickness:'0.50', color:'7024', priceNew:498, unit:'шт' },
-  { cat:'gutter', sub:'Фитинги',     name:'Отвод / угол / муфта',          meta:'Murol · комплектующие в цвет',     coating:'Полимер', thickness:'0.50', color:'9005', priceNew:112, unit:'шт' },
+  /* ── Евроштакетник (Ш1/Ш2 клин+прямой, Ш10, Ш18, Ш19) ── */
+  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 (69 мм) клин',    meta:'Полимер · одностороннее',  coating:'Полимер', thickness:'0.50', color:'6005', priceNew:68,  unit:'м.п.', stock:'in' },
+  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 (69 мм) прямой',  meta:'Полимер · прямой срез',    coating:'Полимер', thickness:'0.50', color:'7024', priceNew:71,  unit:'м.п.', stock:'in' },
+  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 (87 мм) клин',    meta:'Полимер · клин 0.5',       coating:'Полимер', thickness:'0.50', color:'8017', priceNew:90,  unit:'м.п.', stock:'in' },
+  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 (87 мм) прямой',  meta:'Полимер · прямой 0.5',     coating:'Полимер', thickness:'0.50', color:'3005', priceNew:95,  unit:'м.п.' },
+  { cat:'fence', sub:'Ш10',name:'Штакетник Ш10 (100 мм) радиус',meta:'Полимер · радиус 0.5',     coating:'Полимер', thickness:'0.50', color:'9005', priceNew:101, unit:'м.п.' },
+  { cat:'fence', sub:'Ш18',name:'Штакетник Ш18 (118 мм) клин',  meta:'Полимер · клин 0.5',       coating:'Полимер', thickness:'0.50', color:'6002', priceNew:131, unit:'м.п.' },
+  { cat:'fence', sub:'Ш18',name:'Штакетник Ш18 (118 мм) радиус',meta:'Полимер · радиус 0.5',     coating:'Полимер', thickness:'0.50', color:'7024', priceNew:123, unit:'м.п.' },
+  { cat:'fence', sub:'Ш19',name:'Штакетник Ш19 (126 мм) радиус',meta:'Полимер · радиус 0.5',     coating:'Полимер', thickness:'0.50', color:'8017', priceNew:123, unit:'м.п.' },
 
-  /* ── Евроштакетник (прайс клиента) ── */
-  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 (69 мм) клин',             meta:'Полимер · одностороннее',      coating:'Полимер',           thickness:'0.50', color:'6005', priceNew:68,  unit:'м.п.', stock:'in' },
-  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 (69 мм) клин двусторонний',meta:'Полимер · двусторонний',       coating:'Полимер двусторонний', thickness:'0.50', color:'7024', priceNew:79,  unit:'м.п.', stock:'in' },
-  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 (69 мм) под дерево',       meta:'Покрытие под дерево',          coating:'Под дерево',        thickness:'0.50', color:'8017', priceNew:89,  unit:'м.п.' },
-  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 (87 мм) полимер',          meta:'Полимер · клин 0.5',           coating:'Полимер',           thickness:'0.50', color:'7024', priceNew:90,  unit:'м.п.', stock:'in' },
-  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 (87 мм) двусторонний',     meta:'Полимер двусторонний прямой', coating:'Полимер двусторонний', thickness:'0.50', color:'8017', priceNew:111, unit:'м.п.', tag:'Премиум' },
-  { cat:'fence', sub:'Ш10',name:'Штакетник Ш10 (100 мм) радиус',         meta:'Полимер · радиус 0.5',         coating:'Полимер',           thickness:'0.50', color:'9005', priceNew:101, unit:'м.п.' },
-  { cat:'fence', sub:'Ш18',name:'Штакетник Ш18 (велюр радиус)',          meta:'Велюр · 0.5 мм',               coating:'Велюр',             thickness:'0.50', color:'3005', priceNew:146, unit:'м.п.' },
-  { cat:'fence', sub:'Ш19',name:'Штакетник Ш19 (под дерево)',            meta:'Под дерево · радиус 0.5',      coating:'Под дерево',        thickness:'0.50', color:'8017', priceNew:163, unit:'м.п.' },
+  /* ── Плоский лист (в плёнке / без плёнки) ── */
+  { cat:'flatsheet', sub:'В плёнке',   name:'Лист плоский 0.45 в плёнке',  meta:'Ширина 1250 · защитная плёнка', coating:'Полимер',   thickness:'0.45', color:'7024', priceNew:729, unit:'м²', stock:'in' },
+  { cat:'flatsheet', sub:'В плёнке',   name:'Лист плоский 0.5 в плёнке',   meta:'Ширина 1250 · защитная плёнка', coating:'Полимер',   thickness:'0.50', color:'8017', priceNew:800, unit:'м²' },
+  { cat:'flatsheet', sub:'Без плёнки', name:'Лист плоский 0.45 без плёнки',meta:'Ширина 1250 · оцинковка',       coating:'Оцинковка', thickness:'0.45', color:'9003', priceNew:483, unit:'м²', stock:'in' },
+  { cat:'flatsheet', sub:'Без плёнки', name:'Лист плоский 0.5 без плёнки', meta:'Ширина 1250 · оцинковка',       coating:'Оцинковка', thickness:'0.50', color:'9003', priceNew:503, unit:'м²', stock:'in' },
 
-  /* ── Плоский лист (прайс клиента) ── */
-  { cat:'flatsheet', sub:'Оцинкованный', name:'Лист плоский 0.45 оцинкованный', meta:'Ширина 1250 · Цинк',          coating:'Оцинковка', thickness:'0.45', color:'9003', priceNew:483, unit:'м²', stock:'in' },
-  { cat:'flatsheet', sub:'Оцинкованный', name:'Лист плоский 0.5 оцинкованный',  meta:'Ширина 1250 · Цинк',          coating:'Оцинковка', thickness:'0.50', color:'9003', priceNew:503, unit:'м²', stock:'in' },
-  { cat:'flatsheet', sub:'Полимер',      name:'Лист плоский 0.45 с полимером', meta:'Ширина 1250 · Полимер RAL', coating:'Полимер',   thickness:'0.45', color:'7024', priceNew:729, unit:'м²', stock:'in' },
-  { cat:'flatsheet', sub:'Полимер',      name:'Лист плоский 0.5 с полимером',  meta:'Ширина 1250 · Полимер RAL', coating:'Полимер',   thickness:'0.50', color:'8017', priceNew:800, unit:'м²' },
+  /* ── Чёрный металл — труба профильная (ориентиры, клиент корректирует) ── */
+  { cat:'rolled', sub:'80×80', name:'Труба профильная 80×80 (3.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'3.00', color:'9005', priceNew:612, unit:'м.п.' },
+  { cat:'rolled', sub:'60×60', name:'Труба профильная 60×60 (2.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'2.00', color:'9005', priceNew:298, unit:'м.п.' },
+  { cat:'rolled', sub:'60×40', name:'Труба профильная 60×40 (2.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'2.00', color:'9005', priceNew:248, unit:'м.п.' },
+  { cat:'rolled', sub:'60×40', name:'Труба профильная 60×40 (3.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'3.00', color:'9005', priceNew:356, unit:'м.п.' },
+  { cat:'rolled', sub:'40×20', name:'Труба профильная 40×20 (1.5 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'1.50', color:'9005', priceNew:126, unit:'м.п.' },
+  { cat:'rolled', sub:'40×20', name:'Труба профильная 40×20 (2.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'2.00', color:'9005', priceNew:165, unit:'м.п.' },
+  { cat:'rolled', sub:'20×20', name:'Труба профильная 20×20 (1.5 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'1.50', color:'9005', priceNew:78,  unit:'м.п.' },
+  { cat:'rolled', sub:'20×20', name:'Труба профильная 20×20 (2.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'2.00', color:'9005', priceNew:98,  unit:'м.п.' },
 
-  /* ── Чёрный металлопрокат (sib-profil) ── */
-  { cat:'rolled', sub:'Труба прямоугольная', name:'Труба электросварная 40×20×1.5', meta:'Длина 6 м · Под заказ',  coating:'Без покрытия', thickness:'1.50', color:'9005', priceNew:126.20, unit:'м.п.' },
-  { cat:'rolled', sub:'Труба квадратная',    name:'Труба электросварная 40×40×1.5', meta:'Длина 6 м · Под заказ',  coating:'Без покрытия', thickness:'1.50', color:'9005', priceNew:189,    unit:'м.п.' },
-  { cat:'rolled', sub:'Уголок',              name:'Уголок стальной 40×40×4',         meta:'Длина 6 м · Ст3',        coating:'Без покрытия', thickness:'4.00', color:'9005', priceNew:148,    unit:'м.п.' },
-  { cat:'rolled', sub:'Лист г/к',            name:'Лист горячекатаный 4 мм',         meta:'1.25 × 2.5 м · Ст3',     coating:'Без покрытия', thickness:'4.00', color:'9005', priceNew:3490,   unit:'лист' },
+  /* ── Забор «Еврожалюзи» (ламель + П-профиль) ── */
+  { cat:'jaluzi', sub:'Ламель',    name:'Еврожалюзи ламель',         meta:'Полимер · одностороннее покрытие', coating:'Полимер',           thickness:'0.50', color:'7024', priceNew:1980, unit:'м²' },
+  { cat:'jaluzi', sub:'Ламель',    name:'Еврожалюзи ламель Premium', meta:'Двусторонний полимер · усиленная', coating:'Полимер двусторонний', thickness:'0.50', color:'8017', priceNew:2540, unit:'м²', tag:'Премиум' },
+  { cat:'jaluzi', sub:'П-профиль', name:'П-профиль для еврожалюзи',  meta:'40 × 60 × 40 · крепёж/каркас',     coating:'Полимер',           thickness:'1.50', color:'9005', priceNew:340,  unit:'м.п.' },
 
-  /* ── Грядки и клумбы (sib-profil + наценка) ── */
-  { cat:'garden', sub:'Грядка',  name:'Грядка металлическая «Фактурная»', meta:'2 × 1 м · Высота 19 см · Полимер', coating:'Полимер', thickness:'0.45', color:'6005', priceNew:1690, unit:'шт', tag:'Сезон' },
-  { cat:'garden', sub:'Грядка',  name:'Грядка высокая «Фактурная»',        meta:'2 × 1 м · Высота 60 см · Полимер', coating:'Полимер', thickness:'0.50', color:'8017', priceNew:2890, unit:'шт' },
-  { cat:'garden', sub:'Клумба',  name:'Клумба металлическая «Фактурная»', meta:'Круглая Ø 0.8–1.7 м · Полимер',    coating:'Полимер', thickness:'0.50', color:'3005', priceNew:1490, unit:'шт' },
+  /* ── Софиты DOCKE (Standart / Premium / Lux — ориентиры docke.ru) ── */
+  { cat:'soffit', sub:'Standart', name:'Софит DOCKE Standart сплошной',      meta:'Без перфорации · карниз/подшивка', coating:'Полимер', thickness:'0.40', color:'9003', priceNew:430, unit:'шт' },
+  { cat:'soffit', sub:'Standart', name:'Софит DOCKE Standart перфорированный',meta:'С перфорацией · вентиляция',      coating:'Полимер', thickness:'0.40', color:'9003', priceNew:455, unit:'шт' },
+  { cat:'soffit', sub:'Premium',  name:'Софит DOCKE Premium сплошной',       meta:'Усиленная панель · без перфорации',coating:'Полимер', thickness:'0.45', color:'8017', priceNew:520, unit:'шт' },
+  { cat:'soffit', sub:'Premium',  name:'Софит DOCKE Premium перфорированный', meta:'Усиленная · вентиляция',          coating:'Полимер', thickness:'0.45', color:'8017', priceNew:545, unit:'шт' },
+  { cat:'soffit', sub:'Lux',      name:'Софит DOCKE Lux',                    meta:'Премиум-линейка · стойкость цвета', coating:'Полимер', thickness:'0.50', color:'7024', priceNew:640, unit:'шт', tag:'Премиум' },
 
-  /* ── Забор «Еврожалюзи» (sib-profil ориентир) ── */
-  { cat:'jaluzi', sub:'Ламель',     name:'Еврожалюзи ламель',           meta:'Полимер · одностороннее покрытие', coating:'Полимер',           thickness:'0.50', color:'7024', priceNew:1980, unit:'м²' },
-  { cat:'jaluzi', sub:'Ламель',     name:'Еврожалюзи ламель Premium',   meta:'Двусторонний полимер · усиленная',  coating:'Полимер двусторонний', thickness:'0.50', color:'8017', priceNew:2540, unit:'м²', tag:'Премиум' },
-  { cat:'jaluzi', sub:'П-профиль',  name:'П-профиль для еврожалюзи',    meta:'40 × 60 × 40 · крепёж/каркас',       coating:'Полимер',           thickness:'1.50', color:'9005', priceNew:340,  unit:'м.п.' },
+  /* ── Водосточная система DOCKE (Lux Ø100/141 · Premium Ø85/120) ── */
+  { cat:'gutter', sub:'Lux',     name:'Желоб DOCKE Lux (3 м)',     meta:'Ширина 141 мм · крыши от 250 м²', coating:'Полимер', thickness:'1.90', color:'8017', priceNew:1090, unit:'шт', tag:'Премиум', photo:'assets/photo-gutter.webp' },
+  { cat:'gutter', sub:'Lux',     name:'Труба DOCKE Lux Ø100 (3 м)', meta:'Ø100 мм · усиленная серия',       coating:'Полимер', thickness:'1.90', color:'8017', priceNew:1295, unit:'шт' },
+  { cat:'gutter', sub:'Lux',     name:'Воронка DOCKE Lux',         meta:'Водосборная · в цвет',            coating:'Полимер', thickness:'1.90', color:'8017', priceNew:895,  unit:'шт' },
+  { cat:'gutter', sub:'Premium', name:'Желоб DOCKE Premium (3 м)', meta:'Ширина 120 мм · крыши 150–250 м²',coating:'Полимер', thickness:'1.75', color:'7024', priceNew:660,  unit:'шт', stock:'in' },
+  { cat:'gutter', sub:'Premium', name:'Труба DOCKE Premium Ø85 (3 м)', meta:'Ø85 мм · стандартная серия',   coating:'Полимер', thickness:'1.75', color:'7024', priceNew:800,  unit:'шт' },
+  { cat:'gutter', sub:'Premium', name:'Воронка DOCKE Premium',     meta:'Водосборная · в цвет',            coating:'Полимер', thickness:'1.75', color:'7024', priceNew:455,  unit:'шт' },
+
+  /* ── Грядки и клумбы (sib-profil) ── */
+  { cat:'garden', sub:'Грядка', name:'Грядка металлическая «Фактурная»', meta:'Ширина 0.4–1 м · Высота 19 см · Полимер', coating:'Полимер', thickness:'0.45', color:'6005', priceNew:1319, unit:'шт', tag:'Сезон' },
+  { cat:'garden', sub:'Грядка', name:'Грядка высокая «Фактурная»',       meta:'Высота 60 см · Полимер · в цвет',          coating:'Полимер', thickness:'0.50', color:'8017', priceNew:2890, unit:'шт' },
+  { cat:'garden', sub:'Клумба', name:'Клумба металлическая «Фактурная»', meta:'Круглая Ø 0.69–1.73 м · Полимер',          coating:'Полимер', thickness:'0.50', color:'3005', priceNew:1139, unit:'шт' },
 ];
 
 /* ─── STATE ─── */
@@ -945,6 +991,13 @@ function refreshFilterStates(){
 function renderProducts(){
   const cat = CATEGORIES.find(c => c.id === state.cat);
   $title.textContent = cat.name;
+
+  // Доборные элементы — особый блок без цен (изготовление по размерам)
+  if (state.cat === 'dobor') {
+    $count.textContent = '— под ваши размеры';
+    $grid.innerHTML = doborBlockHTML();
+    return;
+  }
 
   let list = PRODUCTS.filter(p => p.cat === state.cat);
   if (state.sub)       list = list.filter(p => p.sub === state.sub);
@@ -1072,6 +1125,8 @@ function productCard(p, pat){
 }
 
 function customBannerHTML(){
+  // На категории «Доборные элементы» баннер не дублируем
+  if (state.cat === 'dobor') return '';
   return `
     <div class="custom-banner">
       <div>
@@ -1084,6 +1139,35 @@ function customBannerHTML(){
         </div>
       </div>
       <div class="number">+</div>
+    </div>`;
+}
+
+/* Категория «Доборные элементы» — перечень + текст, без цен */
+const DOBOR_ITEMS = [
+  'Конёк плоский / полукруглый', 'Ендова нижняя и верхняя',
+  'Планка примыкания', 'Планка торцевая (ветровая)',
+  'Планка карнизная', 'Планка фронтонная',
+  'Снегозадержатель', 'Парапетная крышка',
+  'Водоотлив (отлив оконный/цокольный)', 'Откос оконный / дверной',
+];
+function doborBlockHTML(){
+  const items = DOBOR_ITEMS.map(t => `<li>${t}</li>`).join('');
+  return `
+    <div class="dobor-block">
+      <div class="dobor-intro">
+        <span class="eyebrow">Под ваши размеры</span>
+        <h3>Изготовим доборные элементы<br/>по вашим размерам</h3>
+        <p>Длина изделия — до&nbsp;<strong>3&nbsp;метров</strong>, толщина металла — до&nbsp;<strong>0,5&nbsp;мм</strong>. Гибка по&nbsp;вашему чертежу с&nbsp;точностью ±0.5°, в&nbsp;любой цвет RAL. Стоимость рассчитывается индивидуально под каждый заказ.</p>
+        <div class="actions" style="margin-top:22px">
+          <a href="contacts.html" class="btn btn-accent">Заказать по чертежу ${ARROW_SVG}</a>
+          <a href="https://wa.me/79236819709?text=Здравствуйте,%20хочу%20изготовить%20доборные%20элементы%20по%20размерам" target="_blank" rel="noopener" class="btn btn-ghost">Скинуть в WhatsApp</a>
+        </div>
+      </div>
+      <div class="dobor-list-wrap">
+        <div class="dobor-list-label">Что изготавливаем</div>
+        <ul class="dobor-list">${items}</ul>
+        <div class="dobor-note">Цена — по запросу, расчёт за&nbsp;30&nbsp;минут.</div>
+      </div>
     </div>`;
 }
 
@@ -1235,7 +1319,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=35" defer></script>
+<script src="assets/site.js?v=36" defer></script>
 
 </body>
 </html>
