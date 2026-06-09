@@ -610,7 +610,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=36">
+<link rel="stylesheet" href="assets/site.css?v=37">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -738,7 +738,7 @@ p{margin:0}
               <h2 class="products-title" id="productsTitle">Профнастил</h2>
               <span class="products-count" id="productsCount">— 5 позиций</span>
             </div>
-            <div class="products-toolbar">
+            <div class="products-toolbar" id="productsToolbar">
               <div class="price-filter">
                 <input type="number" id="priceMin" placeholder="₽ от" min="0" inputmode="numeric">
                 <span class="dash">—</span>
@@ -993,11 +993,14 @@ function renderProducts(){
   $title.textContent = cat.name;
 
   // Доборные элементы — особый блок без цен (изготовление по размерам)
+  const $toolbar = document.getElementById('productsToolbar');
   if (state.cat === 'dobor') {
     $count.textContent = '— под ваши размеры';
+    if ($toolbar) $toolbar.style.display = 'none';
     $grid.innerHTML = doborBlockHTML();
     return;
   }
+  if ($toolbar) $toolbar.style.display = '';
 
   let list = PRODUCTS.filter(p => p.cat === state.cat);
   if (state.sub)       list = list.filter(p => p.sub === state.sub);
@@ -1319,7 +1322,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=36" defer></script>
+<script src="assets/site.js?v=37" defer></script>
 
 </body>
 </html>
