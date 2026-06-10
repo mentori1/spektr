@@ -613,7 +613,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=57">
+<link rel="stylesheet" href="assets/site.css?v=58">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1241,11 +1241,19 @@ function alignSidebar(){
   if (offset > 0) sb.style.marginTop = offset + 'px';
 }
 window.addEventListener('resize', () => { alignSidebar(); setTimeout(alignSidebar, 150); });
-// шапка списка может менять высоту (перенос строк) — следим за ней напрямую
+// пересчёт после загрузки шрифтов (Big Shoulders Display меняет высоту заголовка)
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => { alignSidebar(); setTimeout(alignSidebar, 50); });
+}
+// и после полной загрузки страницы (картинки, всё прочее)
+window.addEventListener('load', () => { alignSidebar(); setTimeout(alignSidebar, 100); });
+// шапка списка может менять высоту (перенос строк, смена шрифта) — следим напрямую
 if (window.ResizeObserver) {
   const _ph = document.querySelector('.products-head');
   if (_ph) new ResizeObserver(alignSidebar).observe(_ph);
 }
+// страховочные пересчёты на первые мгновения, пока всё устаканивается
+[120, 350, 700].forEach(t => setTimeout(alignSidebar, t));
 renderAll();
 
 $reset.addEventListener('click', () => {
@@ -1384,7 +1392,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=57" defer></script>
+<script src="assets/site.js?v=58" defer></script>
 
 </body>
 </html>
