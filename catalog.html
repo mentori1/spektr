@@ -611,7 +611,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=41">
+<link rel="stylesheet" href="assets/site.css?v=42">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -809,7 +809,7 @@ const CATEGORIES = [
   { id:'jaluzi',     name:'Забор «Еврожалюзи»',      pat:'pat-fence-jal',  sub:['Ламель','П-профиль'] },
   { id:'dobor',      name:'Доборные элементы',       pat:'pat-dobor',      sub:[] },
   { id:'soffit',     name:'Софиты DOCKE',            pat:'pat-soffit',     sub:['Standart','Premium','Lux'] },
-  { id:'gutter',     name:'Водосточная система DOCKE',pat:'pat-gutter',    sub:['Lux','Premium'] },
+  { id:'gutter',     name:'Водосточная система DOCKE',pat:'pat-gutter',    sub:['Standard','Premium','Lux'] },
   { id:'garden',     name:'Грядки и клумбы',         pat:'pat-garden',     sub:['Грядка','Клумба'] },
 ];
 
@@ -846,7 +846,7 @@ const COLORS = [
    Цены DOCKE и труб профильных — стартовые ориентиры, клиент корректирует. */
 const PRODUCTS = [
   /* ── Профнастил (С8, С10, С10 обр, МП-20, МП-20 обр, С21, НС35, НС44) ── */
-  { cat:'corrugated', sub:'С8',    name:'Профнастил С8 (0.45 полимер)',   meta:'Ширина 1200 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'7024', priceNew:694,  unit:'м²', tag:'Хит', stock:'in', photo:'assets/photo-profnastil.jpg' },
+  { cat:'corrugated', sub:'С8',    name:'Профнастил С8 (0.45 полимер)',   meta:'Ширина 1200 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'7024', priceNew:694,  unit:'м²', tag:'Хит', stock:'in', photo:'assets/profnastil_c8_graphite_bg0F0E11.png' },
   { cat:'corrugated', sub:'С10',   name:'Профнастил С10 (0.45 полимер)',  meta:'Ширина 1146 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'6005', priceNew:710,  unit:'м²', stock:'in' },
   { cat:'corrugated', sub:'С10',   name:'Профнастил С10 обратный прокат', meta:'Ширина 1146 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:621,  unit:'м²' },
   { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 (0.45 полимер)',  meta:'Ширина 1130 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'3005', priceNew:766,  unit:'м²', stock:'in' },
@@ -907,13 +907,33 @@ const PRODUCTS = [
   { cat:'soffit', sub:'Premium',  name:'Софит DOCKE Premium перфорированный', meta:'Усиленная · вентиляция',          coating:'Полимер', thickness:'0.45', color:'8017', priceNew:545, unit:'шт' },
   { cat:'soffit', sub:'Lux',      name:'Софит DOCKE Lux',                    meta:'Премиум-линейка · стойкость цвета', coating:'Полимер', thickness:'0.50', color:'7024', priceNew:640, unit:'шт', tag:'Премиум' },
 
-  /* ── Водосточная система DOCKE (Lux Ø100/141 · Premium Ø85/120) ── */
-  { cat:'gutter', sub:'Lux',     name:'Желоб DOCKE Lux (3 м)',     meta:'Ширина 141 мм · крыши от 250 м²', coating:'Полимер', thickness:'1.90', color:'8017', priceNew:1090, unit:'шт', tag:'Премиум', photo:'assets/photo-gutter.webp' },
-  { cat:'gutter', sub:'Lux',     name:'Труба DOCKE Lux Ø100 (3 м)', meta:'Ø100 мм · усиленная серия',       coating:'Полимер', thickness:'1.90', color:'8017', priceNew:1295, unit:'шт' },
-  { cat:'gutter', sub:'Lux',     name:'Воронка DOCKE Lux',         meta:'Водосборная · в цвет',            coating:'Полимер', thickness:'1.90', color:'8017', priceNew:895,  unit:'шт' },
-  { cat:'gutter', sub:'Premium', name:'Желоб DOCKE Premium (3 м)', meta:'Ширина 120 мм · крыши 150–250 м²',coating:'Полимер', thickness:'1.75', color:'7024', priceNew:660,  unit:'шт', stock:'in' },
-  { cat:'gutter', sub:'Premium', name:'Труба DOCKE Premium Ø85 (3 м)', meta:'Ø85 мм · стандартная серия',   coating:'Полимер', thickness:'1.75', color:'7024', priceNew:800,  unit:'шт' },
-  { cat:'gutter', sub:'Premium', name:'Воронка DOCKE Premium',     meta:'Водосборная · в цвет',            coating:'Полимер', thickness:'1.75', color:'7024', priceNew:455,  unit:'шт' },
+  /* ── Водосточная система DOCKE (цены docke.ru, ориентир) ── */
+  /* Standard — Ø80 мм / жёлоб 120 мм · кровля до 150 м² */
+  { cat:'gutter', sub:'Standard', name:'Жёлоб DOCKE Standard (3 м)',   meta:'Жёлоб 120 мм · кровля до 150 м²', coating:'Полимер', thickness:'1.65', color:'8017', priceNew:480, unit:'шт', stock:'in', photo:'assets/photo-gutter.webp' },
+  { cat:'gutter', sub:'Standard', name:'Труба DOCKE Standard Ø80 (3 м)',meta:'Ø80 мм · стандартная серия',     coating:'Полимер', thickness:'1.65', color:'8017', priceNew:580, unit:'шт', stock:'in' },
+  { cat:'gutter', sub:'Standard', name:'Воронка DOCKE Standard',       meta:'Водосборная · в цвет',            coating:'Полимер', thickness:'1.65', color:'8017', priceNew:314, unit:'шт' },
+  { cat:'gutter', sub:'Standard', name:'Колено DOCKE Standard 45°',    meta:'Отвод трубы · в цвет',            coating:'Полимер', thickness:'1.65', color:'8017', priceNew:197, unit:'шт' },
+  { cat:'gutter', sub:'Standard', name:'Угол жёлоба DOCKE Standard 90°',meta:'Поворот жёлоба · в цвет',        coating:'Полимер', thickness:'1.65', color:'8017', priceNew:270, unit:'шт' },
+  { cat:'gutter', sub:'Standard', name:'Кронштейн жёлоба DOCKE Standard',meta:'Крепление жёлоба',              coating:'Полимер', thickness:'1.65', color:'8017', priceNew:58,  unit:'шт' },
+  { cat:'gutter', sub:'Standard', name:'Муфта соединительная DOCKE Standard',meta:'Соединение труб · в цвет',  coating:'Полимер', thickness:'1.65', color:'8017', priceNew:105, unit:'шт' },
+
+  /* Premium — Ø85 мм / жёлоб 120 мм · кровля 150–250 м² */
+  { cat:'gutter', sub:'Premium', name:'Жёлоб DOCKE Premium (3 м)',     meta:'Жёлоб 120 мм · кровля 150–250 м²',coating:'Полимер', thickness:'1.75', color:'7024', priceNew:625, unit:'шт', stock:'in' },
+  { cat:'gutter', sub:'Premium', name:'Труба DOCKE Premium Ø85 (3 м)', meta:'Ø85 мм · усиленная серия',        coating:'Полимер', thickness:'1.75', color:'7024', priceNew:755, unit:'шт', stock:'in' },
+  { cat:'gutter', sub:'Premium', name:'Воронка DOCKE Premium',         meta:'Водосборная · в цвет',            coating:'Полимер', thickness:'1.75', color:'7024', priceNew:422, unit:'шт' },
+  { cat:'gutter', sub:'Premium', name:'Колено DOCKE Premium 45°',      meta:'Отвод трубы · в цвет',            coating:'Полимер', thickness:'1.75', color:'7024', priceNew:264, unit:'шт' },
+  { cat:'gutter', sub:'Premium', name:'Угол жёлоба DOCKE Premium 90°', meta:'Поворот жёлоба · в цвет',         coating:'Полимер', thickness:'1.75', color:'7024', priceNew:364, unit:'шт' },
+  { cat:'gutter', sub:'Premium', name:'Кронштейн жёлоба DOCKE Premium',meta:'Крепление жёлоба',                coating:'Полимер', thickness:'1.75', color:'7024', priceNew:76,  unit:'шт' },
+  { cat:'gutter', sub:'Premium', name:'Муфта соединительная DOCKE Premium',meta:'Соединение труб · в цвет',    coating:'Полимер', thickness:'1.75', color:'7024', priceNew:140, unit:'шт' },
+
+  /* Lux — Ø100 мм / жёлоб 141 мм · кровля от 250 м² */
+  { cat:'gutter', sub:'Lux', name:'Жёлоб DOCKE Lux (3 м)',         meta:'Жёлоб 141 мм · кровля от 250 м²',  coating:'Полимер', thickness:'1.90', color:'8016', priceNew:1115, unit:'шт', tag:'Премиум' },
+  { cat:'gutter', sub:'Lux', name:'Труба DOCKE Lux Ø100 (3 м)',    meta:'Ø100 мм · усиленная серия',        coating:'Полимер', thickness:'1.90', color:'8016', priceNew:1326, unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Воронка DOCKE Lux',             meta:'Водосборная · в цвет',             coating:'Полимер', thickness:'1.90', color:'8016', priceNew:959,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Колено DOCKE Lux 45°',          meta:'Отвод трубы · в цвет',             coating:'Полимер', thickness:'1.90', color:'8016', priceNew:520,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Угол жёлоба DOCKE Lux 90°',     meta:'Поворот жёлоба · в цвет',          coating:'Полимер', thickness:'1.90', color:'8016', priceNew:670,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Кронштейн жёлоба DOCKE Lux',    meta:'Крепление жёлоба металл',          coating:'Полимер', thickness:'1.90', color:'8016', priceNew:490,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Муфта соединительная DOCKE Lux',meta:'Соединение труб · в цвет',         coating:'Полимер', thickness:'1.90', color:'8016', priceNew:321,  unit:'шт' },
 
   /* ── Грядки и клумбы (sib-profil) ── */
   { cat:'garden', sub:'Грядка', name:'Грядка металлическая «Фактурная»', meta:'Ширина 0.4–1 м · Высота 19 см · Полимер', coating:'Полимер', thickness:'0.45', color:'6005', priceNew:1319, unit:'шт', tag:'Сезон' },
@@ -1339,7 +1359,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=41" defer></script>
+<script src="assets/site.js?v=42" defer></script>
 
 </body>
 </html>
