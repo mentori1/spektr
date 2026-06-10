@@ -613,7 +613,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=55">
+<link rel="stylesheet" href="assets/site.css?v=56">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1228,7 +1228,19 @@ function pluralize(n, one, few, many){
   return many;
 }
 
-function renderAll(){ renderTabs(); renderFilters(); renderProducts(); }
+function renderAll(){ renderTabs(); renderFilters(); renderProducts(); alignSidebar(); }
+
+/* Верх фильтров — точно на уровне первой строки товаров, при любой ширине окна */
+function alignSidebar(){
+  const sb   = document.getElementById('sidebarFilters');
+  const grid = document.getElementById('productsGrid');
+  if (!sb || !grid) return;
+  if (window.innerWidth <= 880) { sb.style.marginTop = ''; return; } // на мобиле сайдбар — drawer
+  sb.style.marginTop = '0px';
+  const offset = grid.getBoundingClientRect().top - sb.getBoundingClientRect().top;
+  if (offset > 0) sb.style.marginTop = offset + 'px';
+}
+window.addEventListener('resize', alignSidebar);
 renderAll();
 
 $reset.addEventListener('click', () => {
@@ -1367,7 +1379,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=55" defer></script>
+<script src="assets/site.js?v=56" defer></script>
 
 </body>
 </html>
