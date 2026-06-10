@@ -76,7 +76,7 @@ article ul,article ol{padding-left:22px;margin:0 0 18px;color:var(--text-on-dark
 .wordmark{text-decoration:none !important}
 .burger{text-decoration:none !important}
 </style>
-<link rel="stylesheet" href="assets/site.css?v=39">
+<link rel="stylesheet" href="assets/site.css?v=41">
 </head>
 
 <body>
@@ -146,17 +146,23 @@ article ul,article ol{padding-left:22px;margin:0 0 18px;color:var(--text-on-dark
 <footer class="footer">
   <div class="container">
     <div class="footer-row">
-      <span class="wordmark">Спектр Металла</span>
-      <ul class="footer-nav">
-        <li><a href="catalog.html">Каталог</a></li>
-        <li><a href="buyers.html">Покупателям</a></li>
-        <li><a href="contacts.html">Контакты</a></li>
-        <li><a href="policy-personal-data.html">Политика ПД</a></li>
-        <li><a href="policy-privacy.html">Конфиденциальность</a></li>
+        <div class="footer-brand">
+          <span class="wordmark">Спектр Металла</span>
+          <a href="tel:+79236819709" class="footer-phone">+7 923 681-97-09</a>
+          <span class="footer-addr-sm">г. Омск, пр. Мира, 191 · Пн–Сб 09:00–19:00</span>
+        </div>
+        <ul class="footer-nav">
+          <li><a href="catalog.html">Каталог</a></li>
+          <li><a href="calculator.html">Калькулятор</a></li>
+          <li><a href="buyers.html">Покупателям</a></li>
+          <li><a href="delivery.html">Доставка</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="policy-personal-data.html">Политика ПД</a></li>
+          <li><a href="policy-privacy.html">Конфиденциальность</a></li>
           <li><a href="offer.html">Оферта</a></li>
           <li><a href="return-policy.html">Возврат</a></li>
-      </ul>
-    </div>
+        </ul>
+      </div>
     <div class="footer-legal"><b>ООО «Спектр»</b><span class="sep">·</span>ИНН 5501096616<span class="sep">·</span>ОГРН 1065501054530<span class="sep">·</span>КПП 550101001<span class="sep">·</span>644085, г. Омск, пр. Мира, 191</div>
       <div class="footer-bot">
       <span>© <span id="yr">2026</span> · Спектр Металла · г. Омск</span>
@@ -166,7 +172,7 @@ article ul,article ol{padding-left:22px;margin:0 0 18px;color:var(--text-on-dark
 </footer>
 
 <script>document.getElementById('yr').textContent=new Date().getFullYear();const b=document.getElementById('progressBar'),h=document.getElementById('header');addEventListener('scroll',()=>{const d=document.documentElement,m=d.scrollHeight-d.clientHeight,p=m>0?d.scrollTop/m:0;b.style.width=(p*100).toFixed(2)+'%';h.classList.toggle('scrolled',d.scrollTop>20)},{passive:true});</script>
-<script src="assets/site.js?v=39" defer></script>
+<script src="assets/site.js?v=41" defer></script>
 
 <!-- Mobile menu -->
 <aside class="mobile-menu" id="mobileMenu">

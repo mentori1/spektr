@@ -323,6 +323,19 @@
 .footer-legal b{color:var(--text-on-dark,#c9ccd2);font-weight:500}
 .footer-legal .sep{color:var(--text-on-dark-deep,#4a4f57);margin:0 6px}
 
+/* ═══ ФУТЕР: бренд + телефон слева, навигация справа ═══ */
+.footer-brand{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.footer-phone{
+  font-family:var(--f-mono,"JetBrains Mono");font-size:15px;letter-spacing:.04em;
+  color:var(--text-on-dark-bright,#f3f4f6) !important;text-decoration:none;
+  transition:color .25s ease;
+}
+.footer-phone:hover{color:var(--accent-hover,#dc2626) !important}
+.footer-addr-sm{font-family:var(--f-mono,"JetBrains Mono");font-size:11px;letter-spacing:.04em;color:var(--text-on-dark-dim,#7d828a)}
+@media (max-width:720px){
+  .footer-brand{gap:10px}
+}
+
 /* ═══ АНТИ-ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ (жёстко, для всех страниц) ═══ */
 html{overflow-x:hidden;max-width:100%}
 body{overflow-x:hidden;max-width:100vw;position:relative}

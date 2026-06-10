@@ -1296,7 +1296,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=39">
+<link rel="stylesheet" href="assets/site.css?v=41">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1757,11 +1757,16 @@ p{margin:0}
   <footer class="footer">
     <div class="container">
       <div class="footer-row">
-        <span class="wordmark">Спектр Металла</span>
+        <div class="footer-brand">
+          <span class="wordmark">Спектр Металла</span>
+          <a href="tel:+79236819709" class="footer-phone">+7 923 681-97-09</a>
+          <span class="footer-addr-sm">г. Омск, пр. Мира, 191 · Пн–Сб 09:00–19:00</span>
+        </div>
         <ul class="footer-nav">
           <li><a href="catalog.html">Каталог</a></li>
-        <li><a href="buyers.html">Покупателям</a></li>
-        <li><a href="delivery.html">Доставка</a></li>
+          <li><a href="calculator.html">Калькулятор</a></li>
+          <li><a href="buyers.html">Покупателям</a></li>
+          <li><a href="delivery.html">Доставка</a></li>
           <li><a href="contacts.html">Контакты</a></li>
           <li><a href="policy-personal-data.html">Политика ПД</a></li>
           <li><a href="policy-privacy.html">Конфиденциальность</a></li>
@@ -1804,7 +1809,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=39
+// FAQ smooth-open handled by assets/site.js?v=41
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1915,7 +1920,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=39" defer></script>
+<script src="assets/site.js?v=41" defer></script>
 
 </body>
 </html>
