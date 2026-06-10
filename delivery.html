@@ -372,6 +372,34 @@ p{margin:0}
   .tl-content .meta{font-size:10.5px;letter-spacing:.16em}
   .tl-desc{font-size:13px;line-height:1.55;grid-column:1;margin-top:8px}
 }
+/* ─── ТРАНСПОРТ — карточки (синхронизировано с .usp-* на главной) ─── */
+.usp-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,48px);
+}
+.usp-cell{
+  display:flex;flex-direction:column;gap:14px;
+  padding:28px 26px;
+  background:rgba(255,255,255,.025);
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(255,255,255,.08);
+  border-left:2px solid var(--accent);
+  border-radius:var(--r-md);
+  transition:transform .35s var(--ease-out), border-color .35s var(--ease-out);
+}
+.usp-cell:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.18);border-left-color:var(--accent)}
+.usp-num{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.24em;
+  color:var(--accent);text-transform:uppercase;font-weight:600;
+}
+.usp-title{
+  font-family:var(--f-display);font-weight:700;font-size:clamp(19px,1.7vw,24px);
+  line-height:1.12;color:var(--text-on-dark-bright);text-transform:uppercase;letter-spacing:-.01em;
+}
+.usp-desc{font-size:13.5px;color:var(--text-on-dark-dim);line-height:1.6}
+@media (max-width:880px){
+  .usp-grid{grid-template-columns:1fr;gap:16px}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
 }
@@ -431,7 +459,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=34">
+<link rel="stylesheet" href="assets/site.css?v=38">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -751,7 +779,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   </div>
 </aside>
 
-<script src="assets/site.js?v=34" defer></script>
+<script src="assets/site.js?v=38" defer></script>
 
 </body>
 </html>
