@@ -1124,6 +1124,12 @@ p{margin:0}
 @keyframes drift3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-40%,-60%) scale(1.15)}}
 /* Уменьшаем огромную пустоту между секциями */
 .section{padding:clamp(60px,8vw,120px) 0}
+/* стык «Производство» → «Доставка» компактнее */
+#custom{padding-bottom:clamp(32px,4vw,56px)}
+#delivery{padding-top:clamp(32px,4vw,56px)}
+/* текст справа в шапке «Доставки» — поднят к верху, на уровень заголовка */
+#delivery .section-head{align-items:flex-start}
+#delivery .section-head .lead{margin-top:8px}
 .section--dark h1,.section--dark h2,.section--dark h3,.section--dark h4{color:var(--text-on-dark-bright)}
 .section--dark .eyebrow{color:var(--text-on-dark-dim)}
 .section--dark .lead{color:var(--text-on-dark)}
@@ -1310,7 +1316,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=51">
+<link rel="stylesheet" href="assets/site.css?v=53">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1906,7 +1912,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=51
+// FAQ smooth-open handled by assets/site.js?v=53
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2017,7 +2023,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=51" defer></script>
+<script src="assets/site.js?v=53" defer></script>
 
 </body>
 </html>
