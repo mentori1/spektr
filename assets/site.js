@@ -270,12 +270,16 @@
     banner.setAttribute('role', 'dialog');
     banner.setAttribute('aria-label', 'Уведомление об использовании cookies');
     banner.innerHTML = `
-      <div class="cookie-banner-text">
-        Мы используем cookies и Яндекс.Метрику для улучшения работы сайта.
-        Аналитика подключается только после вашего согласия. Подробнее в
-        <a href="policy-privacy.html">Политике конфиденциальности</a>
-        и
-        <a href="policy-personal-data.html">Политике обработки персональных данных</a>.
+      <div class="cookie-banner-body">
+        <div class="cookie-banner-title">Использование файлов cookies</div>
+        <div class="cookie-banner-text">
+          Наш сайт использует файлы cookies и сервис веб-аналитики Яндекс.Метрика.
+          Продолжая просмотр, вы соглашаетесь с использованием cookies в&nbsp;соответствии с
+          <a href="policy-privacy.html">Политикой конфиденциальности</a>
+          и
+          <a href="policy-personal-data.html">Политикой обработки персональных данных</a>.
+          Аналитика подключается только после вашего согласия.
+        </div>
       </div>
       <div class="cookie-banner-actions">
         <button type="button" class="cookie-accept">Принять</button>
