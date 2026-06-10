@@ -607,9 +607,9 @@ p{margin:0}
   position:relative;
   background:var(--bg-white);
   border-radius:var(--r-md);
-  padding:28px 26px 24px;
-  min-height:280px;
-  display:flex;flex-direction:column;justify-content:space-between;gap:18px;
+  padding:24px 26px 20px;
+  min-height:210px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:14px;
   transition:transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
   text-decoration:none;color:inherit;
   border:1px solid transparent;
@@ -623,6 +623,8 @@ p{margin:0}
   font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
   color:var(--text-on-light-dim);
 }
+/* на обычных карточках номер «— NN» скрыт — есть водяной знак */
+.cat:not(.cat--featured) .cat-num{display:none}
 .cat-name{
   font-family:var(--f-display);font-weight:800;font-size:clamp(17px, 1.35vw, 21px);
   line-height:1.1;color:var(--text-on-light);text-transform:uppercase;letter-spacing:-.01em;
@@ -930,6 +932,8 @@ p{margin:0}
 
 .contact-card{
   display:flex;flex-direction:column;gap:24px;
+  /* строки распределяются на всю высоту ряда — низ всегда вровень с формой при любом масштабе */
+  justify-content:space-between;
 }
 
 .contact-row{
@@ -1306,7 +1310,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=50">
+<link rel="stylesheet" href="assets/site.css?v=51">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1902,7 +1906,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=50
+// FAQ smooth-open handled by assets/site.js?v=51
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2013,7 +2017,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=50" defer></script>
+<script src="assets/site.js?v=51" defer></script>
 
 </body>
 </html>
