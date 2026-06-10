@@ -809,16 +809,22 @@ p{margin:0}
   position:relative;padding:24px 26px;border-radius:var(--r-md);
   background:var(--bg-white);
   transition:transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
+  overflow:hidden;
 }
 .del-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-card-hover)}
-.del-card-num{
-  font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
-  color:var(--text-on-light-dim);text-transform:uppercase;
+/* водяной знак-номер в углу карточки (как в категориях) */
+.del-stamp{
+  position:absolute;right:16px;top:14px;
+  font-family:var(--f-display);font-weight:900;font-size:clamp(40px,4vw,58px);
+  line-height:.85;color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.12);text-stroke:1px rgba(255,255,255,.12);
+  letter-spacing:-.03em;pointer-events:none;z-index:0;
 }
+.del-card > *:not(.del-stamp){position:relative;z-index:1}
 .del-card h4{
   font-family:var(--f-display);font-weight:700;font-size:15px;
   color:var(--text-on-light);text-transform:uppercase;letter-spacing:-.005em;
-  margin:8px 0 6px;
+  margin:0 0 6px;
 }
 .del-card p{font-size:12.5px;color:var(--text-on-light-soft);line-height:1.55}
 
@@ -1314,7 +1320,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=64">
+<link rel="stylesheet" href="assets/site.css?v=65">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1690,17 +1696,17 @@ p{margin:0}
 
         <div class="del-cards">
           <div class="del-card">
-            <div class="del-card-num">— 01</div>
+            <span class="del-stamp">01</span>
             <h4>Быстрая отправка</h4>
             <p>Из наличия — день в день. Под размер — от 30 минут после согласования.</p>
           </div>
           <div class="del-card">
-            <div class="del-card-num">— 02</div>
+            <span class="del-stamp">02</span>
             <h4>Длинномеры до 6 м</h4>
             <p>Манипулятор берёт грузы до&nbsp;5&nbsp;т и&nbsp;разгрузит сам без грузчиков. Газель — для лёгких партий до&nbsp;2&nbsp;т.</p>
           </div>
           <div class="del-card">
-            <div class="del-card-num">— 03</div>
+            <span class="del-stamp">03</span>
             <h4>Удобно клиенту</h4>
             <p>Привезём в указанное время, разгрузим вручную или манипулятором.</p>
           </div>
@@ -1709,17 +1715,17 @@ p{margin:0}
 
       <div class="del-extras reveal d2">
         <div class="del-card">
-          <div class="del-card-num">— 04</div>
+          <span class="del-stamp">04</span>
           <h4>Помощь с расчётом</h4>
           <p>Назовите адрес — посчитаем стоимость доставки до заказа.</p>
         </div>
         <div class="del-card">
-          <div class="del-card-num">— 05</div>
+          <span class="del-stamp">05</span>
           <h4>Самовывоз со склада</h4>
           <p>Подготовим заказ к приезду и поможем загрузить.</p>
         </div>
         <div class="del-card">
-          <div class="del-card-num">— 06</div>
+          <span class="del-stamp">06</span>
           <h4>Доставка по России</h4>
           <p>Работаем с проверенными ТК. Отправим в любой город.</p>
         </div>
@@ -1910,7 +1916,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=64
+// FAQ smooth-open handled by assets/site.js?v=65
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2021,7 +2027,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=64" defer></script>
+<script src="assets/site.js?v=65" defer></script>
 
 </body>
 </html>
