@@ -611,7 +611,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=45">
+<link rel="stylesheet" href="assets/site.css?v=47">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -943,6 +943,12 @@ const PRODUCTS = [
 
 /* ─── STATE ─── */
 const state = { cat:'corrugated', sub:null, coating:null, thickness:null, color:null, sort:'default', priceMin:null, priceMax:null };
+
+/* категория из URL (?cat=roofing) — для ссылок с главной */
+(function(){
+  const q = new URLSearchParams(location.search).get('cat');
+  if (q && CATEGORIES.some(c => c.id === q)) state.cat = q;
+})();
 
 /* ─── DOM ─── */
 const $tabs      = document.getElementById('catTabs');
@@ -1359,7 +1365,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=45" defer></script>
+<script src="assets/site.js?v=47" defer></script>
 
 </body>
 </html>

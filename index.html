@@ -643,12 +643,12 @@ p{margin:0}
 .cat:hover .cat-arrow{color:var(--accent);transform:translateX(4px)}
 .cat-arrow svg{width:18px;height:18px}
 
-/* первая карточка — full-row featured */
+/* первая карточка — широкая featured (2 колонки, 1 ряд → сетка 11 категорий ровно 3 ряда) */
 .cat--featured{
-  grid-column:span 2;grid-row:span 2;
+  grid-column:span 2;
   background:var(--bg-dark);color:var(--text-on-dark);
-  min-height:auto;
-  padding:40px 36px 36px;
+  min-height:280px;
+  padding:32px 36px 28px;
   position:relative;overflow:hidden;
 }
 .cat--featured::after{
@@ -755,7 +755,8 @@ p{margin:0}
    ════════════════════════════════════════════════════════════════ */
 
 .delivery-grid{
-  display:grid;grid-template-columns:1.3fr .7fr;gap:24px;
+  /* 2fr/1fr + gap 16px — вертикальный зазор совпадает с зазором нижнего ряда del-extras */
+  display:grid;grid-template-columns:2fr 1fr;gap:16px;
 }
 
 /* hero-карточка доставки на белом фоне */
@@ -795,7 +796,7 @@ p{margin:0}
 }
 
 /* правый столбец карточек */
-.del-cards{display:grid;gap:14px}
+.del-cards{display:grid;gap:16px}
 .del-card{
   position:relative;padding:24px 26px;border-radius:var(--r-md);
   background:var(--bg-white);
@@ -815,7 +816,7 @@ p{margin:0}
 
 /* нижняя сетка из 3 карточек — единый стиль с верхними */
 .del-extras{
-  margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
   padding-top:0;border-top:none;
 }
 .del-extra-item{
@@ -1139,10 +1140,8 @@ p{margin:0}
   color:var(--text-on-dark);
 }
 .section--dark .del-feature::before{
-  /* большая цифра-водяной знак — делаем красноватый stroke вместо тёмного */
-  -webkit-text-stroke:1px rgba(255,255,255,.05) !important;
-  text-stroke:1px rgba(255,255,255,.05) !important;
-  color:transparent;
+  /* водяной знак «01» убран — на тёмном фоне выглядел как мигающее серое пятно */
+  display:none;
 }
 .section--dark .del-feature-top h3{color:var(--text-on-dark-bright)}
 .section--dark .del-feature-top p{color:var(--text-on-dark)}
@@ -1291,7 +1290,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=46">
+<link rel="stylesheet" href="assets/site.css?v=47">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1454,63 +1453,135 @@ p{margin:0}
       <div class="cats">
 
         <!-- featured dark tile -->
-        <a href="#contacts" class="cat cat--featured reveal">
+        <a href="catalog.html?cat=corrugated" class="cat cat--featured reveal">
           <span class="cat-stamp">01</span>
           <div>
             <div class="cat-num">— Хит сезона</div>
-            <div class="cat-name">Профнастил<br/>С8 / С21</div>
-            <div class="cat-desc">Универсальный лист для кровли и забора. Любая длина, 11 цветов RAL. Изготовление из наличия.</div>
+            <div class="cat-name">Профнастил</div>
+            <div class="cat-desc">С8, С10, МП-20, С21, НС35, НС44 + обратный прокат. Любая длина, 21 цвет RAL. Изготовление из наличия.</div>
           </div>
           <div class="cat-foot">
-            <span class="cat-price">от 380 ₽/м²</span>
+            <span class="cat-price">от 621 ₽/м²</span>
             <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </a>
 
-        <a href="#contacts" class="cat reveal d1">
+        <a href="catalog.html?cat=roofing" class="cat reveal d3">
           <div>
             <div class="cat-num">— 02</div>
             <div class="cat-name">Металло-<br/>черепица</div>
-            <div class="cat-desc">Монтеррей, Каскад, Модерн — Polyester, MAT, PURAL.</div>
+            <div class="cat-desc">Супер-Монтерей — полимер и велюр, 0.45–0.5 мм.</div>
           </div>
           <div class="cat-foot">
-            <span class="cat-price">от 540 ₽/м²</span>
+            <span class="cat-price">от 779 ₽/м²</span>
             <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </a>
 
-        <a href="#contacts" class="cat reveal d2">
+        <a href="catalog.html?cat=siding" class="cat reveal d1">
           <div>
             <div class="cat-num">— 03</div>
-            <div class="cat-name">Фасадные<br/>панели</div>
-            <div class="cat-desc">Сайдинг, линеарные панели, металлокассеты.</div>
+            <div class="cat-name">Сайдинг</div>
+            <div class="cat-desc">Евро-брус, Блокхаус, Корабельная доска.</div>
           </div>
           <div class="cat-foot">
-            <span class="cat-price">от 690 ₽/м²</span>
+            <span class="cat-price">от 880 ₽/м²</span>
             <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </a>
 
-        <a href="#contacts" class="cat reveal d1">
+        <a href="catalog.html?cat=fence" class="cat reveal d2">
           <div>
             <div class="cat-num">— 04</div>
-            <div class="cat-name">Доборные<br/>элементы</div>
-            <div class="cat-desc">Коньки, ендовы, отливы, планки — точная гибка ±0.5°.</div>
+            <div class="cat-name">Евро-<br/>штакетник</div>
+            <div class="cat-desc">Ш1–Ш19 · клин, прямой, радиус.</div>
           </div>
           <div class="cat-foot">
-            <span class="cat-price">от 120 ₽/м.п.</span>
+            <span class="cat-price">от 68 ₽/м.п.</span>
             <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </a>
 
-        <a href="#contacts" class="cat reveal d2">
+        <a href="catalog.html?cat=flatsheet" class="cat reveal d3">
           <div>
             <div class="cat-num">— 05</div>
-            <div class="cat-name">Водо-<br/>сточные<br/>системы</div>
-            <div class="cat-desc">Полукруглые и прямоугольные — Ø 125–150.</div>
+            <div class="cat-name">Плоский<br/>лист</div>
+            <div class="cat-desc">В плёнке и без — оцинковка, полимер.</div>
           </div>
           <div class="cat-foot">
-            <span class="cat-price">от 290 ₽/м.п.</span>
+            <span class="cat-price">от 483 ₽/м²</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="catalog.html?cat=rolled" class="cat reveal d1">
+          <div>
+            <div class="cat-num">— 06</div>
+            <div class="cat-name">Чёрный<br/>металл</div>
+            <div class="cat-desc">Труба профильная 20×20 — 80×80.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 78 ₽/м.п.</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="catalog.html?cat=jaluzi" class="cat reveal d2">
+          <div>
+            <div class="cat-num">— 07</div>
+            <div class="cat-name">Забор<br/>«Еврожалюзи»</div>
+            <div class="cat-desc">Ламели и П-профиль · одно- и двусторонние.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 340 ₽/м.п.</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="catalog.html?cat=dobor" class="cat reveal d3">
+          <div>
+            <div class="cat-num">— 08</div>
+            <div class="cat-name">Доборные<br/>элементы</div>
+            <div class="cat-desc">Коньки, ендовы, планки — гибка ±0.5°.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">по запросу</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="catalog.html?cat=soffit" class="cat reveal d1">
+          <div>
+            <div class="cat-num">— 09</div>
+            <div class="cat-name">Софиты<br/>DOCKE</div>
+            <div class="cat-desc">Standart, Premium, Lux — сплошные и перфо.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 430 ₽/шт</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="catalog.html?cat=gutter" class="cat reveal d2">
+          <div>
+            <div class="cat-num">— 10</div>
+            <div class="cat-name">Водосточная<br/>система DOCKE</div>
+            <div class="cat-desc">Standard, Premium, Lux — Ø80–100.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 480 ₽/шт</span>
+            <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="catalog.html?cat=garden" class="cat reveal d3">
+          <div>
+            <div class="cat-num">— 11</div>
+            <div class="cat-name">Грядки<br/>и клумбы</div>
+            <div class="cat-desc">«Фактурная» — полимер, любые размеры.</div>
+          </div>
+          <div class="cat-foot">
+            <span class="cat-price">от 1 139 ₽/шт</span>
             <span class="cat-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </div>
         </a>
@@ -1805,7 +1876,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=46
+// FAQ smooth-open handled by assets/site.js?v=47
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1916,7 +1987,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=46" defer></script>
+<script src="assets/site.js?v=47" defer></script>
 
 </body>
 </html>
