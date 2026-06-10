@@ -613,7 +613,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=56">
+<link rel="stylesheet" href="assets/site.css?v=57">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1240,7 +1240,12 @@ function alignSidebar(){
   const offset = grid.getBoundingClientRect().top - sb.getBoundingClientRect().top;
   if (offset > 0) sb.style.marginTop = offset + 'px';
 }
-window.addEventListener('resize', alignSidebar);
+window.addEventListener('resize', () => { alignSidebar(); setTimeout(alignSidebar, 150); });
+// шапка списка может менять высоту (перенос строк) — следим за ней напрямую
+if (window.ResizeObserver) {
+  const _ph = document.querySelector('.products-head');
+  if (_ph) new ResizeObserver(alignSidebar).observe(_ph);
+}
 renderAll();
 
 $reset.addEventListener('click', () => {
@@ -1379,7 +1384,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=56" defer></script>
+<script src="assets/site.js?v=57" defer></script>
 
 </body>
 </html>
