@@ -8,7 +8,7 @@
 <meta http-equiv="Expires" content="0" />
 <!-- Цвет панели браузера на мобильных. CSS-переменные тут не работают —
      синхронизируй вручную со значением --bg-dark в :root ниже. -->
-<meta name="theme-color" content="#111111" />
+<meta name="theme-color" content="#06070a" />
 <title>Спектр Металла — кровля, фасад и металлоизделия по вашим размерам</title>
 <meta name="description" content="Производство кровельных и фасадных систем, профнастил, металлочерепица, евроштакетник, водостоки и металлоизделия по размерам клиента. Изготовление от 30 минут." />
 
@@ -34,10 +34,10 @@
   /* ── 1. ТЁМНЫЕ ПОВЕРХНОСТИ ───────────────────────────────────
      Используются в hero, custom-production, contacts, footer. */
 
-  --bg-dark:           #111111;   /* основной тёмный (hero, contacts) */
-  --bg-graphite:       #1f2937;   /* вторичный тёмный (USP-полоса)   */
-  --bg-steel:          #374151;   /* стальной (карточки на тёмном)   */
-  --bg-near-black:     #0a0a0a;   /* почти чёрный (footer)            */
+  --bg-dark:           #06070a;   /* основной тёмный (hero, contacts) */
+  --bg-graphite:       #0f1115;   /* вторичный тёмный (USP-полоса)   */
+  --bg-steel:          #14171c;   /* стальной (карточки на тёмном)   */
+  --bg-near-black:     #04050a;   /* почти чёрный (footer)            */
 
 
   /* ── 2. СВЕТЛЫЕ ПОВЕРХНОСТИ ──────────────────────────────────
@@ -332,11 +332,7 @@ p{margin:0}
   padding:clamp(96px, 11vw, 160px) 0 clamp(56px, 8vw, 100px);
   min-height:92vh;
   display:flex;align-items:center;
-  background:
-    radial-gradient(80% 100% at 10% 20%, color-mix(in srgb, var(--bg-graphite) 70%, transparent) 0%, transparent 60%),
-    radial-gradient(50% 70% at 78% 30%, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 60%),
-    radial-gradient(60% 80% at 100% 100%, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 50%),
-    var(--bg-dark);
+  background:transparent;
   overflow:hidden;
 }
 
@@ -1096,16 +1092,15 @@ p{margin:0}
    Делаем повторяющийся радиальный паттерн прямо на .shell —
    красные пятна распределены по всей длине страницы.
    Никаких видимых переходов между секциями. */
-.shell{
-  background:
-    radial-gradient(45% 25% at 90% 5%,  color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
-    radial-gradient(40% 20% at 5% 20%,  color-mix(in srgb, var(--accent) 8%,  transparent), transparent 70%),
-    radial-gradient(45% 22% at 95% 38%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
-    radial-gradient(40% 20% at 8% 55%,  color-mix(in srgb, var(--accent) 7%,  transparent), transparent 70%),
-    radial-gradient(45% 22% at 92% 72%, color-mix(in srgb, var(--accent) 9%,  transparent), transparent 70%),
-    radial-gradient(40% 20% at 10% 88%, color-mix(in srgb, var(--accent) 8%,  transparent), transparent 70%),
-    radial-gradient(50% 25% at 95% 98%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
-}
+/* фоновый слой с анимированными glow — единый для всей страницы (как на других страницах) */
+.bg-stage{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-stage .glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.45;will-change:transform}
+.bg-stage .g1{width:55vw;height:55vw;top:-15vw;left:-15vw;background:radial-gradient(circle, color-mix(in srgb, var(--accent) 26%, transparent), transparent 60%);animation:drift1 28s ease-in-out infinite}
+.bg-stage .g2{width:60vw;height:60vw;bottom:-20vw;right:-20vw;background:radial-gradient(circle, color-mix(in srgb, #4b5563 50%, transparent), transparent 60%);animation:drift2 36s ease-in-out infinite}
+.bg-stage .g3{width:42vw;height:42vw;top:45%;left:46%;background:radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%);animation:drift3 44s ease-in-out infinite;opacity:.3}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vw) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-6vw,-4vw) scale(.95)}}
+@keyframes drift3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-40%,-60%) scale(1.15)}}
 /* Уменьшаем огромную пустоту между секциями */
 .section{padding:clamp(60px,8vw,120px) 0}
 .section--dark h1,.section--dark h2,.section--dark h3,.section--dark h4{color:var(--text-on-dark-bright)}
@@ -1296,11 +1291,12 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=41">
+<link rel="stylesheet" href="assets/site.css?v=46">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
 
+<div class="bg-stage" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div></div>
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 
 <!-- HEADER -->
@@ -1809,7 +1805,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=41
+// FAQ smooth-open handled by assets/site.js?v=46
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1920,7 +1916,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=41" defer></script>
+<script src="assets/site.js?v=46" defer></script>
 
 </body>
 </html>
