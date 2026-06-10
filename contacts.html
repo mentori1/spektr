@@ -177,7 +177,12 @@ p{margin:0}
    CONTACT BLOCK — split: info | form
    ════════════════════════════════════════════════════════════════ */
 .contact{padding:clamp(48px,8vw,120px) 0}
-.contact-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(40px,6vw,80px);align-items:flex-start}
+.contact-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(40px,6vw,80px);align-items:stretch}
+.contact-grid .form-glass{display:flex;flex-direction:column}
+.contact-grid .form-glass form{display:flex;flex-direction:column;flex:1}
+/* поля растягиваются, кнопка и согласие прижаты вниз */
+.contact-grid .form-glass form .field:last-of-type{flex:1;display:flex;flex-direction:column}
+.contact-grid .form-glass form .field:last-of-type textarea{flex:1;min-height:120px;resize:none}
 
 /* LEFT — info */
 .contact-info{position:relative}
@@ -454,7 +459,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=38">
+<link rel="stylesheet" href="assets/site.css?v=39">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -765,7 +770,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   </div>
 </aside>
 
-<script src="assets/site.js?v=38" defer></script>
+<script src="assets/site.js?v=39" defer></script>
 
 </body>
 </html>

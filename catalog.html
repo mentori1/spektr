@@ -336,35 +336,36 @@ p{margin:0}
   backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
   border:1px solid color-mix(in srgb, var(--accent) 32%, transparent);
 }
+/* обёртка блока доборных — на всю ширину грида */
+.dobor-wrap{grid-column:1 / -1;display:block}
+.dobor-intro{max-width:760px;margin-bottom:clamp(32px,4vw,48px)}
 .dobor-intro .eyebrow{margin-bottom:16px}
-.dobor-intro h3{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,3vw,40px);text-transform:uppercase;letter-spacing:-.02em;line-height:1.05;margin-bottom:16px;color:var(--text-on-dark-bright)}
-.dobor-intro p{font-size:14px;color:var(--text-on-dark);line-height:1.7;max-width:48ch}
+.dobor-intro h3{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,3vw,40px);text-transform:uppercase;letter-spacing:-.02em;line-height:1.05;margin-bottom:16px;color:var(--text-on-dark-bright);max-width:20ch}
+.dobor-intro p{font-size:14px;color:var(--text-on-dark);line-height:1.7;max-width:52ch}
 .dobor-intro p strong{color:var(--text-on-dark-bright);font-weight:600}
 .dobor-intro .actions{display:flex;flex-wrap:wrap;gap:12px}
-.dobor-list-wrap{
-  border-left:2px solid color-mix(in srgb, var(--accent) 50%, transparent);
-  padding-left:clamp(20px,2.5vw,32px);
+/* сетка карточек доборных */
+.dobor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.dobor-card{
+  padding:22px 22px 24px;border-radius:var(--r-md);
+  background:linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(255,255,255,.08);
+  transition:transform .35s var(--ease-out), border-color .35s var(--ease-out);
 }
-.dobor-list-label{
-  font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
-  color:var(--text-on-dark-dim);text-transform:uppercase;margin-bottom:18px;
-}
-.dobor-list{list-style:none;margin:0;padding:0;display:grid;gap:11px}
-.dobor-list li{
-  position:relative;padding-left:20px;
-  font-size:14px;color:var(--text-on-dark);line-height:1.4;
-}
-.dobor-list li::before{
-  content:"";position:absolute;left:0;top:9px;
-  width:8px;height:1px;background:var(--accent);
-}
+.dobor-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb, var(--accent) 40%, transparent)}
+.dobor-card-name{font-family:var(--f-display);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:-.005em;color:var(--text-on-dark-bright);line-height:1.15;margin-bottom:8px}
+.dobor-card-art{font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;color:var(--accent);margin-bottom:12px}
+.dobor-card-desc{font-size:12.5px;color:var(--text-on-dark-dim);line-height:1.55}
 .dobor-note{
-  margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);
-  font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--accent);text-transform:uppercase;
+  margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--text-on-dark-dim);
 }
 @media (max-width:880px){
-  .dobor-block{grid-template-columns:1fr;gap:32px}
-  .dobor-list-wrap{border-left:none;border-top:1px solid rgba(255,255,255,.08);padding-left:0;padding-top:28px}
+  .dobor-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .dobor-grid{grid-template-columns:1fr}
 }
 
 /* ════════ PRODUCT IMAGE PATTERNS ════════ */
@@ -610,7 +611,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=38">
+<link rel="stylesheet" href="assets/site.css?v=39">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -669,7 +670,7 @@ p{margin:0}
   <!-- ════════ HERO ════════ -->
   <section class="hero">
     <div class="container hero-inner reveal">
-        <h1 class="hero-title">Каталог<br/>металло<em>изделий.</em></h1>
+        <h1 class="hero-title">Каталог<em>.</em></h1>
       <p class="hero-desc">
         Кровля, фасад, профнастил, водостоки и изделия собственного производства. Изготовление по размерам клиента — от 30 минут от подтверждения заявки.
       </p>
@@ -1148,32 +1149,41 @@ function customBannerHTML(){
     </div>`;
 }
 
-/* Категория «Доборные элементы» — перечень + текст, без цен */
+/* Категория «Доборные элементы» — перечень с артикулами, без цен и фото */
 const DOBOR_ITEMS = [
-  'Конёк плоский / полукруглый', 'Ендова нижняя и верхняя',
-  'Планка примыкания', 'Планка торцевая (ветровая)',
-  'Планка карнизная', 'Планка фронтонная',
-  'Снегозадержатель', 'Парапетная крышка',
-  'Водоотлив (отлив оконный/цокольный)', 'Откос оконный / дверной',
+  { name:'Планка конька плоского',          art:'ПКП-200×200×2000 · ПКП-140×140×2000', desc:'Защищает стык двух скатов кровли от попадания влаги и грязи в подкровельное пространство.' },
+  { name:'Планка карнизной рейки',          art:'ПКР-71×100×2000',  desc:'Защищает деревянные элементы кровли и фасада от влаги, направляет воду в водосточный жёлоб.' },
+  { name:'Планка угла наружного',           art:'ПКР-110×100×2000', desc:'Защищает стыки от внешнего воздействия, выполняет декоративную функцию.' },
+  { name:'Планка ендовы нижняя',            art:'ПЕН-298×298×2000', desc:'Закрывает пространство между двумя скатами крыши, предотвращает попадание влаги внутрь.' },
+  { name:'Планка угла внутреннего (нижняя)',art:'ПУВН-110×110×2000',desc:'Для узла примыкания углов кровли к стене. Декоративная функция.' },
+  { name:'Планка конька фигурного',         art:'ПКФ-…×2000',       desc:'Защищает стык двух скатов от попадания влаги и грязи в подкровельное пространство.' },
+  { name:'Планка ендовы верхняя',           art:'ПЕВ-76×76×2000',   desc:'Закрывает пространство между скатами крыши, выполняет декоративную функцию.' },
+  { name:'Планка угла внутреннего (верхняя)',art:'ПУВВ-90×127×2000',desc:'Для узла примыкания углов кровли к стене.' },
+  { name:'Планка торцевая',                 art:'ПТ-130×120×2000',  desc:'Защищает кровлю по фронтону от ветровой нагрузки, разбалтывания крепежа и влаги.' },
+  { name:'Планка примыкания (верхняя)',     art:'ППВ-250×147×2000', desc:'Для узла примыкания кровли к стене (верхний элемент).' },
+  { name:'Планка снегозадержателя',         art:'ПСЗ-70×140×2000',  desc:'Предотвращает осыпь мелкой ледовой и снеговой крошки с кровли.' },
+  { name:'Планка примыкания (нижняя)',      art:'ППН-250×122×2000', desc:'Для узла примыкания кровли к стене. Устанавливается под профлист или металлочерепицу.' },
 ];
 function doborBlockHTML(){
-  const items = DOBOR_ITEMS.map(t => `<li>${t}</li>`).join('');
+  const cards = DOBOR_ITEMS.map(d => `
+    <div class="dobor-card">
+      <div class="dobor-card-name">${d.name}</div>
+      <div class="dobor-card-art">${d.art}</div>
+      <div class="dobor-card-desc">${d.desc}</div>
+    </div>`).join('');
   return `
-    <div class="dobor-block">
+    <div class="dobor-wrap">
       <div class="dobor-intro">
         <span class="eyebrow">Под ваши размеры</span>
-        <h3>Изготовим доборные элементы<br/>по вашим размерам</h3>
-        <p>Длина изделия — до&nbsp;<strong>3&nbsp;метров</strong>, толщина металла — до&nbsp;<strong>0,5&nbsp;мм</strong>. Гибка по&nbsp;вашему чертежу с&nbsp;точностью ±0.5°, в&nbsp;любой цвет RAL. Стоимость рассчитывается индивидуально под каждый заказ.</p>
+        <h3>Изготовим доборные элементы по вашим размерам</h3>
+        <p>Длина изделия — до&nbsp;<strong>3&nbsp;метров</strong>, толщина металла — до&nbsp;<strong>0,5&nbsp;мм</strong>. Гибка по&nbsp;вашему чертежу с&nbsp;точностью ±0.5°, в&nbsp;любой цвет RAL. Стоимость каждой позиции рассчитывается индивидуально.</p>
         <div class="actions" style="margin-top:22px">
           <a href="contacts.html" class="btn btn-accent">Заказать по чертежу ${ARROW_SVG}</a>
           <a href="https://wa.me/79236819709?text=Здравствуйте,%20хочу%20изготовить%20доборные%20элементы%20по%20размерам" target="_blank" rel="noopener" class="btn btn-ghost">Скинуть в WhatsApp</a>
         </div>
       </div>
-      <div class="dobor-list-wrap">
-        <div class="dobor-list-label">Что изготавливаем</div>
-        <ul class="dobor-list">${items}</ul>
-        <div class="dobor-note">Цена — по запросу, расчёт за&nbsp;30&nbsp;минут.</div>
-      </div>
+      <div class="dobor-grid">${cards}</div>
+      <div class="dobor-note">Цена — по запросу, расчёт за&nbsp;30&nbsp;минут. Артикулы указаны в&nbsp;формате «ширина × высота × длина, мм».</div>
     </div>`;
 }
 
@@ -1325,7 +1335,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=38" defer></script>
+<script src="assets/site.js?v=39" defer></script>
 
 </body>
 </html>
