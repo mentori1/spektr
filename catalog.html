@@ -338,7 +338,7 @@ p{margin:0}
 }
 /* обёртка блока доборных — на всю ширину грида */
 .dobor-wrap{grid-column:1 / -1;display:block}
-.dobor-intro{max-width:760px;margin-bottom:clamp(32px,4vw,48px)}
+.dobor-intro{max-width:760px;margin-top:clamp(32px,4vw,48px)}
 .dobor-intro .eyebrow{margin-bottom:16px}
 .dobor-intro h3{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,3vw,40px);text-transform:uppercase;letter-spacing:-.02em;line-height:1.05;margin-bottom:16px;color:var(--text-on-dark-bright);max-width:20ch}
 .dobor-intro p{font-size:14px;color:var(--text-on-dark);line-height:1.7;max-width:52ch}
@@ -611,7 +611,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=47">
+<link rel="stylesheet" href="assets/site.css?v=52">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1203,6 +1203,8 @@ function doborBlockHTML(){
     </div>`).join('');
   return `
     <div class="dobor-wrap">
+      <div class="dobor-grid">${cards}</div>
+      <div class="dobor-note">Цена — по запросу, расчёт за&nbsp;30&nbsp;минут. Артикулы указаны в&nbsp;формате «ширина × высота × длина, мм».</div>
       <div class="dobor-intro">
         <span class="eyebrow">Под ваши размеры</span>
         <h3>Изготовим доборные элементы по вашим размерам</h3>
@@ -1212,8 +1214,6 @@ function doborBlockHTML(){
           <a href="https://wa.me/79236819709?text=Здравствуйте,%20хочу%20изготовить%20доборные%20элементы%20по%20размерам" target="_blank" rel="noopener" class="btn btn-ghost">Скинуть в WhatsApp</a>
         </div>
       </div>
-      <div class="dobor-grid">${cards}</div>
-      <div class="dobor-note">Цена — по запросу, расчёт за&nbsp;30&nbsp;минут. Артикулы указаны в&nbsp;формате «ширина × высота × длина, мм».</div>
     </div>`;
 }
 
@@ -1365,7 +1365,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=47" defer></script>
+<script src="assets/site.js?v=52" defer></script>
 
 </body>
 </html>
