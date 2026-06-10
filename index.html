@@ -915,7 +915,8 @@ p{margin:0}
 
 .contact-wrap{
   display:grid;grid-template-columns:1.1fr .9fr;gap:48px;
-  align-items:start;
+  /* форма справа заканчивается вровень с левым блоком */
+  align-items:stretch;
 }
 /* блок «Свяжитесь с производством» — особое выравнивание */
 .contacts-head{align-items:flex-start !important}
@@ -963,9 +964,13 @@ p{margin:0}
 .form{
   border:1px solid var(--line-dark);
   border-radius:var(--r-md);
-  padding:clamp(28px, 3vw, 40px);
+  padding:clamp(24px, 2.5vw, 32px);
   background:color-mix(in srgb, var(--bg-graphite) 50%, transparent);
+  /* колонка: textarea растягивается, кнопка прижата вниз — форма точно по высоте левого блока */
+  display:flex;flex-direction:column;
 }
+.form .field:has(textarea){flex:1;display:flex;flex-direction:column}
+.form .field:has(textarea) textarea{flex:1;min-height:80px;resize:none}
 .form h3{
   font-family:var(--f-display);font-weight:700;font-size:18px;
   margin-bottom:8px;letter-spacing:-.005em;color:var(--text-on-dark-bright);
@@ -1301,7 +1306,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=49">
+<link rel="stylesheet" href="assets/site.css?v=50">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1897,7 +1902,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=49
+// FAQ smooth-open handled by assets/site.js?v=50
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2008,7 +2013,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=49" defer></script>
+<script src="assets/site.js?v=50" defer></script>
 
 </body>
 </html>
