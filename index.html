@@ -585,10 +585,11 @@ p{margin:0}
 
 .section-head{
   display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);
-  align-items:end;margin-bottom:clamp(48px, 7vw, 96px);
+  align-items:start;margin-bottom:clamp(48px, 7vw, 96px);
 }
 .section-head h2{max-width:14ch}
-.section-head .lead{max-width:46ch}
+/* текст справа — на уровне ~2-й строки заголовка (единообразно во всех секциях) */
+.section-head .lead{max-width:46ch;margin-top:clamp(44px, 5vw, 76px)}
 .section-index{
   font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;
   color:var(--text-on-dark-dim);text-transform:uppercase;
@@ -1127,9 +1128,6 @@ p{margin:0}
 /* стык «Производство» → «Доставка» компактнее */
 #custom{padding-bottom:clamp(32px,4vw,56px)}
 #delivery{padding-top:clamp(32px,4vw,56px)}
-/* текст справа в шапке «Доставки» — поднят к верху, на уровень заголовка */
-#delivery .section-head{align-items:flex-start}
-#delivery .section-head .lead{margin-top:8px}
 .section--dark h1,.section--dark h2,.section--dark h3,.section--dark h4{color:var(--text-on-dark-bright)}
 .section--dark .eyebrow{color:var(--text-on-dark-dim)}
 .section--dark .lead{color:var(--text-on-dark)}
@@ -1316,7 +1314,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=63">
+<link rel="stylesheet" href="assets/site.css?v=64">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1912,7 +1910,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=63
+// FAQ smooth-open handled by assets/site.js?v=64
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2023,7 +2021,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=63" defer></script>
+<script src="assets/site.js?v=64" defer></script>
 
 </body>
 </html>
