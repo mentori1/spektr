@@ -312,6 +312,17 @@
 /* Цены в каталоге/списках — ярче для контраста */
 .cat-price,.product-price,.price{color:#f3f4f6 !important;font-weight:600}
 
+/* ═══ ЮР. РЕКВИЗИТЫ В ФУТЕРЕ (152-ФЗ / ЗОЗПП) ═══ */
+.footer-legal{
+  margin-top:28px;padding-top:20px;
+  border-top:1px solid var(--line, rgba(255,255,255,.07));
+  font-family:var(--f-mono,"JetBrains Mono");
+  font-size:11.5px;line-height:1.7;letter-spacing:.03em;
+  color:var(--text-on-dark-dim,#7d828a);
+}
+.footer-legal b{color:var(--text-on-dark,#c9ccd2);font-weight:500}
+.footer-legal .sep{color:var(--text-on-dark-deep,#4a4f57);margin:0 6px}
+
 /* ═══ АНТИ-ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ (жёстко, для всех страниц) ═══ */
 html{overflow-x:hidden;max-width:100%}
 body{overflow-x:hidden;max-width:100vw;position:relative}
@@ -362,14 +373,17 @@ h1,h2,h3{max-width:100%;word-break:normal;overflow-wrap:normal;hyphens:none}
 .cookie-banner.show{transform:translateY(0)}
 .cookie-banner-text{flex:1;min-width:0;font-size:12.5px;line-height:1.5;color:var(--text-on-dark,#c9ccd2)}
 .cookie-banner-text a{color:var(--accent-hover,#dc2626);text-decoration:underline;text-underline-offset:2px}
+.cookie-banner-actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap}
 .cookie-banner button{
-  background:var(--accent,#b91c1c);color:#fff;
-  border:none;padding:10px 20px;border-radius:999px;
-  font-family:var(--f-secondary,"Unbounded");font-weight:500;font-size:11.5px;letter-spacing:.06em;
+  border:none;padding:10px 18px;border-radius:999px;
+  font-family:var(--f-secondary,"Unbounded");font-weight:500;font-size:11px;letter-spacing:.05em;
   text-transform:uppercase;cursor:pointer;flex:0 0 auto;
-  transition:background .25s ease;
+  transition:background .25s ease, border-color .25s ease;
 }
-.cookie-banner button:hover{background:var(--accent-hover,#dc2626)}
+.cookie-accept{background:var(--accent,#b91c1c);color:#fff}
+.cookie-accept:hover{background:var(--accent-hover,#dc2626)}
+.cookie-decline{background:rgba(255,255,255,.06);color:var(--text-on-dark,#c9ccd2);border:1px solid rgba(255,255,255,.16)}
+.cookie-decline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
 /* на мобиле sticky-bar внизу не даёт места — поднимем баннер выше */
 @media (max-width:880px){
   .cookie-banner{bottom:88px}

@@ -49,4 +49,28 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://spectr-metalla.ru/offer.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://spectr-metalla.ru/return-policy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://spectr-metalla.ru/policy-personal-data.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://spectr-metalla.ru/policy-privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>

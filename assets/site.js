@@ -272,20 +272,30 @@
     banner.innerHTML = `
       <div class="cookie-banner-text">
         Мы используем cookies и Яндекс.Метрику для улучшения работы сайта.
-        Продолжая просмотр, вы соглашаетесь с
-        <a href="policy-privacy.html">Политикой конфиденциальности</a>
+        Аналитика подключается только после вашего согласия. Подробнее в
+        <a href="policy-privacy.html">Политике конфиденциальности</a>
         и
-        <a href="policy-personal-data.html">обработкой персональных данных</a>.
+        <a href="policy-personal-data.html">Политике обработки персональных данных</a>.
       </div>
-      <button type="button" class="cookie-accept">Принять</button>`;
+      <div class="cookie-banner-actions">
+        <button type="button" class="cookie-accept">Принять</button>
+        <button type="button" class="cookie-decline">Только необходимые</button>
+      </div>`;
     document.body.appendChild(banner);
     // плавное появление
     requestAnimationFrame(() => requestAnimationFrame(() => banner.classList.add('show')));
 
+    function close(){ banner.classList.remove('show'); setTimeout(() => banner.remove(), 600); }
+
     banner.querySelector('.cookie-accept').addEventListener('click', () => {
       try { localStorage.setItem(COOKIE_KEY, 'accepted'); } catch {}
-      banner.classList.remove('show');
-      setTimeout(() => banner.remove(), 600);
+      if (typeof window.SM_loadMetrika === 'function') window.SM_loadMetrika();
+      close();
+    });
+    banner.querySelector('.cookie-decline').addEventListener('click', () => {
+      try { localStorage.setItem(COOKIE_KEY, 'declined'); } catch {}
+      // Метрику не загружаем — только технические cookies
+      close();
     });
   }
 
@@ -317,17 +327,30 @@
      • download_price     — клик «Скачать прайс»
      • form_submit        — отправка формы расчёта
    ════════════════════════════════════════════════════════════════ */
-(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-m[i].l=1*new Date();
-for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
 /* ВНИМАНИЕ: при подключении замени значение ниже на свой ID счётчика */
 window.SM_METRIKA_ID = 'COUNTER_ID_PLACEHOLDER';
-if (window.SM_METRIKA_ID && window.SM_METRIKA_ID !== 'COUNTER_ID_PLACEHOLDER') {
-  ym(window.SM_METRIKA_ID, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true });
-}
+
+/* Метрика загружается ТОЛЬКО после согласия пользователя на cookies (152-ФЗ).
+   Скрипт tag.js и трекеры НЕ подгружаются до клика «Принять». */
+window.SM_loadMetrika = function(){
+  if (window.__sm_metrika_loaded) return;
+  window.__sm_metrika_loaded = true;
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  if (window.SM_METRIKA_ID && window.SM_METRIKA_ID !== 'COUNTER_ID_PLACEHOLDER') {
+    ym(window.SM_METRIKA_ID, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true });
+  }
+};
+
+/* Если пользователь уже дал согласие ранее — грузим Метрику сразу */
+try {
+  if (localStorage.getItem('sm_cookie_consent_v1') === 'accepted') {
+    window.SM_loadMetrika();
+  }
+} catch {}
 
 /* Хелпер для отправки целей в Метрику */
 window.SMGoal = function(name, params){

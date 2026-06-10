@@ -413,6 +413,25 @@ p{margin:0}
   h1{font-size:clamp(22px, 7vw, 30px) !important}
   h2{font-size:clamp(19px, 5.5vw, 26px) !important}
 }
+
+/* ─── Блок «Транспорт» (карточки 01/02/03) ─── */
+.usp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,48px)}
+.usp-cell{
+  display:flex;flex-direction:column;gap:14px;
+  padding-left:24px;border-left:2px solid var(--accent);
+}
+.usp-num{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;
+  color:var(--accent);text-transform:uppercase;font-weight:600;
+}
+.usp-title{
+  font-family:var(--f-display);font-weight:800;font-size:clamp(20px,1.8vw,26px);
+  line-height:1.1;color:var(--text-on-dark-bright);text-transform:uppercase;letter-spacing:-.01em;
+}
+.usp-desc{font-size:14px;color:var(--text-on-dark-dim);line-height:1.6;max-width:32ch}
+@media (max-width:880px){
+  .usp-grid{grid-template-columns:1fr;gap:28px}
+}
 </style>
 
 <!-- ═══ SEO: OG + Schema.org — вставлено site-bootstrap ═══ -->
@@ -708,8 +727,11 @@ p{margin:0}
           <li><a href="contacts.html">Контакты</a></li>
           <li><a href="policy-personal-data.html">Политика ПД</a></li>
           <li><a href="policy-privacy.html">Конфиденциальность</a></li>
+          <li><a href="offer.html">Оферта</a></li>
+          <li><a href="return-policy.html">Возврат</a></li>
         </ul>
       </div>
+      <div class="footer-legal"><b>ООО «Спектр»</b><span class="sep">·</span>ИНН 5501096616<span class="sep">·</span>ОГРН 1065501054530<span class="sep">·</span>КПП 550101001<span class="sep">·</span>644085, г. Омск, пр. Мира, 191</div>
       <div class="footer-bot">
         <span>© <span id="yr">2026</span> · Спектр Металла</span>
         <span>SM // SPECTRUM·METAL // ENGINEERED IN RU</span>
