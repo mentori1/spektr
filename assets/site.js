@@ -301,15 +301,16 @@
   function formatPhone(digits){
     // оставляем максимум 11 цифр, первая всегда 7
     let d = digits.replace(/\D/g, '');
-    if (d.startsWith('8'))  d = '7' + d.slice(1);
-    if (d.startsWith('9') && d.length <= 10) d = '7' + d; // ввели без кода страны
-    if (!d.startsWith('7')) d = '7' + d;
+    if (d.startsWith('8')) d = '7' + d.slice(1);
+    if (d && d[0] !== '7') d = '7' + d; // ввели без кода страны / с 9...
     d = d.slice(0, 11);
+    if (d.length <= 1) return d ? '+7' : '';
+    // разделители добавляем ТОЛЬКО когда за ними есть цифра — иначе backspace застревает
     let out = '+7';
     if (d.length > 1) out += ' (' + d.slice(1, 4);
-    if (d.length >= 4) out += ') ' + d.slice(4, 7);
-    if (d.length >= 7) out += '-' + d.slice(7, 9);
-    if (d.length >= 9) out += '-' + d.slice(9, 11);
+    if (d.length > 4) out += ') ' + d.slice(4, 7);
+    if (d.length > 7) out += '-' + d.slice(7, 9);
+    if (d.length > 9) out += '-' + d.slice(9, 11);
     return out;
   }
   function initPhoneMask(){
@@ -318,17 +319,26 @@
       inp.dataset.maskBound = '1';
       inp.setAttribute('inputmode', 'tel');
       inp.setAttribute('maxlength', '18');
-      const apply = () => { inp.value = inp.value.trim() === '' ? '' : formatPhone(inp.value); };
-      inp.addEventListener('input', apply);
+
+      inp.addEventListener('input', (e) => {
+        inp.setCustomValidity('');
+        const isDelete = e.inputType && e.inputType.indexOf('delete') === 0;
+        const digits = inp.value.replace(/\D/g, '');
+        // полностью пусто или осталась одна цифра при удалении — очищаем
+        if (digits.length === 0 || (isDelete && digits.length <= 1)) { inp.value = ''; return; }
+        inp.value = formatPhone(inp.value);
+      });
       inp.addEventListener('focus', () => { if (!inp.value) inp.value = '+7 ('; });
-      inp.addEventListener('blur',  () => { if (inp.value === '+7 (' || inp.value === '+7') inp.value = ''; });
+      inp.addEventListener('blur',  () => {
+        const digits = inp.value.replace(/\D/g, '');
+        if (digits.length <= 1) inp.value = '';
+      });
       // запрет на отправку неполного номера
       inp.addEventListener('invalid', () => {
         const digits = inp.value.replace(/\D/g, '');
         if (digits.length && digits.length < 11) inp.setCustomValidity('Введите номер полностью: +7 (___) ___-__-__');
         else inp.setCustomValidity('');
       });
-      inp.addEventListener('input', () => inp.setCustomValidity(''));
     });
   }
 
