@@ -166,7 +166,8 @@ p{margin:0}
 .filter-pill.active{background:color-mix(in srgb, var(--accent) 22%, transparent);border-color:color-mix(in srgb, var(--accent) 55%, transparent);color:#fff}
 
 /* RAL */
-.color-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:4px;padding-bottom:18px}
+/* row-gap 26px — чтобы код RAL под квадратом не наезжал на следующий ряд */
+.color-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:26px 8px;margin-top:4px;padding-bottom:8px}
 .color-cell{
   position:relative;aspect-ratio:1/1;border-radius:6px;cursor:pointer;
   border:1px solid rgba(255,255,255,.12);transition:all .25s var(--ease);
@@ -175,10 +176,10 @@ p{margin:0}
 .color-cell:hover{transform:translateY(-2px)}
 .color-cell.active{outline:2px solid var(--accent);outline-offset:2px}
 .color-cell::after{
-  content:attr(data-ral);position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);
-  font-family:var(--f-mono);font-size:8.5px;letter-spacing:.06em;color:var(--text-on-dark-deep);white-space:nowrap;
+  content:attr(data-ral);position:absolute;bottom:-17px;left:50%;transform:translateX(-50%);
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.04em;color:var(--text-on-dark-dim);white-space:nowrap;
 }
-.color-cell:hover::after,.color-cell.active::after{color:var(--text-on-dark)}
+.color-cell:hover::after,.color-cell.active::after{color:var(--text-on-dark-bright)}
 
 /* ════════ PRODUCT GRID ════════ */
 .products-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:22px;flex-wrap:wrap}
@@ -609,7 +610,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=77">
+<link rel="stylesheet" href="assets/site.css?v=78">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1386,7 +1387,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=77" defer></script>
+<script src="assets/site.js?v=78" defer></script>
 
 </body>
 </html>
