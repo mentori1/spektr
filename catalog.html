@@ -613,7 +613,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=73">
+<link rel="stylesheet" href="assets/site.css?v=76">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1122,7 +1122,7 @@ function productCard(p, pat){
   `).join('');
 
   return `
-    <a href="contacts.html" class="product ${pat}" data-item="${itemJSON}">
+    <div class="product ${pat}" data-item="${itemJSON}">
       <div class="product-image">
         ${photoHTML}
         ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
@@ -1160,7 +1160,7 @@ function productCard(p, pat){
           </button>
         </div>
       </div>
-    </a>`;
+    </div>`;
 }
 
 function customBannerHTML(){
@@ -1391,7 +1391,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=73" defer></script>
+<script src="assets/site.js?v=76" defer></script>
 
 </body>
 </html>
