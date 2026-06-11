@@ -1320,7 +1320,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=65">
+<link rel="stylesheet" href="assets/site.css?v=66">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1844,10 +1844,13 @@ p{margin:0}
             <textarea id="f-msg" placeholder="Например: профнастил С8, забор 40 м, высота 2 м, RAL 6005"></textarea>
           </div>
           <label class="consent">
-            <input type="checkbox" name="consent" required>
-            <span>Я согласен на обработку персональных данных согласно
-            <a href="policy-personal-data.html" target="_blank">Политике</a>
-            и принимаю условия
+            <input type="checkbox" name="consent_pd" required>
+            <span>Даю согласие на обработку персональных данных согласно
+            <a href="policy-personal-data.html" target="_blank">Политике</a>.</span>
+          </label>
+          <label class="consent">
+            <input type="checkbox" name="accept_offer" required>
+            <span>Принимаю условия
             <a href="offer.html" target="_blank">Оферты</a>.</span>
           </label>
           <button type="submit" class="btn btn-accent btn-block">
@@ -1916,7 +1919,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=65
+// FAQ smooth-open handled by assets/site.js?v=66
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2027,7 +2030,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=65" defer></script>
+<script src="assets/site.js?v=66" defer></script>
 
 </body>
 </html>

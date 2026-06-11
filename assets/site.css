@@ -222,6 +222,8 @@
 }
 .cart-summary b{font-family:var(--f-display,"Big Shoulders Display");font-size:18px;color:#f3f4f6;letter-spacing:-.005em}
 .cart-actions{display:grid;gap:10px}
+.cart-consent{margin-top:12px;font-size:10.5px;line-height:1.45;color:var(--text-on-dark-dim,#7d828a);text-align:center}
+.cart-consent a{color:var(--text-on-dark,#c9ccd2);text-decoration:underline;text-underline-offset:2px}
 
 /* ═══ КНОПКА «В ЗАЯВКУ» В КАРТОЧКЕ ═══ */
 .add-to-cart{
@@ -410,6 +412,8 @@ h1,h2,h3{max-width:100%;word-break:normal;overflow-wrap:normal;hyphens:none}
   cursor:pointer;
   user-select:none;
 }
+/* два чекбокса подряд (ПДн + Оферта) — компактнее */
+.consent + .consent{margin-top:0;margin-bottom:14px}
 .consent input[type=checkbox]{
   flex:0 0 auto;width:18px;height:18px;
   appearance:none;-webkit-appearance:none;
