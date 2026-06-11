@@ -185,14 +185,16 @@ p{margin:0}
 .contact-grid .form-glass form .field:last-of-type textarea{flex:1;min-height:120px;resize:none}
 
 /* LEFT — info */
-.contact-info{position:relative}
-.contact-info .eyebrow{margin-bottom:20px}
+/* левый блок — flex-колонка, строки распределяются на высоту формы (низ вровень) */
+.contact-info{position:relative;display:flex;flex-direction:column}
+.contact-info .eyebrow{margin-bottom:20px;flex:0 0 auto}
 .contact-row{
   display:flex;justify-content:space-between;align-items:baseline;gap:24px;
-  padding:28px 0;
+  padding:28px 0;flex:1 1 auto;min-height:0;
   border-bottom:1px solid var(--line);
   transition:padding-left .35s var(--ease);
 }
+.contact-row:last-child{border-bottom:none}
 .contact-row:first-child{padding-top:0}
 .contact-row:hover{padding-left:8px}
 .contact-row .label{
@@ -459,7 +461,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=79">
+<link rel="stylesheet" href="assets/site.css?v=80">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -778,7 +780,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   </div>
 </aside>
 
-<script src="assets/site.js?v=79" defer></script>
+<script src="assets/site.js?v=80" defer></script>
 
 </body>
 </html>
