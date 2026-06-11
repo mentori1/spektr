@@ -390,6 +390,15 @@ p{margin:0}
 }
 .hero-actions .btn-long{display:inline}
 .hero-actions .btn-short{display:none}
+/* подсветка главной CTA «Получить расчёт» — мягкая пульсация */
+.btn-pulse{box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);animation:btnPulse 2.4s ease-out infinite}
+.btn-pulse:hover{animation-play-state:paused}
+@keyframes btnPulse{
+  0%   {box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent)}
+  70%  {box-shadow:0 0 0 16px color-mix(in srgb, var(--accent) 0%, transparent)}
+  100% {box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent)}
+}
+@media (prefers-reduced-motion:reduce){.btn-pulse{animation:none}}
 
 .hero-info{
   margin-top:64px;padding-top:24px;
@@ -1320,7 +1329,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=68">
+<link rel="stylesheet" href="assets/site.css?v=70">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1391,14 +1400,14 @@ p{margin:0}
         </p>
 
         <div class="hero-actions">
+          <a href="#contacts" class="btn btn-accent btn-pulse">
+            <span class="btn-long">Получить расчёт</span>
+            <span class="btn-short">Расчёт</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
           <a href="catalog.html" class="btn btn-primary">
             <span class="btn-long">Каталог продукции</span>
             <span class="btn-short">Каталог</span>
-            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a href="#contacts" class="btn btn-ghost">
-            <span class="btn-long">Получить расчёт</span>
-            <span class="btn-short">Расчёт</span>
           </a>
         </div>
       </div>
@@ -1919,7 +1928,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=68
+// FAQ smooth-open handled by assets/site.js?v=70
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2030,7 +2039,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=68" defer></script>
+<script src="assets/site.js?v=70" defer></script>
 
 </body>
 </html>
