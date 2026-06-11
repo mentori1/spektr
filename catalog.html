@@ -310,20 +310,16 @@ p{margin:0}
     linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
   backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
   border:1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-  display:grid;grid-template-columns:1.4fr .6fr;gap:32px;align-items:center;
+  display:grid;grid-template-columns:1fr auto;gap:clamp(24px,4vw,56px);align-items:center;
 }
-.custom-banner .eyebrow{margin-bottom:14px}
-.custom-banner h3{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,2.8vw,38px);text-transform:uppercase;letter-spacing:-.02em;line-height:1.05;margin-bottom:14px;max-width:16ch;color:var(--text-on-dark-bright)}
-.custom-banner p{font-size:13.5px;color:var(--text-on-dark);max-width:46ch;line-height:1.65}
-.custom-banner .number{
-  font-family:var(--f-display);font-weight:900;font-size:clamp(120px,16vw,220px);
-  line-height:.82;color:transparent;
-  -webkit-text-stroke:1px color-mix(in srgb, var(--accent) 50%, transparent);
-  position:absolute;right:-12px;bottom:-32px;
-  pointer-events:none;letter-spacing:-.04em;z-index:0;
-}
+.custom-banner h3{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,2.8vw,38px);text-transform:uppercase;letter-spacing:-.02em;line-height:1.05;margin-bottom:14px;max-width:18ch;color:var(--text-on-dark-bright)}
+.custom-banner p{font-size:13.5px;color:var(--text-on-dark);max-width:52ch;line-height:1.65}
 .custom-banner > div{position:relative;z-index:1}
-.custom-banner .actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
+.custom-banner-cta{display:flex;justify-content:flex-end;flex:0 0 auto}
+@media (max-width:720px){
+  .custom-banner{grid-template-columns:1fr;gap:24px}
+  .custom-banner-cta{justify-content:flex-start}
+}
 
 /* ════════ ДОБОРНЫЕ ЭЛЕМЕНТЫ — блок без цен ════════ */
 .dobor-block{
@@ -613,7 +609,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=76">
+<link rel="stylesheet" href="assets/site.css?v=77">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1169,12 +1165,11 @@ function customBannerHTML(){
   return `
     <div class="custom-banner">
       <div>
-        <span class="eyebrow">Доборные элементы</span>
         <h3>Можем изготовить под ваши размеры</h3>
         <p>Коньки, ендовы, отливы, планки примыкания, парапеты, нестандартные доборные элементы и металлоизделия по вашему чертежу. Точность гибки ±0.5°, без минимальной партии. Срок — от 30 минут.</p>
-        <div class="actions" style="margin-top:18px">
-          <a href="contacts.html" class="btn btn-accent">Заказать по чертежу ${ARROW_SVG}</a>
-        </div>
+      </div>
+      <div class="custom-banner-cta">
+        <a href="contacts.html" class="btn btn-accent">Заказать по чертежу ${ARROW_SVG}</a>
       </div>
     </div>`;
 }
@@ -1391,7 +1386,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=76" defer></script>
+<script src="assets/site.js?v=77" defer></script>
 
 </body>
 </html>
