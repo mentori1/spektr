@@ -598,7 +598,7 @@ p{margin:0}
 }
 .section-head h2{max-width:14ch}
 /* текст справа — на уровне ~2-й строки заголовка (единообразно во всех секциях) */
-.section-head .lead{max-width:46ch;margin-top:clamp(44px, 5vw, 76px)}
+.section-head .lead{max-width:48ch;margin-top:clamp(44px, 5vw, 76px);font-size:clamp(16px, 1.3vw, 20px);line-height:1.5}
 .section-index{
   font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;
   color:var(--text-on-dark-dim);text-transform:uppercase;
@@ -1329,7 +1329,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=71">
+<link rel="stylesheet" href="assets/site.css?v=72">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1928,7 +1928,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=71
+// FAQ smooth-open handled by assets/site.js?v=72
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2039,7 +2039,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=71" defer></script>
+<script src="assets/site.js?v=72" defer></script>
 
 </body>
 </html>
