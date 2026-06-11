@@ -103,7 +103,7 @@ p{margin:0}
 .section{position:relative;padding:clamp(48px,6vw,96px) 0}
 .section-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);align-items:end;margin-bottom:clamp(48px,7vw,80px)}
 .section-head h2{max-width:14ch}
-.section-head .lead{max-width:46ch}
+.section-head .lead{max-width:48ch;font-size:clamp(16px, 1.3vw, 20px);line-height:1.5}
 .section-index{font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;color:var(--text-on-dark-dim);text-transform:uppercase;display:inline-flex;align-items:center;gap:14px;margin-bottom:24px}
 .section-index::before{content:"";width:32px;height:1px;background:var(--accent)}
 
@@ -173,6 +173,7 @@ p{margin:0}
   background:transparent;
 }
 .doc-row{
+  position:relative;overflow:hidden;
   display:flex;flex-direction:column;gap:12px;
   padding:24px 26px;
   background:rgba(255,255,255,.025);
@@ -186,11 +187,16 @@ p{margin:0}
   border-color:rgba(255,255,255,.18);
   background:rgba(255,255,255,.04);
 }
-.doc-row-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.doc-row .num{
-  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.24em;
-  color:var(--accent-hover);text-transform:uppercase;
+.doc-row > *{position:relative;z-index:1}
+/* водяной знак-номер в углу (как на главной) */
+.doc-stamp{
+  position:absolute;right:16px;top:12px;z-index:0;
+  font-family:var(--f-display);font-weight:900;font-size:clamp(40px,4vw,58px);
+  line-height:.85;color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.12);text-stroke:1px rgba(255,255,255,.12);
+  letter-spacing:-.03em;pointer-events:none;
 }
+.doc-row-head{display:flex;align-items:baseline;justify-content:flex-start;gap:14px;flex-wrap:wrap}
 .doc-row .when{
   font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;
   color:var(--text-on-dark-dim);text-transform:uppercase;
@@ -370,7 +376,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=73">
+<link rel="stylesheet" href="assets/site.css?v=75">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -567,32 +573,38 @@ p{margin:0}
       <div class="doc-list reveal">
 
         <div class="doc-row">
-          <div class="doc-row-head"><span class="num">01</span><span class="when">В момент отгрузки</span></div>
+          <span class="doc-stamp">01</span>
+          <div class="doc-row-head"><span class="when">В момент отгрузки</span></div>
           <span class="name">Товарный чек<small>Для физических лиц при наличной или карточной оплате.</small></span>
         </div>
 
         <div class="doc-row">
-          <div class="doc-row-head"><span class="num">02</span><span class="when">В момент отгрузки</span></div>
+          <span class="doc-stamp">02</span>
+          <div class="doc-row-head"><span class="when">В момент отгрузки</span></div>
           <span class="name">Товарная накладная<small>С полным перечнем позиций, артикулами и количеством.</small></span>
         </div>
 
         <div class="doc-row">
-          <div class="doc-row-head"><span class="num">03</span><span class="when">До оплаты</span></div>
+          <span class="doc-stamp">03</span>
+          <div class="doc-row-head"><span class="when">До оплаты</span></div>
           <span class="name">Счёт на оплату<small>Для юридических лиц — высылаем на e-mail заранее.</small></span>
         </div>
 
         <div class="doc-row">
-          <div class="doc-row-head"><span class="num">04</span><span class="when">Безналичный расчёт</span></div>
+          <span class="doc-stamp">04</span>
+          <div class="doc-row-head"><span class="when">Безналичный расчёт</span></div>
           <span class="name">Счёт-фактура · УПД<small>Универсальный передаточный документ с НДС.</small></span>
         </div>
 
         <div class="doc-row">
-          <div class="doc-row-head"><span class="num">05</span><span class="when">По запросу</span></div>
+          <span class="doc-stamp">05</span>
+          <div class="doc-row-head"><span class="when">По запросу</span></div>
           <span class="name">Паспорт качества<small>Сертификат и протокол испытаний на партию проката.</small></span>
         </div>
 
         <div class="doc-row">
-          <div class="doc-row-head"><span class="num">06</span><span class="when">С каждой партией</span></div>
+          <span class="doc-stamp">06</span>
+          <div class="doc-row-head"><span class="when">С каждой партией</span></div>
           <span class="name">Гарантийный талон<small>На цветостойкость и геометрию изделий.</small></span>
         </div>
 
@@ -741,7 +753,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=73
+// FAQ smooth-open handled by assets/site.js?v=75
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', (e) => {
@@ -780,7 +792,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   </div>
 </aside>
 
-<script src="assets/site.js?v=73" defer></script>
+<script src="assets/site.js?v=75" defer></script>
 
 </body>
 </html>
