@@ -308,8 +308,8 @@
 /* ═══ ACCESSIBILITY (WCAG 2.2 AA) ═══
    - Минимальная кликабельная зона 44x44 (WCAG SC 2.5.5/2.5.8)
    - Контраст текста ярче для лучшей читаемости пожилыми клиентами */
-.nav-list a{min-height:44px !important;display:inline-flex !important;align-items:center;color:color-mix(in srgb, var(--accent-hover,#dc2626) 80%, #9aa0a6) !important;transition:color .25s ease}
-.nav-list a:hover,.nav-list a.active{color:var(--accent-hover,#dc2626) !important}
+.nav-list a{min-height:44px !important;display:inline-flex !important;align-items:center;color:var(--text-on-dark,#c9ccd2) !important;transition:color .25s ease}
+.nav-list a:hover,.nav-list a.active{color:var(--text-on-dark-bright,#f3f4f6) !important}
 .footer-nav a{min-height:32px !important;display:inline-block !important;padding:8px 0 !important;color:var(--text-on-dark,#c9ccd2) !important;line-height:1.4}
 .wordmark{min-height:32px;display:inline-flex !important;align-items:center}
 /* Цены в каталоге/списках — ярче для контраста */
