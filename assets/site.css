@@ -313,7 +313,9 @@
 .footer-nav a{min-height:32px !important;display:inline-block !important;padding:8px 0 !important;color:var(--text-on-dark,#c9ccd2) !important;line-height:1.4}
 .wordmark{min-height:32px;display:inline-flex !important;align-items:center}
 /* Цены в каталоге/списках — ярче для контраста */
-.cat-price,.product-price,.price{color:#f3f4f6 !important;font-weight:600}
+.product-price,.price{color:#f3f4f6 !important;font-weight:600}
+/* Цены категорий на главной — красный акцент, как в каталоге (.price-new) */
+.cat-price{color:var(--accent,#b91c1c) !important;font-weight:600}
 
 /* ═══ ЮР. РЕКВИЗИТЫ В ФУТЕРЕ (152-ФЗ / ЗОЗПП) ═══ */
 .footer-legal{
