@@ -293,6 +293,31 @@ p{margin:0}
 .dropdown .val::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--text-on-dark-dim);margin-left:4px}
 .dropdown .swatch{display:inline-block;width:13px;height:13px;border-radius:3px;border:1px solid rgba(255,255,255,.18)}
 
+/* ── Интерактивный селектор «вид покрытия» / «толщина» (variant-товары) ── */
+.dropdown--interactive{cursor:pointer;user-select:none}
+.dropdown:not(.dropdown--interactive) .val::after{display:none}      /* статичный — без стрелки */
+.dropdown .val::after{transition:transform .2s var(--ease)}
+.dropdown--interactive.open .val::after{transform:rotate(180deg)}
+.dropdown-menu{
+  position:absolute;z-index:30;top:calc(100% + 6px);left:0;right:0;
+  display:none;flex-direction:column;gap:2px;padding:6px;
+  border-radius:14px;background:rgba(18,18,22,.97);
+  backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 44px rgba(0,0,0,.55);
+}
+.dropdown--interactive.open .dropdown-menu{display:flex}
+.dropdown-option{
+  appearance:none;-webkit-appearance:none;background:transparent;border:0;width:100%;
+  text-align:left;padding:9px 11px;border-radius:9px;cursor:pointer;
+  font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark);
+  transition:background .15s var(--ease), color .15s var(--ease);
+}
+.dropdown-option:hover{background:rgba(255,255,255,.07);color:var(--text-on-dark-bright)}
+.dropdown-option.active{color:var(--accent);font-weight:600}
+/* округлить верх картинки + дать поповеру вылезти за карточку, когда он открыт */
+.product-image{border-radius:var(--r-md) var(--r-md) 0 0}
+.product:has(.dropdown--interactive.open){overflow:visible;z-index:6}
+
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
 .price-old{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-deep);text-decoration:line-through;letter-spacing:.04em}
 .price-from{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-dim);letter-spacing:.18em;text-transform:uppercase;margin-right:2px}
@@ -813,7 +838,7 @@ const CATEGORIES = [
 ];
 
 const COATINGS    = ['Полимер','Полимер двусторонний','Под дерево','Велюр','Оцинковка','SteelWood'];
-const THICKNESSES = ['0.40','0.45','0.50','0.55','0.65','0.70'];
+const THICKNESSES = ['0.35','0.40','0.45','0.50','0.60','0.65','0.70','0.80'];
 
 /* Палитра RAL — синхронизирована с sib-profil.ru */
 const COLORS = [
@@ -832,7 +857,6 @@ const COLORS = [
   { ral:'6029', name:'Мята',             hex:'#1a854a' },
   { ral:'7004', name:'Серый',            hex:'#9a9a9c' },
   { ral:'7024', name:'Графитовый серый', hex:'#4a4d52' },
-  { ral:'8016', name:'Коричневый',       hex:'#5a3327' },
   { ral:'8017', name:'Шоколад',          hex:'#3f2b22' },
   { ral:'9002', name:'Серо-белый',       hex:'#d6d3cb' },
   { ral:'9003', name:'Белый',            hex:'#f4f6f4' },
@@ -844,29 +868,54 @@ const COLORS = [
    Источники: прайс «Сибтрансэфир» (клиент) + sib-profil.ru + docke.ru (ориентиры).
    Цены DOCKE и труб профильных — стартовые ориентиры, клиент корректирует. */
 const PRODUCTS = [
-  /* ── Профнастил (С8, С10, С10 обр, МП-20, МП-20 обр, С21, НС35, НС44) ── */
-  { cat:'corrugated', sub:'С8',    name:'Профнастил С8 (0.45 полимер)',   meta:'Ширина 1200 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'7024', priceNew:694,  unit:'м²', tag:'Хит', stock:'in', photo:'assets/profnastil_c8_graphite_bg0F0E11.png' },
-  { cat:'corrugated', sub:'С10',   name:'Профнастил С10 (0.45 полимер)',  meta:'Ширина 1146 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'6005', priceNew:710,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'С10',   name:'Профнастил С10 обратный прокат', meta:'Ширина 1146 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:621,  unit:'м²' },
-  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 (0.45 полимер)',  meta:'Ширина 1130 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'3005', priceNew:766,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', meta:'Ширина 1130 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:630,  unit:'м²' },
-  { cat:'corrugated', sub:'С21',   name:'Профнастил С21 (0.45 полимер)',  meta:'Ширина 1051 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'7024', priceNew:863,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'НС35',  name:'Профнастил НС35 (0.45 полимер)', meta:'Ширина 1060 мм · Полимер RAL',  coating:'Полимер', thickness:'0.45', color:'8017', priceNew:844,  unit:'м²', stock:'in' },
-  { cat:'corrugated', sub:'НС44',  name:'Профнастил НС44 (0.5 полимер)',  meta:'Ширина 1045 мм · Полимер RAL',  coating:'Полимер', thickness:'0.50', color:'3005', priceNew:919,  unit:'м²', stock:'in' },
+  /* ── Профнастил — выбор покрытия+толщины в карточке (матрица из прайса сибтрансэфир, июнь 2026) ── */
+  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', photo:'assets/profnastil_c8_graphite_bg0F0E11.png',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
+    {coating:'Полимер',thickness:'0.40',price:605},{coating:'Полимер',thickness:'0.45',price:694},{coating:'Полимер',thickness:'0.50',price:789},
+    {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
+    {coating:'Полимер',thickness:'0.40',price:621},{coating:'Полимер',thickness:'0.45',price:710},{coating:'Полимер',thickness:'0.50',price:854},
+    {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10 обратный прокат', meta:'Ширина 1146 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:621, unit:'м²' },
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20', meta:'Ширина 1150/1100 мм · кровля/стена', color:'3005', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Оцинковка',thickness:'0.40',price:489},{coating:'Оцинковка',thickness:'0.45',price:534},{coating:'Оцинковка',thickness:'0.50',price:555},{coating:'Оцинковка',thickness:'0.65',price:725},
+    {coating:'Полимер',thickness:'0.40',price:630},{coating:'Полимер',thickness:'0.45',price:766},{coating:'Полимер',thickness:'0.50',price:884},{coating:'Полимер',thickness:'0.65',price:913},
+    {coating:'Велюр',thickness:'0.45',price:843},{coating:'Под дерево',thickness:'0.45',price:994} ] },
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', meta:'Ширина 1130 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:630, unit:'м²' },
+  { cat:'corrugated', sub:'С21', name:'Профнастил С21', meta:'Ширина 1090/1030 мм · кровельный', color:'7024', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Оцинковка',thickness:'0.40',price:534},{coating:'Оцинковка',thickness:'0.45',price:583},{coating:'Оцинковка',thickness:'0.50',price:603},
+    {coating:'Полимер',thickness:'0.40',price:819},{coating:'Полимер',thickness:'0.45',price:863},{coating:'Полимер',thickness:'0.50',price:948} ] },
+  { cat:'corrugated', sub:'НС35', name:'Профнастил НС35', meta:'Ширина 1090/1000 мм · несущий', color:'8017', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Оцинковка',thickness:'0.45',price:591},{coating:'Оцинковка',thickness:'0.50',price:613},{coating:'Оцинковка',thickness:'0.60',price:723},
+    {coating:'Полимер',thickness:'0.45',price:844},{coating:'Полимер',thickness:'0.50',price:890},{coating:'Полимер',thickness:'0.65',price:838} ] }, /* НС35 0.65=838 — колонка в .doc неоднозначна, клиенту на сверку */
+  { cat:'corrugated', sub:'НС44', name:'Профнастил НС44', meta:'Ширина 1070/970 мм · несущий', color:'3005', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Оцинковка',thickness:'0.50',price:624},{coating:'Оцинковка',thickness:'0.60',price:736},{coating:'Оцинковка',thickness:'0.65',price:779},{coating:'Оцинковка',thickness:'0.70',price:809},{coating:'Оцинковка',thickness:'0.80',price:903},
+    {coating:'Полимер',thickness:'0.50',price:919},{coating:'Полимер',thickness:'0.65',price:981},{coating:'Полимер',thickness:'0.70',price:1036} ] },
 
-  /* ── Металлочерепица Супер-Монтерей ── */
-  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей (0.45 полимер)', meta:'Ширина 1180/1100 · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'3005', priceNew:779, unit:'м²', tag:'Топ', stock:'in' },
-  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей (0.5 полимер)',  meta:'Ширина 1180/1100 · Полимер RAL', coating:'Полимер', thickness:'0.50', color:'8017', priceNew:890, unit:'м²', stock:'in' },
-  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей (0.45 велюр)',   meta:'Премиум-покрытие велюр',          coating:'Велюр',   thickness:'0.45', color:'6005', priceNew:878, unit:'м²', stock:'in' },
-  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей (0.5 велюр)',    meta:'Премиум велюр · полная толщина',  coating:'Велюр',   thickness:'0.50', color:'7024', priceNew:935, unit:'м²' },
+  /* ── Металлочерепица Супер-Монтерей — выбор покрытия+толщины ── */
+  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей', meta:'Ширина 1180/1100 мм', color:'3005', unit:'м²', tag:'Топ', stock:'in',
+    defCoat:'Полимер', defThk:'0.40', variants:[
+    {coating:'Полимер',thickness:'0.40',price:779},{coating:'Полимер',thickness:'0.50',price:890},
+    {coating:'Велюр',thickness:'0.40',price:878},{coating:'Велюр',thickness:'0.50',price:935} ] },
 
-  /* ── Сайдинг (Евро-брус, Блокхаус, Корабельная доска) ── */
-  { cat:'siding', sub:'Евро-брус',         name:'Сайдинг Евро-брус (0.45 полимер)',          meta:'Ширина 258/232 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:896,  unit:'м²', stock:'in' },
-  { cat:'siding', sub:'Евро-брус',         name:'Сайдинг Евро-брус (0.45 под дерево)',        meta:'Ширина 258/232 · Под дерево',    coating:'Под дерево', thickness:'0.45', color:'8016', priceNew:1070, unit:'м²' },
-  { cat:'siding', sub:'Блокхаус',          name:'Сайдинг Блокхаус (0.45 полимер)',           meta:'Ширина 383/362 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'1015', priceNew:906,  unit:'м²', stock:'in' },
-  { cat:'siding', sub:'Блокхаус',          name:'Сайдинг Блокхаус (0.45 под дерево)',         meta:'Ширина 383/362 · Под дерево',    coating:'Под дерево', thickness:'0.45', color:'8017', priceNew:1050, unit:'м²' },
-  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска (0.45 полимер)',  meta:'Ширина 267/236 мм · Полимер RAL', coating:'Полимер', thickness:'0.45', color:'1014', priceNew:880,  unit:'м²', stock:'in' },
-  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска (0.45 под дерево)', meta:'Ширина 267/236 · Под дерево',  coating:'Под дерево', thickness:'0.45', color:'8017', priceNew:1050, unit:'м²' },
+  /* ── Сайдинг — выбор покрытия+толщины ── */
+  { cat:'siding', sub:'Евро-брус', name:'Сайдинг Евро-брус', meta:'Ширина 258/232 мм', color:'8017', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Полимер',thickness:'0.45',price:896},{coating:'Велюр',thickness:'0.45',price:1002},{coating:'Под дерево',thickness:'0.45',price:1070} ] },
+  { cat:'siding', sub:'Блокхаус', name:'Сайдинг Блокхаус', meta:'Ширина 383/362 мм', color:'1015', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Полимер',thickness:'0.45',price:906},{coating:'Велюр',thickness:'0.45',price:964},{coating:'Под дерево',thickness:'0.45',price:1050} ] },
+  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска', meta:'Ширина 267/236 мм', color:'1014', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Полимер',thickness:'0.40',price:738},{coating:'Полимер',thickness:'0.45',price:880},
+    {coating:'Велюр',thickness:'0.45',price:1015},{coating:'Под дерево',thickness:'0.40',price:966},{coating:'Под дерево',thickness:'0.45',price:1050} ] },
 
   /* ── Евроштакетник (Ш1/Ш2 клин+прямой, Ш10, Ш18, Ш19) ── */
   { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 (69 мм) клин',    meta:'Полимер · одностороннее',  coating:'Полимер', thickness:'0.50', color:'6005', priceNew:68,  unit:'м.п.', stock:'in' },
@@ -879,20 +928,24 @@ const PRODUCTS = [
   { cat:'fence', sub:'Ш19',name:'Штакетник Ш19 (126 мм) радиус',meta:'Полимер · радиус 0.5',     coating:'Полимер', thickness:'0.50', color:'8017', priceNew:123, unit:'м.п.' },
 
   /* ── Плоский лист (в плёнке / без плёнки) ── */
-  { cat:'flatsheet', sub:'В плёнке',   name:'Лист плоский 0.45 в плёнке',  meta:'Ширина 1250 · защитная плёнка', coating:'Полимер',   thickness:'0.45', color:'7024', priceNew:729, unit:'м²', stock:'in' },
-  { cat:'flatsheet', sub:'В плёнке',   name:'Лист плоский 0.5 в плёнке',   meta:'Ширина 1250 · защитная плёнка', coating:'Полимер',   thickness:'0.50', color:'8017', priceNew:800, unit:'м²' },
-  { cat:'flatsheet', sub:'Без плёнки', name:'Лист плоский 0.45 без плёнки',meta:'Ширина 1250 · оцинковка',       coating:'Оцинковка', thickness:'0.45', color:'9003', priceNew:483, unit:'м²', stock:'in' },
-  { cat:'flatsheet', sub:'Без плёнки', name:'Лист плоский 0.5 без плёнки', meta:'Ширина 1250 · оцинковка',       coating:'Оцинковка', thickness:'0.50', color:'9003', priceNew:503, unit:'м²', stock:'in' },
+  { cat:'flatsheet', sub:'В плёнке', name:'Лист плоский в плёнке', meta:'Ширина 1250 мм · полимер + защитная плёнка', color:'7024', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Полимер',thickness:'0.35',price:575},{coating:'Полимер',thickness:'0.40',price:613},{coating:'Полимер',thickness:'0.45',price:729},{coating:'Полимер',thickness:'0.50',price:800} ] },
+  { cat:'flatsheet', sub:'Без плёнки', name:'Лист плоский без плёнки', meta:'Ширина 1250 мм · оцинковка', color:'9003', unit:'м²', stock:'in',
+    defCoat:'Оцинковка', defThk:'0.45', variants:[
+    {coating:'Оцинковка',thickness:'0.35',price:403},{coating:'Оцинковка',thickness:'0.40',price:443},{coating:'Оцинковка',thickness:'0.45',price:483},{coating:'Оцинковка',thickness:'0.50',price:503} ] },
 
-  /* ── Чёрный металл — труба профильная (ориентиры, клиент корректирует) ── */
-  { cat:'rolled', sub:'80×80', name:'Труба профильная 80×80 (3.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'3.00', color:'9005', priceNew:612, unit:'м.п.' },
-  { cat:'rolled', sub:'60×60', name:'Труба профильная 60×60 (2.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'2.00', color:'9005', priceNew:298, unit:'м.п.' },
-  { cat:'rolled', sub:'60×40', name:'Труба профильная 60×40 (2.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'2.00', color:'9005', priceNew:248, unit:'м.п.' },
-  { cat:'rolled', sub:'60×40', name:'Труба профильная 60×40 (3.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'3.00', color:'9005', priceNew:356, unit:'м.п.' },
-  { cat:'rolled', sub:'40×20', name:'Труба профильная 40×20 (1.5 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'1.50', color:'9005', priceNew:126, unit:'м.п.' },
-  { cat:'rolled', sub:'40×20', name:'Труба профильная 40×20 (2.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'2.00', color:'9005', priceNew:165, unit:'м.п.' },
-  { cat:'rolled', sub:'20×20', name:'Труба профильная 20×20 (1.5 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'1.50', color:'9005', priceNew:78,  unit:'м.п.' },
-  { cat:'rolled', sub:'20×20', name:'Труба профильная 20×20 (2.0 мм)', meta:'Длина 6 м · Ст3 · под заказ', coating:'Без покрытия', thickness:'2.00', color:'9005', priceNew:98,  unit:'м.п.' },
+  /* ── Чёрный металл — труба профильная (выбор толщины, без покрытия и цвета; цены — ориентир, клиент корректирует) ── */
+  { cat:'rolled', sub:'80×80', name:'Труба профильная 80×80', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
+    defThk:'3.00', variants:[{thickness:'3.00',price:612}] },
+  { cat:'rolled', sub:'60×60', name:'Труба профильная 60×60', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
+    defThk:'2.00', variants:[{thickness:'2.00',price:298}] },
+  { cat:'rolled', sub:'60×40', name:'Труба профильная 60×40', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
+    defThk:'2.00', variants:[{thickness:'2.00',price:248},{thickness:'3.00',price:356}] },
+  { cat:'rolled', sub:'40×20', name:'Труба профильная 40×20', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
+    defThk:'1.50', variants:[{thickness:'1.50',price:126},{thickness:'2.00',price:165}] },
+  { cat:'rolled', sub:'20×20', name:'Труба профильная 20×20', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
+    defThk:'1.50', variants:[{thickness:'1.50',price:78},{thickness:'2.00',price:98}] },
 
   /* ── Забор «Еврожалюзи» (ламель + П-профиль) ── */
   { cat:'jaluzi', sub:'Ламель',    name:'Еврожалюзи ламель',         meta:'Полимер · одностороннее покрытие', coating:'Полимер',           thickness:'0.50', color:'7024', priceNew:1980, unit:'м²' },
@@ -926,13 +979,13 @@ const PRODUCTS = [
   { cat:'gutter', sub:'Premium', name:'Муфта соединительная DOCKE Premium',meta:'Соединение труб · в цвет',    coating:'Полимер', thickness:'1.75', color:'7024', priceNew:140, unit:'шт' },
 
   /* Lux — Ø100 мм / жёлоб 141 мм · кровля от 250 м² */
-  { cat:'gutter', sub:'Lux', name:'Жёлоб DOCKE Lux (3 м)',         meta:'Жёлоб 141 мм · кровля от 250 м²',  coating:'Полимер', thickness:'1.90', color:'8016', priceNew:1115, unit:'шт', tag:'Премиум' },
-  { cat:'gutter', sub:'Lux', name:'Труба DOCKE Lux Ø100 (3 м)',    meta:'Ø100 мм · усиленная серия',        coating:'Полимер', thickness:'1.90', color:'8016', priceNew:1326, unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Воронка DOCKE Lux',             meta:'Водосборная · в цвет',             coating:'Полимер', thickness:'1.90', color:'8016', priceNew:959,  unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Колено DOCKE Lux 45°',          meta:'Отвод трубы · в цвет',             coating:'Полимер', thickness:'1.90', color:'8016', priceNew:520,  unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Угол жёлоба DOCKE Lux 90°',     meta:'Поворот жёлоба · в цвет',          coating:'Полимер', thickness:'1.90', color:'8016', priceNew:670,  unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Кронштейн жёлоба DOCKE Lux',    meta:'Крепление жёлоба металл',          coating:'Полимер', thickness:'1.90', color:'8016', priceNew:490,  unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Муфта соединительная DOCKE Lux',meta:'Соединение труб · в цвет',         coating:'Полимер', thickness:'1.90', color:'8016', priceNew:321,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Жёлоб DOCKE Lux (3 м)',         meta:'Жёлоб 141 мм · кровля от 250 м²',  coating:'Полимер', thickness:'1.90', color:'8017', priceNew:1115, unit:'шт', tag:'Премиум' },
+  { cat:'gutter', sub:'Lux', name:'Труба DOCKE Lux Ø100 (3 м)',    meta:'Ø100 мм · усиленная серия',        coating:'Полимер', thickness:'1.90', color:'8017', priceNew:1326, unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Воронка DOCKE Lux',             meta:'Водосборная · в цвет',             coating:'Полимер', thickness:'1.90', color:'8017', priceNew:959,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Колено DOCKE Lux 45°',          meta:'Отвод трубы · в цвет',             coating:'Полимер', thickness:'1.90', color:'8017', priceNew:520,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Угол жёлоба DOCKE Lux 90°',     meta:'Поворот жёлоба · в цвет',          coating:'Полимер', thickness:'1.90', color:'8017', priceNew:670,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Кронштейн жёлоба DOCKE Lux',    meta:'Крепление жёлоба металл',          coating:'Полимер', thickness:'1.90', color:'8017', priceNew:490,  unit:'шт' },
+  { cat:'gutter', sub:'Lux', name:'Муфта соединительная DOCKE Lux',meta:'Соединение труб · в цвет',         coating:'Полимер', thickness:'1.90', color:'8017', priceNew:321,  unit:'шт' },
 
   /* ── Грядки и клумбы (sib-profil) ── */
   { cat:'garden', sub:'Грядка', name:'Грядка металлическая «Фактурная»', meta:'Ширина 0.4–1 м · Высота 19 см · Полимер', coating:'Полимер', thickness:'0.45', color:'6005', priceNew:1319, unit:'шт', tag:'Сезон' },
@@ -1037,17 +1090,17 @@ function renderProducts(){
 
   let list = PRODUCTS.filter(p => p.cat === state.cat);
   if (state.sub)       list = list.filter(p => p.sub === state.sub);
-  if (state.coating)   list = list.filter(p => p.coating === state.coating);
-  if (state.thickness) list = list.filter(p => p.thickness === state.thickness);
+  if (state.coating)   list = list.filter(p => prodCoatings(p).includes(state.coating));
+  if (state.thickness) list = list.filter(p => prodThicknesses(p).includes(state.thickness));
   if (state.color)     list = list.filter(p => p.color === state.color);
 
-  // фильтр по цене
-  if (state.priceMin != null) list = list.filter(p => Number(p.priceNew) >= state.priceMin);
-  if (state.priceMax != null) list = list.filter(p => Number(p.priceNew) <= state.priceMax);
+  // фильтр по цене (по минимальной цене среди вариантов)
+  if (state.priceMin != null) list = list.filter(p => repPrice(p) >= state.priceMin);
+  if (state.priceMax != null) list = list.filter(p => repPrice(p) <= state.priceMax);
 
   // сортировка
-  if (state.sort === 'price-asc')  list.sort((a,b) => Number(a.priceNew) - Number(b.priceNew));
-  if (state.sort === 'price-desc') list.sort((a,b) => Number(b.priceNew) - Number(a.priceNew));
+  if (state.sort === 'price-asc')  list.sort((a,b) => repPrice(a) - repPrice(b));
+  if (state.sort === 'price-desc') list.sort((a,b) => repPrice(b) - repPrice(a));
 
   $count.textContent = `— ${list.length} ${pluralize(list.length, 'позиция', 'позиции', 'позиций')}`;
 
@@ -1092,47 +1145,152 @@ function renderProducts(){
       card.dataset.item = JSON.stringify(item).replace(/"/g, '&quot;').replace(/&quot;/g, '"');
     });
   });
+
+  // дропдауны покрытие/толщина — через делегирование на $grid (см. ниже, навешено один раз)
 }
 
+/* ─── ВАРИАНТЫ (толщина × покрытие из прайса) ─── */
+function prodCoatings(p){
+  if (Array.isArray(p.variants)) return [...new Set(p.variants.map(v => v.coating).filter(Boolean))];
+  return p.coating ? [p.coating] : [];
+}
+function prodThicknesses(p, coating){
+  if (Array.isArray(p.variants)) return [...new Set(p.variants.filter(v => coating == null || v.coating === coating).map(v => v.thickness))];
+  return p.thickness ? [p.thickness] : [];
+}
+function variantPrice(p, coating, thickness){
+  if (!Array.isArray(p.variants)) return p.priceNew;
+  const v = p.variants.find(x => (coating == null || x.coating === coating) && x.thickness === thickness);
+  return v ? v.price : null;
+}
+function repPrice(p){
+  if (Array.isArray(p.variants) && p.variants.length) return Math.min(...p.variants.map(v => v.price));
+  return p.priceNew;
+}
+function dropdownHTML(kind, label, options, curVal){
+  const cur = options.find(o => o.value === curVal) || options[0];
+  const interactive = options.length > 1;
+  const menu = interactive
+    ? `<div class="dropdown-menu" role="listbox">${options.map(o => `<button type="button" class="dropdown-option${o.value === cur.value ? ' active' : ''}" role="option" data-value="${o.value}">${o.label}</button>`).join('')}</div>`
+    : '';
+  return `<span class="dropdown${interactive ? ' dropdown--interactive' : ''}" data-kind="${kind}"${interactive ? ' tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false"' : ''}>` +
+         `<span class="key">${label}</span><span class="val" data-value="${cur.value}">${cur.label}</span>${menu}</span>`;
+}
+// пересобрать список толщин под выбранное покрытие
+function rebuildThickness(card){
+  const variants = card.dataset.variants ? JSON.parse(card.dataset.variants) : null;
+  const thkDD = card.querySelector('.dropdown[data-kind="thickness"]');
+  if (!variants || !thkDD) return;
+  const coatEl = card.querySelector('.dropdown[data-kind="coating"] .val');
+  const coat = coatEl ? coatEl.dataset.value : null;
+  const ths = [...new Set(variants.filter(v => coat == null || v.coating === coat).map(v => v.thickness))];
+  const valEl = thkDD.querySelector('.val');
+  let cur = valEl.dataset.value;
+  if (!ths.includes(cur)) cur = ths[0];
+  valEl.dataset.value = cur;
+  valEl.textContent = `${cur} мм`;
+  const menu = thkDD.querySelector('.dropdown-menu');
+  if (menu) menu.innerHTML = ths.map(t => `<button type="button" class="dropdown-option${t === cur ? ' active' : ''}" role="option" data-value="${t}">${t} мм</button>`).join('');
+  if (ths.length <= 1) { thkDD.classList.remove('dropdown--interactive','open'); thkDD.removeAttribute('tabindex'); }
+  else { thkDD.classList.add('dropdown--interactive'); thkDD.setAttribute('tabindex','0'); }
+}
+// пересчитать цену + данные корзины по выбранной комбинации
+function refreshCardPrice(card){
+  const variants = card.dataset.variants ? JSON.parse(card.dataset.variants) : null;
+  if (!variants) return;
+  const coatEl = card.querySelector('.dropdown[data-kind="coating"] .val');
+  const thkEl  = card.querySelector('.dropdown[data-kind="thickness"] .val');
+  const coat = coatEl ? coatEl.dataset.value : null;
+  const thk  = thkEl ? thkEl.dataset.value : null;
+  const v = variants.find(x => (coat == null || x.coating === coat) && x.thickness === thk);
+  if (!v) return;
+  const priceEl = card.querySelector('.price-new');
+  if (priceEl) priceEl.textContent = `${formatPrice(v.price)} ₽`;
+  const item = JSON.parse(card.dataset.item);
+  item.price = v.price;
+  if (coat) item.coating = coat;
+  if (thk)  item.thickness = thk;
+  card.dataset.item = JSON.stringify(item);
+}
+// закрытие открытых дропдаунов по клику вне / Escape (один раз)
+document.addEventListener('click', e => {
+  if (!e.target.closest('.dropdown--interactive'))
+    document.querySelectorAll('.dropdown--interactive.open').forEach(o => { o.classList.remove('open'); o.setAttribute('aria-expanded','false'); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape')
+    document.querySelectorAll('.dropdown--interactive.open').forEach(o => { o.classList.remove('open'); o.setAttribute('aria-expanded','false'); });
+});
+// делегированный обработчик дропдаунов (один раз; работает и после пересборки списка толщин)
+$grid.addEventListener('click', e => {
+  const opt = e.target.closest('.dropdown-option');
+  if (opt) {
+    e.preventDefault(); e.stopPropagation();
+    const dd = opt.closest('.dropdown'); const card = opt.closest('.product');
+    const valEl = dd.querySelector('.val');
+    valEl.dataset.value = opt.dataset.value;
+    valEl.textContent = dd.dataset.kind === 'thickness' ? `${opt.dataset.value} мм` : opt.dataset.value;
+    dd.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('active'));
+    opt.classList.add('active');
+    dd.classList.remove('open'); dd.setAttribute('aria-expanded','false');
+    if (dd.dataset.kind === 'coating') rebuildThickness(card);
+    refreshCardPrice(card);
+    return;
+  }
+  const dd = e.target.closest('.dropdown--interactive');
+  if (dd) {
+    e.stopPropagation();
+    const wasOpen = dd.classList.contains('open');
+    $grid.querySelectorAll('.dropdown--interactive.open').forEach(o => { o.classList.remove('open'); o.setAttribute('aria-expanded','false'); });
+    if (!wasOpen) { dd.classList.add('open'); dd.setAttribute('aria-expanded','true'); }
+  }
+});
+
 function productCard(p, pat){
+  const hasVar  = Array.isArray(p.variants) && p.variants.length > 0;
+  const noColor = p.noColor === true;
+
+  // начальная комбинация покрытие/толщина (с учётом пред-выбора из бокового фильтра)
+  const coatings = hasVar ? prodCoatings(p) : (p.coating ? [p.coating] : []);
+  let curCoat = hasVar ? (p.defCoat || coatings[0] || null) : (p.coating || null);
+  if (hasVar && state.coating && coatings.includes(state.coating)) curCoat = state.coating;
+
+  const thicknesses = hasVar ? prodThicknesses(p, curCoat) : (p.thickness ? [p.thickness] : []);
+  let curThk = hasVar ? (thicknesses.includes(p.defThk) ? p.defThk : thicknesses[0]) : (p.thickness || null);
+  if (hasVar && state.thickness && thicknesses.includes(state.thickness)) curThk = state.thickness;
+
+  const curPrice = hasVar ? (variantPrice(p, curCoat, curThk) ?? repPrice(p)) : p.priceNew;
+
   const initialColor = COLORS.find(c => c.ral === p.color) || COLORS[14]; // 7024 fallback
-  const old          = p.priceOld ? `<span class="price-old">${p.priceOld} ₽</span>` : '';
+  const old = p.priceOld ? `<span class="price-old">${p.priceOld} ₽</span>` : '';
 
-  // данные для корзины (цвет будет обновляться при клике)
-  const itemJSON = JSON.stringify({
-    name: p.name, meta: p.meta, price: p.priceNew, unit: p.unit,
-    color: initialColor.ral, colorName: initialColor.name
-  }).replace(/"/g, '&quot;');
+  // данные для корзины (цвет/спеки обновляются при выборе)
+  const item = { name: p.name, meta: p.meta, price: curPrice, unit: p.unit };
+  if (curCoat) item.coating = curCoat;
+  if (curThk)  item.thickness = curThk;
+  if (!noColor) { item.color = initialColor.ral; item.colorName = initialColor.name; }
+  const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
+  const variantsAttr = hasVar ? ` data-variants="${JSON.stringify(p.variants).replace(/"/g, '&quot;')}"` : '';
 
-  // если есть photo — используем img, иначе паттерн
   const photoHTML = p.photo
     ? `<img src="${p.photo}" alt="${p.name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy">`
     : '';
 
-  // Цветовой пикер — все 21 цвет; активный = выбранный
-  const swatchesHTML = COLORS.map(c => `
+  // селекторы «вид покрытия» и «толщина»
+  const coatDD = (coatings.length && curCoat)
+    ? dropdownHTML('coating', 'Вид покрытия', coatings.map(c => ({ value: c, label: c })), curCoat) : '';
+  const thkDD = (thicknesses.length && curThk)
+    ? dropdownHTML('thickness', 'Толщина', thicknesses.map(t => ({ value: t, label: `${t} мм` })), curThk) : '';
+  const dropdownsHTML = (coatDD || thkDD) ? `<div class="dropdowns">${coatDD}${thkDD}</div>` : '';
+
+  // цветовой пикер — нет у чёрного металла
+  const swatchesHTML = noColor ? '' : COLORS.map(c => `
     <button type="button" class="color-swatch ${c.ral === initialColor.ral ? 'active' : ''}"
       style="background:${c.hex}"
       data-ral="${c.ral}" data-name="${c.name}"
       title="RAL ${c.ral} · ${c.name}"
-      aria-label="Цвет RAL ${c.ral} ${c.name}"></button>
-  `).join('');
-
-  return `
-    <div class="product ${pat}" data-item="${itemJSON}">
-      <div class="product-image">
-        ${photoHTML}
-        ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
-      </div>
-      <div class="product-body">
-        <div class="product-name">${p.name}</div>
-        <div class="product-meta">${p.meta}</div>
-
-        <div class="dropdowns">
-          <span class="dropdown"><span class="key">Вид покрытия</span><span class="val">${p.coating}</span></span>
-          <span class="dropdown"><span class="key">Толщина</span><span class="val">${p.thickness} мм</span></span>
-        </div>
-
+      aria-label="Цвет RAL ${c.ral} ${c.name}"></button>`).join('');
+  const colorHTML = noColor ? '' : `
         <div class="color-picker">
           <div class="color-picker-head">
             <span class="color-picker-label">Цвет RAL</span>
@@ -1142,13 +1300,24 @@ function productCard(p, pat){
             </span>
           </div>
           <div class="color-picker-swatches">${swatchesHTML}</div>
-        </div>
+        </div>`;
 
+  return `
+    <div class="product ${pat}" data-item="${itemJSON}"${variantsAttr}>
+      <div class="product-image">
+        ${photoHTML}
+        ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
+      </div>
+      <div class="product-body">
+        <div class="product-name">${p.name}</div>
+        <div class="product-meta">${p.meta}</div>
+        ${dropdownsHTML}
+        ${colorHTML}
         <div class="product-foot-row">
           <div class="product-price">
             ${old}
             <span class="price-from">от</span>
-            <span class="price-new">${formatPrice(p.priceNew)} ₽</span>
+            <span class="price-new">${formatPrice(curPrice)} ₽</span>
             <span class="price-unit">/ ${p.unit}</span>
           </div>
           <button class="add-to-cart-btn" aria-label="В заявку">
