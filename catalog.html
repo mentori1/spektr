@@ -402,6 +402,9 @@ p{margin:0}
 .jz-card .gp-body{padding:15px 16px 16px;gap:11px}
 .jz-card .gp-swatch{width:18px;height:18px}
 .gd-spec{font-family:var(--f-mono);font-size:11px;letter-spacing:.02em;color:var(--text-on-dark-dim);margin-top:-2px}
+/* евроштакетник: 5 карточек, выбор покрытия→цвет, край, цена по матрице */
+.fence-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+@media (max-width:680px){.fence-grid{grid-template-columns:1fr;max-width:420px}}
 /* универсальный слот под фото — еврожалюзи / софиты / водосток (паттерн = заглушка до реального фото) */
 .media-slot{
   position:relative;aspect-ratio:16/8;border-radius:var(--r-md) var(--r-md) 0 0;overflow:hidden;
@@ -1015,32 +1018,7 @@ const PRODUCTS = [
     {coating:'Полимер',thickness:'0.40',price:738},{coating:'Полимер',thickness:'0.45',price:880},
     {coating:'Велюр',thickness:'0.45',price:1015},{coating:'Под дерево',thickness:'0.40',price:966},{coating:'Под дерево',thickness:'0.45',price:1050} ] },
 
-  /* ── Евроштакетник (Ш1/Ш2 клин+прямой, Ш10, Ш18, Ш19) ── */
-  /* выбор «Вид покрытия» в карточке (цена зависит от покрытия), толщина 0.5; цены — прайс «Сибтрансэфир» */
-  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 «Кветник» (69 мм) клин', meta:'Ширина 69 мм · обработка края — клин', color:'6005', unit:'м.п.', stock:'in',
-    defCoat:'Полимер', defThk:'0.50', variants:[
-    {coating:'Полимер',thickness:'0.50',price:68},{coating:'Двухсторонний полимер',thickness:'0.50',price:79},{coating:'Под дерево',thickness:'0.50',price:89} ] },
-  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 «Кветник» (69 мм) прямой', meta:'Ширина 69 мм · обработка края — прямой', color:'7024', unit:'м.п.', stock:'in',
-    defCoat:'Полимер', defThk:'0.50', variants:[
-    {coating:'Полимер',thickness:'0.50',price:71},{coating:'Двухсторонний полимер',thickness:'0.50',price:84},{coating:'Под дерево',thickness:'0.50',price:95} ] },
-  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 «Меридиан» (87 мм) клин', meta:'Ширина 87 мм · обработка края — клин', color:'8017', unit:'м.п.', stock:'in',
-    defCoat:'Полимер', defThk:'0.50', variants:[
-    {coating:'Полимер',thickness:'0.50',price:90},{coating:'Двухсторонний полимер',thickness:'0.50',price:105},{coating:'Под дерево',thickness:'0.50',price:119} ] },
-  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 «Меридиан» (87 мм) прямой', meta:'Ширина 87 мм · обработка края — прямой', color:'3005', unit:'м.п.',
-    defCoat:'Полимер', defThk:'0.50', variants:[
-    {coating:'Полимер',thickness:'0.50',price:95},{coating:'Двухсторонний полимер',thickness:'0.50',price:111},{coating:'Под дерево',thickness:'0.50',price:126} ] },
-  { cat:'fence', sub:'Ш10', name:'Штакетник Ш10 «Палисад» (100 мм) радиус', meta:'Ширина 100 мм · обработка края — радиус', color:'9005', unit:'м.п.',
-    defCoat:'Полимер', defThk:'0.50', variants:[
-    {coating:'Полимер',thickness:'0.50',price:101},{coating:'Двухсторонний полимер',thickness:'0.50',price:119},{coating:'Под дерево',thickness:'0.50',price:128},{coating:'Под дерево двухсторонний',thickness:'0.50',price:150} ] },
-  { cat:'fence', sub:'Ш18', name:'Штакетник Ш18 «Barrera» (118 мм) клин', meta:'Ширина 118 мм · обработка края — клин', color:'6002', unit:'м.п.',
-    defCoat:'Полимер', defThk:'0.50', variants:[
-    {coating:'Полимер',thickness:'0.50',price:131},{coating:'Двухсторонний полимер',thickness:'0.50',price:133},{coating:'Под дерево',thickness:'0.50',price:173},{coating:'Под дерево двухсторонний',thickness:'0.50',price:220} ] },
-  { cat:'fence', sub:'Ш18', name:'Штакетник Ш18 «Barrera» (118 мм) радиус', meta:'Ширина 118 мм · обработка края — радиус', color:'7024', unit:'м.п.',
-    defCoat:'Полимер', defThk:'0.50', variants:[
-    {coating:'Полимер',thickness:'0.50',price:123},{coating:'Двухсторонний полимер',thickness:'0.50',price:144},{coating:'Велюр',thickness:'0.50',price:146},{coating:'Под дерево',thickness:'0.50',price:163},{coating:'Под дерево двухсторонний',thickness:'0.50',price:206} ] },
-  { cat:'fence', sub:'Ш19', name:'Штакетник Ш19 «Эллипс» (126 мм) радиус', meta:'Ширина 126 мм · обработка края — радиус', color:'8017', unit:'м.п.',
-    defCoat:'Полимер', defThk:'0.50', variants:[
-    {coating:'Полимер',thickness:'0.50',price:123},{coating:'Двухсторонний полимер',thickness:'0.50',price:144},{coating:'Велюр',thickness:'0.50',price:146},{coating:'Под дерево',thickness:'0.50',price:163},{coating:'Под дерево двухсторонний',thickness:'0.50',price:206} ] },
+  /* ── Евроштакетник — вынесен в FENCE_MODELS (5 карточек: покрытие→цвет меняется, край-селектор; данные sib-profil) ── */
 
   /* ── Плоский лист (в плёнке / без плёнки) ── */
   { cat:'flatsheet', sub:'В плёнке', name:'Лист плоский в плёнке', meta:'Ширина 1250 мм · полимер + защитная плёнка', color:'7024', unit:'м²', stock:'in',
@@ -1176,6 +1154,59 @@ const GARDEN_PRODUCTS = [
     ] },
 ];
 
+/* ═══ ЕВРОШТАКЕТНИК ═══
+   5 карточек (Ш1/Ш2/Ш10/Ш18/Ш19). В карточке: «Вид покрытия» → набор ЦВЕТОВ меняется под покрытие,
+   «Вид обработки края» (клин/прямой/радиус), толщина 0,50, ширина. Цена = f(покрытие × край).
+   Данные/цены/цвета — с официального sib-profil (конфигуратор Bitrix). */
+// hex свотча для цвета штакетника: RAL → из COLORS, древесные (W.../Дуб 3D) → текстура
+function fenceColorObj(s){
+  if (/W\d|Дуб|3D|орех|R\b/i.test(s)) {
+    let hex = '#6b4327';
+    if (/Атланта/i.test(s)) hex = '#6e4a2a'; else if (/Бренди/i.test(s)) hex = '#7c4a26';
+    else if (/Рустик/i.test(s)) hex = '#4a3422'; else if (/Грэй/i.test(s)) hex = '#5b524a';
+    else if (/W001/i.test(s)) hex = '#6e4a2a'; else if (/W003|орех/i.test(s)) hex = '#8a6038';
+    else if (/W004/i.test(s)) hex = '#5a3a26'; else if (/W005/i.test(s)) hex = '#3f2c20';
+    return { name: s, hex, wood: true };
+  }
+  const ral = (s.match(/\b(\d{4})\b/) || [])[1];
+  const c = ral ? COLORS.find(x => x.ral === ral) : null;
+  return { name: c ? `${ral} · ${c.name}` : s, hex: c ? c.hex : '#9a9a9c' };
+}
+const FENCE_MODELS = [
+  { id:'Ш1', name:'Евроштакетник Ш1 «Кветник»', width:'69 мм', thickness:'0,50', edges:['Клин','Прямой'], coatings:[
+    {name:'Полимер', price:{'Клин':70,'Прямой':73}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
+    {name:'Велюр', price:{'Клин':83,'Прямой':87}, colors:['6005']},
+    {name:'SteelArt', price:{'Клин':92,'Прямой':96}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']} ] },
+  { id:'Ш2', name:'Евроштакетник Ш2 «Меридиан»', width:'87 мм', thickness:'0,50', edges:['Клин','Прямой'], coatings:[
+    {name:'Полимер', price:{'Клин':93,'Прямой':97}, colors:['1014','1015','3003','3005','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
+    {name:'Двухсторонний полимер', price:{'Клин':109,'Прямой':114}, colors:['7024','8017']},
+    {name:'Велюр', price:{'Клин':111,'Прямой':116}, colors:['6005']},
+    {name:'SteelArt', price:{'Клин':123,'Прямой':129}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']} ] },
+  { id:'Ш10', name:'Евроштакетник Ш10 «Палисад»', width:'100 мм', thickness:'0,50', edges:['Радиус'], coatings:[
+    {name:'Полимер', price:{'Радиус':107}, colors:['3005','6005','7024','8017','9003']},
+    {name:'Двухсторонний полимер', price:{'Радиус':125}, colors:['7024','8017']},
+    {name:'Велюр', price:{'Радиус':139}, colors:['7024','8017','9005']},
+    {name:'SteelArt', price:{'Радиус':134}, colors:['Золотой орех 3D (W003)','Античный дуб R (W004)']},
+    {name:'SteelWood', price:{'Радиус':134}, colors:['Дуб 3D Атланта','Дуб 3D Бренди']},
+    {name:'SteelWood двухсторонний', price:{'Радиус':158}, colors:['Дуб 3D Бренди двухсторонний']} ] },
+  { id:'Ш18', name:'Евроштакетник Ш18 «Баррера»', width:'118 мм', thickness:'0,50', edges:['Клин','Радиус'], coatings:[
+    {name:'Полимер', price:{'Клин':133,'Радиус':127}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
+    {name:'Двухсторонний полимер', price:{'Клин':156,'Радиус':149}, colors:['7024','8017']},
+    {name:'Велюр', price:{'Клин':159,'Радиус':151}, colors:['6005','7024','8017','9005']},
+    {name:'SteelArt', price:{'Клин':176,'Радиус':168}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']},
+    {name:'SteelArt двухсторонний', price:{'Клин':224,'Радиус':213}, colors:['Дуб 3D (W001/W001)','Античный дуб R (W004/W004)']},
+    {name:'SteelWood', price:{'Клин':168,'Радиус':160}, colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D Рустик','Дуб 3D Грэй']},
+    {name:'SteelWood двухсторонний', price:{'Клин':197,'Радиус':188}, colors:['Дуб 3D Бренди двухсторонний','Дуб 3D Рустик двухсторонний']} ] },
+  { id:'Ш19', name:'Евроштакетник Ш19 «Эллипс»', width:'126 мм', thickness:'0,50', edges:['Радиус'], coatings:[
+    {name:'Полимер', price:{'Радиус':127}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
+    {name:'Двухсторонний полимер', price:{'Радиус':149}, colors:['7024','8017']},
+    {name:'Велюр', price:{'Радиус':151}, colors:['6005','7024','8017','9005']},
+    {name:'SteelArt', price:{'Радиус':168}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']},
+    {name:'SteelArt двухсторонний', price:{'Радиус':213}, colors:['Дуб 3D (W001/W001)','Античный дуб R (W004/W004)']},
+    {name:'SteelWood', price:{'Радиус':160}, colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D Рустик','Дуб 3D Грэй']},
+    {name:'SteelWood двухсторонний', price:{'Радиус':188}, colors:['Дуб 3D Бренди двухсторонний','Дуб 3D Рустик двухсторонний']} ] },
+];
+
 /* ─── STATE ─── */
 const state = { cat:'corrugated', sub:null, coating:null, thickness:null, color:null, sort:'default', priceMin:null, priceMax:null };
 
@@ -1250,7 +1281,7 @@ function renderFilters(){
   }));
 
   // Водосток / Софиты / Еврожалюзи DOCKE: покрытие/толщина/цвет неприменимы — выбор в карточке
-  const hideExtra = (state.cat === 'gutter' || state.cat === 'soffit' || state.cat === 'jaluzi' || state.cat === 'garden');
+  const hideExtra = (state.cat === 'gutter' || state.cat === 'soffit' || state.cat === 'jaluzi' || state.cat === 'garden' || state.cat === 'fence');
   const grp = el => el && el.closest('.filter-group');
   [grp($coating), grp($thickness), grp($color)].forEach(g => { if (g) g.style.display = hideExtra ? 'none' : ''; });
   // подсказка над подкатегориями для систем
@@ -1290,6 +1321,7 @@ function renderProducts(){
   if (state.cat === 'soffit') { renderSoffit($toolbar); return; }
   if (state.cat === 'jaluzi') { renderJaluzi($toolbar); return; }
   if (state.cat === 'garden') { renderGarden($toolbar); return; }
+  if (state.cat === 'fence')  { renderFence($toolbar); return; }
 
   if ($toolbar) $toolbar.style.display = '';
 
@@ -1468,7 +1500,12 @@ $grid.addEventListener('click', e => {
       try { const it = JSON.parse(card.dataset.item); it[dd.dataset.kind] = opt.dataset.value; card.dataset.item = JSON.stringify(it); } catch (_) {}
     }
     // еврожалюзи: смена покрытия → пересобрать палитру (RAL ↔ SteelWood/SteelArt)
-    if (dd.dataset.kind === 'coating' && card && card.classList.contains('jz-card')) rebuildJaluziColors(card);
+    if (dd.dataset.kind === 'coating' && card && card.classList.contains('jz-card') && !card.classList.contains('fence-card')) rebuildJaluziColors(card);
+    // евроштакетник: покрытие → пересобрать цвета + цену; край → пересчитать цену
+    if (card && card.classList.contains('fence-card')) {
+      if (dd.dataset.kind === 'coating') { rebuildFenceColors(card); updateFencePrice(card); }
+      else if (dd.dataset.kind === 'edge') { updateFencePrice(card); }
+    }
     return;
   }
   const dd = e.target.closest('.dropdown--interactive');
@@ -1867,6 +1904,84 @@ function gardenCardHTML(p){
         </div>
       </div>
     </div>`;
+}
+
+/* ─── ЕВРОШТАКЕТНИК: 5 карточек, выбор покрытия (меняет цвета) + край + цвет; цена = f(покрытие×край) ─── */
+function renderFence($toolbar){
+  if ($toolbar) $toolbar.style.display = 'none';
+  const list = !state.sub ? FENCE_MODELS : FENCE_MODELS.filter(m => m.id === state.sub);
+  $count.textContent = `— ${list.length} ${pluralize(list.length,'модель','модели','моделей')}`;
+  $grid.innerHTML = `<div class="fence-grid">${list.map(fenceCardHTML).join('')}</div>` + customBannerHTML();
+  $grid.querySelectorAll('.gp-card .add-to-cart-btn').forEach(btn => btn.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const card = btn.closest('.gp-card');
+    const item = JSON.parse(card.dataset.item);
+    if (window.SMCart) window.SMCart.add(item);
+    btn.classList.add('added'); setTimeout(() => btn.classList.remove('added'), 1500);
+    if (window.SMGoal) SMGoal('cart_add', {product: item.name});
+  }));
+}
+
+function fenceCardHTML(m){
+  const coatings = m.coatings.map(c => ({ name:c.name, price:c.price, colors:c.colors.map(fenceColorObj) }));
+  const c0 = coatings[0], e0 = m.edges[0], col0 = c0.colors[0];
+  const price = c0.price[e0];
+  const item = { name:m.name, meta:`Ширина ${m.width} · толщина ${m.thickness} мм`, price, unit:'м.п.', coating:c0.name, edge:e0, thickness:`${m.thickness} мм`, width:m.width, colorName:col0.name };
+  const itemJSON = JSON.stringify(item).replace(/"/g,'&quot;');
+  const fenceJSON = JSON.stringify({coatings}).replace(/"/g,'&quot;');
+  const coatDD = dropdownHTML('coating','Вид покрытия', coatings.map(c=>({value:c.name,label:c.name})), c0.name);
+  const edgeDD = dropdownHTML('edge','Вид обработки края', m.edges.map(e=>({value:e,label:e})), e0);
+  const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  return `
+    <div class="gp-card jz-card fence-card pat-fence" data-item="${itemJSON}" data-fence="${fenceJSON}">
+      <div class="media-slot"><span class="media-hint">фото</span></div>
+      <div class="gp-body">
+        <div class="gp-name">${m.name}</div>
+        <div class="dropdowns">
+          ${coatDD}
+          ${edgeDD}
+          <span class="dropdown"><span class="key">Толщина</span><span class="val">${m.thickness}</span></span>
+          <span class="dropdown"><span class="key">Ширина</span><span class="val">${m.width}</span></span>
+        </div>
+        <div class="gp-colors">
+          <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${col0.name}</span></div>
+          <div class="gp-swatches">${swatches}</div>
+        </div>
+        <div class="gp-foot">
+          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(price)} ₽</span><span class="gp-unit">/ м.п.</span></div>
+          <button class="add-to-cart-btn" aria-label="В заявку">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span>В заявку</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function fenceCoatOf(card){
+  const data = JSON.parse(card.dataset.fence);
+  const coatName = card.querySelector('.dropdown[data-kind="coating"] .val').dataset.value;
+  return { data, coatName, coat: data.coatings.find(c => c.name === coatName) };
+}
+// смена покрытия → пересобрать цвета под покрытие
+function rebuildFenceColors(card){
+  const { coat } = fenceCoatOf(card);
+  const colors = coat ? coat.colors : [];
+  const wrap = card.querySelector('.gp-swatches');
+  if (wrap) wrap.innerHTML = colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const nameEl = card.querySelector('.gp-color-name');
+  if (nameEl) nameEl.textContent = colors[0] ? colors[0].name : '';
+  try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0] ? colors[0].name : ''; card.dataset.item = JSON.stringify(it); } catch(_){}
+}
+// смена покрытия/края → пересчитать цену по матрице
+function updateFencePrice(card){
+  const { coat } = fenceCoatOf(card);
+  const edgeEl = card.querySelector('.dropdown[data-kind="edge"] .val');
+  const edge = edgeEl ? edgeEl.dataset.value : null;
+  const price = coat ? (edge && coat.price[edge] != null ? coat.price[edge] : Object.values(coat.price)[0]) : null;
+  if (price == null) return;
+  const pe = card.querySelector('.gp-new'); if (pe) pe.textContent = `${formatPrice(price)} ₽`;
+  try { const it = JSON.parse(card.dataset.item); it.price = price; if (edge) it.edge = edge; card.dataset.item = JSON.stringify(it); } catch(_){}
 }
 
 function doborBlockHTML(){
