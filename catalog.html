@@ -381,6 +381,13 @@ p{margin:0}
 .gp-new{font-family:var(--f-display);font-weight:800;font-size:19px;color:var(--accent);white-space:nowrap}
 .gp-unit{font-family:var(--f-mono);font-size:10px;color:var(--text-on-dark-dim);white-space:nowrap}
 
+/* софиты: описание на карточке системы + одиночная карточка с выбором «Вид» */
+.gsys-desc{font-family:var(--f-mono);font-size:12px;line-height:1.45;color:var(--text-on-dark-dim);margin:0}
+.soffit-detail{max-width:380px}
+.sf-card{position:relative}
+.sf-card .dropdowns{margin:0}
+.gp-card:has(.dropdown--interactive.open){overflow:visible;z-index:6}
+
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
 .price-old{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-deep);text-decoration:line-through;letter-spacing:.04em}
 .price-from{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-dim);letter-spacing:.18em;text-transform:uppercase;margin-right:2px}
@@ -895,7 +902,7 @@ const CATEGORIES = [
   { id:'rolled',     name:'Чёрный металл',           pat:'pat-rolled',     sub:['80×80','60×60','60×40','40×20','20×20'] },
   { id:'jaluzi',     name:'Забор «Еврожалюзи»',      pat:'pat-fence-jal',  sub:['Ламель','П-профиль'] },
   { id:'dobor',      name:'Доборные элементы',       pat:'pat-dobor',      sub:[] },
-  { id:'soffit',     name:'Софиты DOCKE',            pat:'pat-soffit',     sub:['Standart','Premium','Lux'] },
+  { id:'soffit',     name:'Софиты DOCKE',            pat:'pat-soffit',     sub:['Стандарт','Премиум','Люкс'] },
   { id:'gutter',     name:'Водосточная система DOCKE',pat:'pat-gutter',    sub:['Стандарт','Премиум','Люкс'] },
   { id:'garden',     name:'Грядки и клумбы',         pat:'pat-garden',     sub:['Грядка','Клумба'] },
 ];
@@ -1015,12 +1022,7 @@ const PRODUCTS = [
   { cat:'jaluzi', sub:'Ламель',    name:'Еврожалюзи ламель Premium', meta:'Двусторонний полимер · усиленная', coating:'Полимер двусторонний', thickness:'0.50', color:'8017', priceNew:2540, unit:'м²', tag:'Премиум' },
   { cat:'jaluzi', sub:'П-профиль', name:'П-профиль для еврожалюзи',  meta:'40 × 60 × 40 · крепёж/каркас',     coating:'Полимер',           thickness:'1.50', color:'9005', priceNew:340,  unit:'м.п.' },
 
-  /* ── Софиты DOCKE (Standart / Premium / Lux — ориентиры docke.ru) ── */
-  { cat:'soffit', sub:'Standart', name:'Софит DOCKE Standart сплошной',      meta:'Без перфорации · карниз/подшивка', coating:'Полимер', thickness:'0.40', color:'9003', priceNew:430, unit:'шт' },
-  { cat:'soffit', sub:'Standart', name:'Софит DOCKE Standart перфорированный',meta:'С перфорацией · вентиляция',      coating:'Полимер', thickness:'0.40', color:'9003', priceNew:455, unit:'шт' },
-  { cat:'soffit', sub:'Premium',  name:'Софит DOCKE Premium сплошной',       meta:'Усиленная панель · без перфорации',coating:'Полимер', thickness:'0.45', color:'8017', priceNew:520, unit:'шт' },
-  { cat:'soffit', sub:'Premium',  name:'Софит DOCKE Premium перфорированный', meta:'Усиленная · вентиляция',          coating:'Полимер', thickness:'0.45', color:'8017', priceNew:545, unit:'шт' },
-  { cat:'soffit', sub:'Lux',      name:'Софит DOCKE Lux',                    meta:'Премиум-линейка · стойкость цвета', coating:'Полимер', thickness:'0.50', color:'7024', priceNew:640, unit:'шт', tag:'Премиум' },
+  /* ── Софиты DOCKE — вынесены в SOFFIT_SYSTEMS (категория → 3 системы → карточка с выбором «Вид» + цвет) ── */
 
   /* ── Водосточная система DOCKE — вынесена в GUTTER_SYSTEMS (двухуровневая навигация: категория → 3 системы → товары) ── */
 
@@ -1075,6 +1077,21 @@ const GUTTER_SYSTEMS = [
       {name:'Крепление регулируемое', price:278}, {name:'Муфта соединительная', price:286},
       {name:'Хомут универсальный', price:199}, {name:'Шпилька специальная с гайкой', price:231},
       {name:'Уплотнитель резиновый', price:36} ] },
+];
+
+/* ═══ СОФИТЫ DOCKE ═══
+   Двухуровневая навигация: категория → 3 системы → карточка с выбором «Вид» (перфорация) + цвет.
+   Цвета/виды/цены — с docke.ru (/siding/soffits/...). Цена = «от» (нижняя граница, зависит от цвета). */
+const SOFFIT_SYSTEMS = [
+  { id:'Стандарт', name:'Стандарт', tagline:'Базовая серия для подшивки кровли', price:448,
+    views:['Центральная перфорация','Полная перфорация','Сплошной'],
+    colors:[{name:'Пломбир',hex:'#f1efe8'},{name:'Шоколад',hex:'#352721'},{name:'Графит',hex:'#383b3e'},{name:'Каштан',hex:'#5a3a2a'}] },
+  { id:'Премиум', name:'Премиум', tagline:'Усиленная серия, расширенная палитра', price:509,
+    views:['Центральная перфорация','Полная перфорация','Сплошной'],
+    colors:[{name:'Пломбир',hex:'#f1efe8'},{name:'Шоколад',hex:'#352721'},{name:'Графит',hex:'#383b3e'},{name:'Карбон',hex:'#1c1c1e'},{name:'Каштан',hex:'#5a3a2a'}] },
+  { id:'Люкс', name:'Люкс', tagline:'Древесные текстуры под Lux-сайдинг', price:846, tag:'Премиум',
+    views:['Центральная перфорация','Полная перфорация','Сплошной'],
+    colors:[{name:'Зрелый каштан',hex:'#4a2e22'},{name:'Миндаль',hex:'#c9a877'},{name:'Орех',hex:'#6b4327'},{name:'Фундук',hex:'#8a5a36'}] },
 ];
 
 /* ─── STATE ─── */
@@ -1150,8 +1167,8 @@ function renderFilters(){
     renderProducts(); refreshFilterStates();
   }));
 
-  // Водосток DOCKE: покрытие/толщина/цвет неприменимы — цвет выбирается в карточке под систему
-  const hideExtra = (state.cat === 'gutter');
+  // Водосток / Софиты DOCKE: покрытие/толщина/цвет неприменимы — выбор в карточке под систему
+  const hideExtra = (state.cat === 'gutter' || state.cat === 'soffit');
   const grp = el => el && el.closest('.filter-group');
   [grp($coating), grp($thickness), grp($color)].forEach(g => { if (g) g.style.display = hideExtra ? 'none' : ''; });
   // подсказка над подкатегориями для систем
@@ -1179,8 +1196,9 @@ function renderProducts(){
     return;
   }
 
-  // Водосточные системы DOCKE — двухуровневая навигация (3 системы → товары)
+  // Водосток / Софиты DOCKE — двухуровневая навигация (3 системы → товары)
   if (state.cat === 'gutter') { renderGutter($toolbar); return; }
+  if (state.cat === 'soffit') { renderSoffit($toolbar); return; }
 
   if ($toolbar) $toolbar.style.display = '';
 
@@ -1322,7 +1340,7 @@ $grid.addEventListener('click', e => {
   const opt = e.target.closest('.dropdown-option');
   if (opt) {
     e.preventDefault(); e.stopPropagation();
-    const dd = opt.closest('.dropdown'); const card = opt.closest('.product');
+    const dd = opt.closest('.dropdown'); const card = opt.closest('.product, .gp-card');
     const valEl = dd.querySelector('.val');
     valEl.dataset.value = opt.dataset.value;
     valEl.textContent = dd.dataset.kind === 'thickness' ? `${opt.dataset.value} мм` : opt.dataset.value;
@@ -1331,6 +1349,10 @@ $grid.addEventListener('click', e => {
     dd.classList.remove('open'); dd.setAttribute('aria-expanded','false');
     if (dd.dataset.kind === 'coating') rebuildThickness(card);
     refreshCardPrice(card);
+    // не-variant карточки (напр. софит «Вид») — синхронизируем выбор в data-item
+    if (card && card.dataset.item && !card.dataset.variants) {
+      try { const it = JSON.parse(card.dataset.item); it[dd.dataset.kind] = opt.dataset.value; card.dataset.item = JSON.stringify(it); } catch (_) {}
+    }
     return;
   }
   const dd = e.target.closest('.dropdown--interactive');
@@ -1562,6 +1584,108 @@ function gutterProductCardHTML(p, s){
         </div>
         <div class="gp-foot">
           <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(p.price)} ₽</span><span class="gp-unit">/ шт</span></div>
+          <button class="add-to-cart-btn" aria-label="В заявку">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span>В заявку</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ─── СОФИТЫ DOCKE: уровень 1 (3 системы) / уровень 2 (карточка «Вид» перфорации + цвет) ─── */
+function renderSoffit($toolbar){
+  if ($toolbar) $toolbar.style.display = 'none';
+  const sys = state.sub ? SOFFIT_SYSTEMS.find(s => s.id === state.sub) : null;
+
+  if (!sys){
+    $count.textContent = `— ${SOFFIT_SYSTEMS.length} ${pluralize(SOFFIT_SYSTEMS.length,'система','системы','систем')}`;
+    $grid.innerHTML = `<div class="gutter-systems">${SOFFIT_SYSTEMS.map(soffitSystemCardHTML).join('')}</div>`;
+    $grid.querySelectorAll('.gsys').forEach(card => card.addEventListener('click', () => {
+      state.sub = card.dataset.sys;
+      renderProducts(); refreshFilterStates();
+      const ofs = document.querySelector('.products-head').getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({top:ofs, behavior:'smooth'});
+    }));
+    return;
+  }
+
+  $count.textContent = `— ${sys.name}`;
+  $grid.innerHTML =
+    `<div class="gutter-detail">
+      <button class="gutter-back" type="button">← Все системы</button>
+      <div class="soffit-detail">${soffitProductCardHTML(sys)}</div>
+    </div>` + customBannerHTML();
+
+  const back = $grid.querySelector('.gutter-back');
+  if (back) back.addEventListener('click', () => { state.sub = null; renderProducts(); refreshFilterStates(); });
+
+  // выбор цвета
+  $grid.querySelectorAll('.gp-swatch').forEach(sw => sw.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const card = sw.closest('.gp-card');
+    card.querySelectorAll('.gp-swatch').forEach(s => s.classList.remove('active'));
+    sw.classList.add('active');
+    const nameEl = card.querySelector('.gp-color-name');
+    if (nameEl) nameEl.textContent = sw.dataset.name;
+    const item = JSON.parse(card.dataset.item);
+    item.colorName = sw.dataset.name;
+    card.dataset.item = JSON.stringify(item);
+  }));
+
+  // в заявку
+  $grid.querySelectorAll('.gp-card .add-to-cart-btn').forEach(btn => btn.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const card = btn.closest('.gp-card');
+    const item = JSON.parse(card.dataset.item);
+    if (window.SMCart) window.SMCart.add(item);
+    btn.classList.add('added'); setTimeout(() => btn.classList.remove('added'), 1500);
+    if (window.SMGoal) SMGoal('cart_add', {product: item.name});
+  }));
+}
+
+function soffitSystemCardHTML(s){
+  const swatches = s.colors.map(c => `<span class="gsys-sw" style="background:${c.hex}" title="${c.name}"></span>`).join('');
+  return `
+    <button type="button" class="gsys" data-sys="${s.id}">
+      ${s.tag ? `<span class="gsys-tag">${s.tag}</span>` : ''}
+      <div class="gsys-name">${s.name}</div>
+      <p class="gsys-desc">${s.tagline}</p>
+      <ul class="gsys-specs">
+        <li><span>Вид</span><b>3 перфорации</b></li>
+        <li><span>Цена</span><b>от ${formatPrice(s.price)} ₽/шт</b></li>
+      </ul>
+      <div class="gsys-colors">${swatches}<span class="gsys-colors-n">${s.colors.length} ${pluralize(s.colors.length,'цвет','цвета','цветов')}</span></div>
+      <div class="gsys-foot">
+        <span class="gsys-cta">Смотреть продукцию</span>
+        <span class="gsys-arrow" aria-hidden="true">→</span>
+      </div>
+    </button>`;
+}
+
+function soffitProductCardHTML(s){
+  const initColor = s.colors[0];
+  const initView = s.views[0];
+  const item = { name: `Софит DOCKE ${s.name}`, meta: `Подшивка кровли · DOCKE ${s.name}`, price: s.price, unit: 'шт', view: initView, colorName: initColor.name };
+  const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
+  const viewOpts = s.views.map((v,i) => `<button type="button" class="dropdown-option${i===0?' active':''}" role="option" data-value="${v}">${v}</button>`).join('');
+  const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  return `
+    <div class="gp-card sf-card" data-item="${itemJSON}">
+      <div class="gp-body">
+        <div class="gp-name">Софит DOCKE ${s.name}</div>
+        <div class="dropdowns">
+          <span class="dropdown dropdown--interactive" data-kind="view" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+            <span class="key">Вид</span><span class="val" data-value="${initView}">${initView}</span>
+            <div class="dropdown-menu" role="listbox">${viewOpts}</div>
+          </span>
+        </div>
+        <div class="gp-colors">
+          <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${initColor.name}</span></div>
+          <div class="gp-swatches">${swatches}</div>
+        </div>
+        <div class="gp-foot">
+          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(s.price)} ₽</span><span class="gp-unit">/ шт</span></div>
           <button class="add-to-cart-btn" aria-label="В заявку">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
             <span>В заявку</span>
