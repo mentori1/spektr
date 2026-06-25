@@ -1136,21 +1136,27 @@ const JALUZI_PRODUCTS = [
 ];
 
 /* ═══ ГРЯДКИ И КЛУМБЫ ═══
-   Расширенные карточки: выбор параметров (размеры) + цвет (только доступные). Размеры/цвета — sib-profil.
-   Цена — «от» (точная сетка по размерам у sib-profil не отдаётся ботом — клиент пришлёт прайс). */
-const GARDEN_COLORS = [
-  {name:'Зелёный (6005)', hex:'#2e4a36'}, {name:'Графит (7024)', hex:'#4a4d52'}, {name:'Шоколад (8017)', hex:'#3f2b22'},
-  {name:'Оцинковка', hex:'#b8bcc2'}, {name:'Дуб 3D', hex:'#6e4a2a', wood:true},
-];
+   Карточки с выбором покрытия (→ меняет цвета) + размеры; цена = f(покрытие × размеры).
+   Данные/цвета/цены — с реального конфигуратора sib-profil (Bitrix-офферы). Ключ цены = значения dims через "|". */
 const GARDEN_PRODUCTS = [
-  { sub:'Грядка', name:'Грядка «Фактурная»', price:1319, unit:'шт', spec:'Высота 190 мм · толщина 0.45–0.5 мм', meta:'Грядка металлическая фактурная',
-    params:[
+  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', spec:'Высота 190 мм · толщина 0,45–0,5 мм', meta:'Грядка металлическая фактурная',
+    dims:[
       {kind:'width',  label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
       {kind:'length', label:'Длина',  options:[{value:'1000',label:'1000 мм'},{value:'1840',label:'1840 мм'},{value:'2000',label:'2000 мм'}]},
+    ],
+    coatings:[
+      {name:'Оцинкованный', colors:['Цинк'], price:{'400|1000':678,'400|1840':1007,'400|2000':1064,'600|1000':755,'600|1840':1084,'600|2000':1141,'800|1000':828,'800|1840':1156,'800|2000':1214,'1000|1000':905,'1000|1840':1234,'1000|2000':1291}},
+      {name:'Полимер', colors:['6005','7024','8017'], price:{'400|1000':848,'400|1840':1249,'400|2000':1319,'600|1000':942,'600|1840':1343,'600|2000':1413,'800|1000':1030,'800|1840':1432,'800|2000':1502,'1000|1000':1125,'1000|1840':1526,'1000|2000':1596}},
+      {name:'SteelWood', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400|1000':1147,'400|1840':1697,'400|2000':1792,'600|1000':1276,'600|1840':1826,'600|2000':1921,'800|1000':1397,'800|1840':1947,'800|2000':2043,'1000|1000':1526,'1000|1840':2076,'1000|2000':2172}},
     ] },
-  { sub:'Клумба', name:'Клумба «Фактурная»', price:1139, unit:'шт', spec:'Круглая · толщина 0.45–0.5 мм', meta:'Клумба металлическая фактурная',
-    params:[
-      {kind:'diameter', label:'Диаметр', options:[{value:'690',label:'Ø 0.69 м'},{value:'1000',label:'Ø 1.0 м'},{value:'1380',label:'Ø 1.38 м'},{value:'1730',label:'Ø 1.73 м'}]},
+  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', spec:'Круглая · толщина 0,45–0,5 мм', meta:'Клумба металлическая фактурная',
+    dims:[
+      {kind:'width', label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
+    ],
+    coatings:[
+      {name:'Оцинкованный', colors:['Цинк'], price:{'400':677,'600':908,'800':1126,'1000':1357}},
+      {name:'Полимер', colors:['6005','7024','8017'], price:{'400':856,'600':1139,'800':1404,'1000':1687}},
+      {name:'SteelWood', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400':1151,'600':1538,'800':1902,'1000':2289}},
     ] },
 ];
 
@@ -1160,6 +1166,7 @@ const GARDEN_PRODUCTS = [
    Данные/цены/цвета — с официального sib-profil (конфигуратор Bitrix). */
 // hex свотча для цвета штакетника: RAL → из COLORS, древесные (W.../Дуб 3D) → текстура
 function fenceColorObj(s){
+  if (/Цинк|оцинков/i.test(s)) return { name:'Оцинковка', hex:'#b8bcc2' };
   if (/W\d|Дуб|3D|орех|R\b/i.test(s)) {
     let hex = '#6b4327';
     if (/Атланта/i.test(s)) hex = '#6e4a2a'; else if (/Бренди/i.test(s)) hex = '#7c4a26';
@@ -1500,11 +1507,16 @@ $grid.addEventListener('click', e => {
       try { const it = JSON.parse(card.dataset.item); it[dd.dataset.kind] = opt.dataset.value; card.dataset.item = JSON.stringify(it); } catch (_) {}
     }
     // еврожалюзи: смена покрытия → пересобрать палитру (RAL ↔ SteelWood/SteelArt)
-    if (dd.dataset.kind === 'coating' && card && card.classList.contains('jz-card') && !card.classList.contains('fence-card')) rebuildJaluziColors(card);
+    if (dd.dataset.kind === 'coating' && card && card.classList.contains('jz-card') && !card.classList.contains('fence-card') && !card.classList.contains('gd-card')) rebuildJaluziColors(card);
     // евроштакетник: покрытие → пересобрать цвета + цену; край → пересчитать цену
     if (card && card.classList.contains('fence-card')) {
       if (dd.dataset.kind === 'coating') { rebuildFenceColors(card); updateFencePrice(card); }
       else if (dd.dataset.kind === 'edge') { updateFencePrice(card); }
+    }
+    // грядки/клумбы: покрытие → цвета + цена; размеры → цена
+    if (card && card.classList.contains('gd-card')) {
+      if (dd.dataset.kind === 'coating') { rebuildGardenColors(card); updateGardenPrice(card); }
+      else { updateGardenPrice(card); }
     }
     return;
   }
@@ -1878,25 +1890,30 @@ function renderGarden($toolbar){
 }
 
 function gardenCardHTML(p){
-  const initColor = GARDEN_COLORS[0];
-  const item = { name: p.name, meta: p.meta, price: p.price, unit: p.unit, colorName: initColor.name };
-  p.params.forEach(par => { item[par.kind] = par.options[0].value; });
-  const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
-  const dropdowns = p.params.map(par => dropdownHTML(par.kind, par.label, par.options, par.options[0].value)).join('');
-  const swatches = GARDEN_COLORS.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const coatings = p.coatings.map(c => ({ name:c.name, colors:c.colors.map(fenceColorObj), price:c.price }));
+  const c0 = coatings[0], col0 = c0.colors[0];
+  const dimVals = p.dims.map(d => d.options[0].value);
+  const price = c0.price[dimVals.join('|')];
+  const item = { name:p.name, meta:p.meta, price, unit:p.unit, coating:c0.name, colorName:col0.name };
+  p.dims.forEach((d,i) => { item[d.kind] = dimVals[i]; });
+  const itemJSON = JSON.stringify(item).replace(/"/g,'&quot;');
+  const gardenJSON = JSON.stringify({ coatings, dims: p.dims.map(d => ({kind:d.kind})) }).replace(/"/g,'&quot;');
+  const coatDD = dropdownHTML('coating','Вид покрытия', coatings.map(c=>({value:c.name,label:c.name})), c0.name);
+  const dimDDs = p.dims.map(d => dropdownHTML(d.kind, d.label, d.options, d.options[0].value)).join('');
+  const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
-    <div class="gp-card jz-card gd-card pat-garden" data-item="${itemJSON}">
+    <div class="gp-card jz-card gd-card pat-garden" data-item="${itemJSON}" data-garden="${gardenJSON}">
       <div class="media-slot"><span class="media-hint">фото</span></div>
       <div class="gp-body">
         <div class="gp-name">${p.name}</div>
         ${p.spec ? `<div class="gd-spec">${p.spec}</div>` : ''}
-        <div class="dropdowns">${dropdowns}</div>
+        <div class="dropdowns">${coatDD}${dimDDs}</div>
         <div class="gp-colors">
-          <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${initColor.name}</span></div>
+          <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${col0.name}</span></div>
           <div class="gp-swatches">${swatches}</div>
         </div>
         <div class="gp-foot">
-          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(p.price)} ₽</span><span class="gp-unit">/ ${p.unit}</span></div>
+          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(price)} ₽</span><span class="gp-unit">/ ${p.unit}</span></div>
           <button class="add-to-cart-btn" aria-label="В заявку">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
             <span>В заявку</span>
@@ -1904,6 +1921,32 @@ function gardenCardHTML(p){
         </div>
       </div>
     </div>`;
+}
+
+function gardenCoatOf(card){
+  const data = JSON.parse(card.dataset.garden);
+  const coatName = card.querySelector('.dropdown[data-kind="coating"] .val').dataset.value;
+  return { data, coat: data.coatings.find(c => c.name === coatName) };
+}
+// смена покрытия → пересобрать цвета под покрытие
+function rebuildGardenColors(card){
+  const { coat } = gardenCoatOf(card);
+  const colors = coat ? coat.colors : [];
+  const wrap = card.querySelector('.gp-swatches');
+  if (wrap) wrap.innerHTML = colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const nameEl = card.querySelector('.gp-color-name');
+  if (nameEl) nameEl.textContent = colors[0] ? colors[0].name : '';
+  try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0] ? colors[0].name : ''; card.dataset.item = JSON.stringify(it); } catch(_){}
+}
+// смена покрытия/размеров → пересчитать цену по сетке (ключ = значения dims через "|")
+function updateGardenPrice(card){
+  const { data, coat } = gardenCoatOf(card);
+  if (!coat) return;
+  const key = data.dims.map(d => card.querySelector(`.dropdown[data-kind="${d.kind}"] .val`)?.dataset.value).join('|');
+  const price = coat.price[key];
+  if (price == null) return;
+  const pe = card.querySelector('.gp-new'); if (pe) pe.textContent = `${formatPrice(price)} ₽`;
+  try { const it = JSON.parse(card.dataset.item); it.price = price; data.dims.forEach(d => { it[d.kind] = card.querySelector(`.dropdown[data-kind="${d.kind}"] .val`)?.dataset.value; }); card.dataset.item = JSON.stringify(it); } catch(_){}
 }
 
 /* ─── ЕВРОШТАКЕТНИК: 5 карточек, выбор покрытия (меняет цвета) + край + цвет; цена = f(покрытие×край) ─── */
