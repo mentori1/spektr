@@ -318,6 +318,69 @@ p{margin:0}
 .product-image{border-radius:var(--r-md) var(--r-md) 0 0}
 .product:has(.dropdown--interactive.open){overflow:visible;z-index:6}
 
+/* ════════ ВОДОСТОЧНЫЕ СИСТЕМЫ DOCKE (категория → 3 системы → товары) ════════ */
+/* уровень 1 — карточки систем */
+.gutter-systems{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:900px){.gutter-systems{grid-template-columns:1fr}}
+.gsys{
+  position:relative;display:flex;flex-direction:column;gap:18px;text-align:left;cursor:pointer;color:inherit;
+  padding:clamp(22px,2.6vw,30px);border-radius:var(--r-lg);
+  background:rgba(255,255,255,.025);border:1px solid var(--line);
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  transition:transform .4s var(--ease-out),border-color .4s var(--ease-out),box-shadow .4s var(--ease-out);
+}
+.gsys:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.22);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.gsys-tag{position:absolute;top:16px;right:16px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 10px;border-radius:999px}
+.gsys-name{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.01em;color:var(--text-on-dark-bright)}
+.gsys-specs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.gsys-specs li{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:12px}
+.gsys-specs span{color:var(--text-on-dark-dim);letter-spacing:.04em}
+.gsys-specs b{color:var(--text-on-dark-bright);font-weight:600}
+.gsys-colors{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.gsys-sw{width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
+.gsys-colors-n{font-family:var(--f-mono);font-size:10.5px;color:var(--text-on-dark-dim);letter-spacing:.04em;margin-left:4px}
+.gsys-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:16px;border-top:1px solid var(--line-strong)}
+.gsys-cta{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--text-on-dark-bright);text-transform:uppercase}
+.gsys-arrow{font-family:var(--f-display);font-weight:800;font-size:22px;line-height:1;color:var(--accent);transition:transform .3s var(--ease-out)}
+.gsys:hover .gsys-arrow{transform:translateX(5px)}
+
+/* уровень 2 — показатели + товары */
+.gutter-detail{grid-column:1 / -1;display:flex;flex-direction:column;gap:22px}
+.gutter-back{align-self:flex-start;cursor:pointer;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-on-dark-dim);background:transparent;border:0;padding:4px 0;transition:color .2s var(--ease)}
+.gutter-back:hover{color:var(--accent)}
+.gutter-spec-card{border:1px solid var(--line);border-radius:var(--r-lg);background:rgba(255,255,255,.025);padding:clamp(20px,2.4vw,28px)}
+.gutter-spec-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+.gutter-spec-eyebrow{font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-on-dark-dim);margin-bottom:6px}
+.gutter-spec-title{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.6vw,32px);color:var(--text-on-dark-bright);margin:0}
+.gutter-spec-colors{display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+.gutter-spec-colors-label{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-on-dark-dim)}
+.gutter-spec-sw{display:flex;gap:6px}
+.gutter-spec-sw span{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
+.gutter-spec-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+@media (max-width:760px){.gutter-spec-grid{grid-template-columns:repeat(2,1fr)}}
+.gspec{display:flex;flex-direction:column;gap:5px;padding:14px 16px;background:#15171c}
+.gspec-k{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-on-dark-dim)}
+.gspec-v{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--text-on-dark-bright)}
+
+.gutter-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:16px}
+.gp-card{border:1px solid var(--line);border-radius:var(--r-md);background:rgba(255,255,255,.025);transition:border-color .3s var(--ease),transform .3s var(--ease)}
+.gp-card:hover{border-color:rgba(255,255,255,.18);transform:translateY(-3px)}
+.gp-body{padding:18px;display:flex;flex-direction:column;gap:14px;height:100%}
+.gp-name{font-family:var(--f-display);font-weight:700;font-size:16px;line-height:1.15;color:var(--text-on-dark-bright)}
+.gp-colors{display:flex;flex-direction:column;gap:8px}
+.gp-colors-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em}
+.gp-colors-label{color:var(--text-on-dark-dim);text-transform:uppercase}
+.gp-color-name{color:var(--text-on-dark-bright)}
+.gp-swatches{display:flex;gap:6px;flex-wrap:wrap}
+.gp-swatch{width:22px;height:22px;border-radius:50%;cursor:pointer;border:1px solid rgba(255,255,255,.2);padding:0;transition:transform .15s var(--ease),box-shadow .15s var(--ease)}
+.gp-swatch:hover{transform:scale(1.12)}
+.gp-swatch.active{box-shadow:0 0 0 2px var(--accent),0 0 0 3px rgba(0,0,0,.4)}
+.gp-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
+.gp-price{display:flex;align-items:baseline;gap:5px}
+.gp-from{font-family:var(--f-mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-on-dark-dim)}
+.gp-new{font-family:var(--f-display);font-weight:800;font-size:19px;color:var(--accent)}
+.gp-unit{font-family:var(--f-mono);font-size:10px;color:var(--text-on-dark-dim)}
+
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
 .price-old{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-deep);text-decoration:line-through;letter-spacing:.04em}
 .price-from{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-dim);letter-spacing:.18em;text-transform:uppercase;margin-right:2px}
@@ -833,7 +896,7 @@ const CATEGORIES = [
   { id:'jaluzi',     name:'Забор «Еврожалюзи»',      pat:'pat-fence-jal',  sub:['Ламель','П-профиль'] },
   { id:'dobor',      name:'Доборные элементы',       pat:'pat-dobor',      sub:[] },
   { id:'soffit',     name:'Софиты DOCKE',            pat:'pat-soffit',     sub:['Standart','Premium','Lux'] },
-  { id:'gutter',     name:'Водосточная система DOCKE',pat:'pat-gutter',    sub:['Standard','Premium','Lux'] },
+  { id:'gutter',     name:'Водосточная система DOCKE',pat:'pat-gutter',    sub:['Стандарт','Премиум','Люкс'] },
   { id:'garden',     name:'Грядки и клумбы',         pat:'pat-garden',     sub:['Грядка','Клумба'] },
 ];
 
@@ -959,38 +1022,59 @@ const PRODUCTS = [
   { cat:'soffit', sub:'Premium',  name:'Софит DOCKE Premium перфорированный', meta:'Усиленная · вентиляция',          coating:'Полимер', thickness:'0.45', color:'8017', priceNew:545, unit:'шт' },
   { cat:'soffit', sub:'Lux',      name:'Софит DOCKE Lux',                    meta:'Премиум-линейка · стойкость цвета', coating:'Полимер', thickness:'0.50', color:'7024', priceNew:640, unit:'шт', tag:'Премиум' },
 
-  /* ── Водосточная система DOCKE (цены docke.ru, ориентир) ── */
-  /* Standard — Ø80 мм / жёлоб 120 мм · кровля до 150 м² */
-  { cat:'gutter', sub:'Standard', name:'Жёлоб DOCKE Standard (3 м)',   meta:'Жёлоб 120 мм · кровля до 150 м²', coating:'Полимер', thickness:'1.65', color:'8017', priceNew:480, unit:'шт', stock:'in' },
-  { cat:'gutter', sub:'Standard', name:'Труба DOCKE Standard Ø80 (3 м)',meta:'Ø80 мм · стандартная серия',     coating:'Полимер', thickness:'1.65', color:'8017', priceNew:580, unit:'шт', stock:'in' },
-  { cat:'gutter', sub:'Standard', name:'Воронка DOCKE Standard',       meta:'Водосборная · в цвет',            coating:'Полимер', thickness:'1.65', color:'8017', priceNew:314, unit:'шт' },
-  { cat:'gutter', sub:'Standard', name:'Колено DOCKE Standard 45°',    meta:'Отвод трубы · в цвет',            coating:'Полимер', thickness:'1.65', color:'8017', priceNew:197, unit:'шт' },
-  { cat:'gutter', sub:'Standard', name:'Угол жёлоба DOCKE Standard 90°',meta:'Поворот жёлоба · в цвет',        coating:'Полимер', thickness:'1.65', color:'8017', priceNew:270, unit:'шт' },
-  { cat:'gutter', sub:'Standard', name:'Кронштейн жёлоба DOCKE Standard',meta:'Крепление жёлоба',              coating:'Полимер', thickness:'1.65', color:'8017', priceNew:58,  unit:'шт' },
-  { cat:'gutter', sub:'Standard', name:'Муфта соединительная DOCKE Standard',meta:'Соединение труб · в цвет',  coating:'Полимер', thickness:'1.65', color:'8017', priceNew:105, unit:'шт' },
-
-  /* Premium — Ø85 мм / жёлоб 120 мм · кровля 150–250 м² */
-  { cat:'gutter', sub:'Premium', name:'Жёлоб DOCKE Premium (3 м)',     meta:'Жёлоб 120 мм · кровля 150–250 м²',coating:'Полимер', thickness:'1.75', color:'7024', priceNew:625, unit:'шт', stock:'in' },
-  { cat:'gutter', sub:'Premium', name:'Труба DOCKE Premium Ø85 (3 м)', meta:'Ø85 мм · усиленная серия',        coating:'Полимер', thickness:'1.75', color:'7024', priceNew:755, unit:'шт', stock:'in' },
-  { cat:'gutter', sub:'Premium', name:'Воронка DOCKE Premium',         meta:'Водосборная · в цвет',            coating:'Полимер', thickness:'1.75', color:'7024', priceNew:422, unit:'шт' },
-  { cat:'gutter', sub:'Premium', name:'Колено DOCKE Premium 45°',      meta:'Отвод трубы · в цвет',            coating:'Полимер', thickness:'1.75', color:'7024', priceNew:264, unit:'шт' },
-  { cat:'gutter', sub:'Premium', name:'Угол жёлоба DOCKE Premium 90°', meta:'Поворот жёлоба · в цвет',         coating:'Полимер', thickness:'1.75', color:'7024', priceNew:364, unit:'шт' },
-  { cat:'gutter', sub:'Premium', name:'Кронштейн жёлоба DOCKE Premium',meta:'Крепление жёлоба',                coating:'Полимер', thickness:'1.75', color:'7024', priceNew:76,  unit:'шт' },
-  { cat:'gutter', sub:'Premium', name:'Муфта соединительная DOCKE Premium',meta:'Соединение труб · в цвет',    coating:'Полимер', thickness:'1.75', color:'7024', priceNew:140, unit:'шт' },
-
-  /* Lux — Ø100 мм / жёлоб 141 мм · кровля от 250 м² */
-  { cat:'gutter', sub:'Lux', name:'Жёлоб DOCKE Lux (3 м)',         meta:'Жёлоб 141 мм · кровля от 250 м²',  coating:'Полимер', thickness:'1.90', color:'8017', priceNew:1115, unit:'шт', tag:'Премиум' },
-  { cat:'gutter', sub:'Lux', name:'Труба DOCKE Lux Ø100 (3 м)',    meta:'Ø100 мм · усиленная серия',        coating:'Полимер', thickness:'1.90', color:'8017', priceNew:1326, unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Воронка DOCKE Lux',             meta:'Водосборная · в цвет',             coating:'Полимер', thickness:'1.90', color:'8017', priceNew:959,  unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Колено DOCKE Lux 45°',          meta:'Отвод трубы · в цвет',             coating:'Полимер', thickness:'1.90', color:'8017', priceNew:520,  unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Угол жёлоба DOCKE Lux 90°',     meta:'Поворот жёлоба · в цвет',          coating:'Полимер', thickness:'1.90', color:'8017', priceNew:670,  unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Кронштейн жёлоба DOCKE Lux',    meta:'Крепление жёлоба металл',          coating:'Полимер', thickness:'1.90', color:'8017', priceNew:490,  unit:'шт' },
-  { cat:'gutter', sub:'Lux', name:'Муфта соединительная DOCKE Lux',meta:'Соединение труб · в цвет',         coating:'Полимер', thickness:'1.90', color:'8017', priceNew:321,  unit:'шт' },
+  /* ── Водосточная система DOCKE — вынесена в GUTTER_SYSTEMS (двухуровневая навигация: категория → 3 системы → товары) ── */
 
   /* ── Грядки и клумбы (sib-profil) ── */
   { cat:'garden', sub:'Грядка', name:'Грядка металлическая «Фактурная»', meta:'Ширина 0.4–1 м · Высота 19 см · Полимер', coating:'Полимер', thickness:'0.45', color:'6005', priceNew:1319, unit:'шт', tag:'Сезон' },
   { cat:'garden', sub:'Грядка', name:'Грядка высокая «Фактурная»',       meta:'Высота 60 см · Полимер · в цвет',          coating:'Полимер', thickness:'0.50', color:'8017', priceNew:2890, unit:'шт' },
   { cat:'garden', sub:'Клумба', name:'Клумба металлическая «Фактурная»', meta:'Круглая Ø 0.69–1.73 м · Полимер',          coating:'Полимер', thickness:'0.50', color:'3005', priceNew:1139, unit:'шт' },
+];
+
+/* ═══ ВОДОСТОЧНЫЕ СИСТЕМЫ DOCKE ═══
+   Двухуровневая навигация: категория «Водосточная система DOCKE» → 3 карточки-системы → товары серии.
+   Цвета, состав и цены — с официального docke.ru (цена = «от» по нижней границе диапазона, т.к. зависит от цвета). */
+const GUTTER_SYSTEMS = [
+  { id:'Стандарт', name:'Стандарт', tagline:'до 150 м²', flow:'5,3 л/сек', wall:'1,7 мм',
+    specs:[['Для кровли','до 150 м²'],['Диаметр трубы','80 мм'],['Ширина жёлоба','120 мм'],['Глубина жёлоба','70 мм'],['Толщина стенок','1,65 мм']],
+    colors:[{name:'Серый',hex:'#4a4d52'},{name:'Белый',hex:'#f1f2ee'},{name:'Тёмно-коричневый',hex:'#352721'},{name:'Светло-коричневый',hex:'#5a3a2a'},{name:'Зелёный',hex:'#2e4a36'},{name:'Красный',hex:'#7a2226'}],
+    products:[
+      {name:'Жёлоб водосточный 3 м', price:425}, {name:'Труба водосточная 3 м', price:517},
+      {name:'Воронка водосточная', price:292}, {name:'Угол жёлоба 90°', price:252},
+      {name:'Колено водосточное 45°', price:180}, {name:'Соединитель жёлобов', price:163},
+      {name:'Заглушка жёлоба', price:78}, {name:'Наконечник водосточной трубы', price:172},
+      {name:'Кронштейн жёлоба', price:55}, {name:'Кронштейн жёлоба металлический', price:183},
+      {name:'Крепление регулируемое', price:324}, {name:'Муфта соединительная', price:98},
+      {name:'Хомут универсальный', price:73}, {name:'Шпилька специальная с гайкой', price:231},
+      {name:'Уплотнитель резиновый', price:27} ] },
+
+  { id:'Премиум', name:'Премиум', tagline:'150…250 м²', flow:'6,4 л/сек', wall:'1,8 мм',
+    specs:[['Для кровли','150…250 м²'],['Диаметр трубы','85 мм'],['Ширина жёлоба','120 мм'],['Глубина жёлоба','76 мм'],['Толщина стенок','1,75 мм']],
+    colors:[{name:'Графит',hex:'#383b3e'},{name:'Пломбир',hex:'#f1efe8'},{name:'Каштан',hex:'#5a3a2a'},{name:'Шоколад',hex:'#352721'},{name:'Карбон',hex:'#1c1c1e'}],
+    products:[
+      {name:'Жёлоб водосточный 3 м', price:644}, {name:'Труба водосточная 3 м', price:776},
+      {name:'Воронка', price:435}, {name:'Угол жёлоба 90°', price:375}, {name:'Угол жёлоба 135°', price:1278},
+      {name:'Колено водосточное 45°', price:271}, {name:'Колено водосточное 72°', price:271},
+      {name:'Соединитель жёлобов', price:240}, {name:'Заглушка жёлоба', price:116}, {name:'Заглушка воронки', price:116},
+      {name:'Наконечник', price:255}, {name:'Кронштейн жёлоба', price:78}, {name:'Кронштейн металлический', price:296},
+      {name:'Крепление регулируемое', price:357}, {name:'Муфта соединительная', price:144},
+      {name:'Сетка защитная', price:91}, {name:'Хомут универсальный', price:109},
+      {name:'Шпилька с гайкой', price:231}, {name:'Уплотнитель резиновый', price:36} ] },
+
+  { id:'Люкс', name:'Люкс', tagline:'250 м² и выше', flow:'9,3 л/сек', wall:'1,9 мм', tag:'Премиум',
+    specs:[['Для кровли','250 м² и выше'],['Диаметр трубы','100 мм'],['Ширина жёлоба','141 мм'],['Глубина жёлоба','82 мм'],['Толщина стенок','1,9 мм']],
+    colors:[{name:'Графит',hex:'#383b3e'},{name:'Пломбир',hex:'#f1efe8'},{name:'Шоколад',hex:'#352721'},{name:'Латте',hex:'#ddd0b4'},{name:'Карбон',hex:'#1c1c1e'}],
+    products:[
+      {name:'Жёлоб водосточный 3 м', price:1095}, {name:'Жёлоб водосточный 1,5 м', price:680},
+      {name:'Труба водосточная 3 м', price:1302}, {name:'Воронка водосточная', price:857},
+      {name:'Угол жёлоба 90°', price:597}, {name:'Угол жёлоба 135°', price:1683}, {name:'Угол жёлоба регулируемый', price:1683},
+      {name:'Колено водосточное 45°', price:464}, {name:'Колено водосточное 72°', price:464},
+      {name:'Тройник 45° водосточной трубы', price:1226}, {name:'Коллектор', price:1193},
+      {name:'Переходник Lux/Premium', price:626}, {name:'Соединитель жёлобов', price:330},
+      {name:'Заглушка жёлоба', price:194}, {name:'Наконечник водосточной трубы', price:519},
+      {name:'Кронштейн жёлоба', price:151}, {name:'Кронштейн жёлоба металлический', price:457},
+      {name:'Крепление регулируемое', price:278}, {name:'Муфта соединительная', price:286},
+      {name:'Хомут универсальный', price:199}, {name:'Шпилька специальная с гайкой', price:231},
+      {name:'Уплотнитель резиновый', price:36} ] },
 ];
 
 /* ─── STATE ─── */
@@ -1065,6 +1149,14 @@ function renderFilters(){
     state.color = state.color === cell.dataset.ral ? null : cell.dataset.ral;
     renderProducts(); refreshFilterStates();
   }));
+
+  // Водосток DOCKE: покрытие/толщина/цвет неприменимы — цвет выбирается в карточке под систему
+  const hideExtra = (state.cat === 'gutter');
+  const grp = el => el && el.closest('.filter-group');
+  [grp($coating), grp($thickness), grp($color)].forEach(g => { if (g) g.style.display = hideExtra ? 'none' : ''; });
+  // подсказка над подкатегориями для систем
+  const subTitle = grp($sub) && grp($sub).querySelector('.filter-title');
+  if (subTitle) subTitle.textContent = hideExtra ? 'Система' : 'Подкатегория';
 }
 
 function refreshFilterStates(){
@@ -1086,6 +1178,10 @@ function renderProducts(){
     $grid.innerHTML = doborBlockHTML();
     return;
   }
+
+  // Водосточные системы DOCKE — двухуровневая навигация (3 системы → товары)
+  if (state.cat === 'gutter') { renderGutter($toolbar); return; }
+
   if ($toolbar) $toolbar.style.display = '';
 
   let list = PRODUCTS.filter(p => p.cat === state.cat);
@@ -1359,6 +1455,122 @@ const DOBOR_ITEMS = [
   { name:'Планка снегозадержателя',         art:'ПСЗ-70×140×2000',  desc:'Предотвращает осыпь мелкой ледовой и снеговой крошки с кровли.' },
   { name:'Планка примыкания (нижняя)',      art:'ППН-250×122×2000', desc:'Для узла примыкания кровли к стене. Устанавливается под профлист или металлочерепицу.' },
 ];
+/* ─── ВОДОСТОК DOCKE: уровень 1 (3 системы) / уровень 2 (товары серии) ─── */
+function renderGutter($toolbar){
+  if ($toolbar) $toolbar.style.display = 'none';
+  const sys = state.sub ? GUTTER_SYSTEMS.find(s => s.id === state.sub) : null;
+
+  if (!sys){
+    // уровень 1 — выбор системы
+    $count.textContent = `— ${GUTTER_SYSTEMS.length} ${pluralize(GUTTER_SYSTEMS.length,'система','системы','систем')}`;
+    $grid.innerHTML = `<div class="gutter-systems">${GUTTER_SYSTEMS.map(gutterSystemCardHTML).join('')}</div>`;
+    $grid.querySelectorAll('.gsys').forEach(card => card.addEventListener('click', () => {
+      state.sub = card.dataset.sys;
+      renderProducts(); refreshFilterStates();
+      const ofs = document.querySelector('.products-head').getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({top:ofs, behavior:'smooth'});
+    }));
+    return;
+  }
+
+  // уровень 2 — товары выбранной системы
+  $count.textContent = `— ${sys.name} · ${sys.products.length} ${pluralize(sys.products.length,'позиция','позиции','позиций')}`;
+  $grid.innerHTML =
+    `<div class="gutter-detail">
+      <button class="gutter-back" type="button">← Все системы</button>
+      ${gutterSpecsHTML(sys)}
+      <div class="gutter-products">${sys.products.map(p => gutterProductCardHTML(p, sys)).join('')}</div>
+    </div>` + customBannerHTML();
+
+  const back = $grid.querySelector('.gutter-back');
+  if (back) back.addEventListener('click', () => { state.sub = null; renderProducts(); refreshFilterStates(); });
+
+  // выбор цвета
+  $grid.querySelectorAll('.gp-swatch').forEach(sw => sw.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const card = sw.closest('.gp-card');
+    card.querySelectorAll('.gp-swatch').forEach(s => s.classList.remove('active'));
+    sw.classList.add('active');
+    const nameEl = card.querySelector('.gp-color-name');
+    if (nameEl) nameEl.textContent = sw.dataset.name;
+    const item = JSON.parse(card.dataset.item);
+    item.colorName = sw.dataset.name;
+    card.dataset.item = JSON.stringify(item);
+  }));
+
+  // в заявку
+  $grid.querySelectorAll('.gp-card .add-to-cart-btn').forEach(btn => btn.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const card = btn.closest('.gp-card');
+    const item = JSON.parse(card.dataset.item);
+    if (window.SMCart) window.SMCart.add(item);
+    btn.classList.add('added'); setTimeout(() => btn.classList.remove('added'), 1500);
+    if (window.SMGoal) SMGoal('cart_add', {product: item.name});
+  }));
+}
+
+function gutterSystemCardHTML(s){
+  const swatches = s.colors.map(c => `<span class="gsys-sw" style="background:${c.hex}" title="${c.name}"></span>`).join('');
+  return `
+    <button type="button" class="gsys reveal" data-sys="${s.id}">
+      ${s.tag ? `<span class="gsys-tag">${s.tag}</span>` : ''}
+      <div class="gsys-name">${s.name}</div>
+      <ul class="gsys-specs">
+        <li><span>Для кровли</span><b>${s.tagline}</b></li>
+        <li><span>Пропуск. способность</span><b>${s.flow}</b></li>
+        <li><span>Толщина стенок</span><b>${s.wall}</b></li>
+      </ul>
+      <div class="gsys-colors">${swatches}<span class="gsys-colors-n">${s.colors.length} ${pluralize(s.colors.length,'цвет','цвета','цветов')}</span></div>
+      <div class="gsys-foot">
+        <span class="gsys-cta">Смотреть продукцию</span>
+        <span class="gsys-arrow" aria-hidden="true">→</span>
+      </div>
+    </button>`;
+}
+
+function gutterSpecsHTML(s){
+  const rows = s.specs.map(([k,v]) => `<div class="gspec"><span class="gspec-k">${k}</span><span class="gspec-v">${v}</span></div>`).join('');
+  const colors = s.colors.map(c => `<span style="background:${c.hex}" title="${c.name}"></span>`).join('');
+  return `
+    <div class="gutter-spec-card">
+      <div class="gutter-spec-head">
+        <div>
+          <div class="gutter-spec-eyebrow">Водосточная система DOCKE</div>
+          <h3 class="gutter-spec-title">${s.name}</h3>
+        </div>
+        <div class="gutter-spec-colors">
+          <span class="gutter-spec-colors-label">Цвета (${s.colors.length})</span>
+          <div class="gutter-spec-sw">${colors}</div>
+        </div>
+      </div>
+      <div class="gutter-spec-grid">${rows}</div>
+    </div>`;
+}
+
+function gutterProductCardHTML(p, s){
+  const init = s.colors[0];
+  const item = { name: `${p.name} · DOCKE ${s.name}`, meta: `Водосток DOCKE ${s.name}`, price: p.price, unit: 'шт', colorName: init.name };
+  const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
+  const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  return `
+    <div class="gp-card" data-item="${itemJSON}">
+      <div class="gp-body">
+        <div class="gp-name">${p.name}</div>
+        <div class="gp-colors">
+          <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${init.name}</span></div>
+          <div class="gp-swatches">${swatches}</div>
+        </div>
+        <div class="gp-foot">
+          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(p.price)} ₽</span><span class="gp-unit">/ шт</span></div>
+          <button class="add-to-cart-btn" aria-label="В заявку">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span>В заявку</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
 function doborBlockHTML(){
   const cards = DOBOR_ITEMS.map(d => `
     <div class="dobor-card">
