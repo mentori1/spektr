@@ -1512,7 +1512,7 @@ function renderGutter($toolbar){
 function gutterSystemCardHTML(s){
   const swatches = s.colors.map(c => `<span class="gsys-sw" style="background:${c.hex}" title="${c.name}"></span>`).join('');
   return `
-    <button type="button" class="gsys reveal" data-sys="${s.id}">
+    <button type="button" class="gsys" data-sys="${s.id}">
       ${s.tag ? `<span class="gsys-tag">${s.tag}</span>` : ''}
       <div class="gsys-name">${s.name}</div>
       <ul class="gsys-specs">
