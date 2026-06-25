@@ -365,9 +365,9 @@ p{margin:0}
 .gspec-v{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--text-on-dark-bright)}
 
 .gutter-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:16px}
-.gp-card{border:1px solid var(--line);border-radius:var(--r-md);background:rgba(255,255,255,.025);transition:border-color .3s var(--ease),transform .3s var(--ease)}
+.gp-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(255,255,255,.025);transition:border-color .3s var(--ease),transform .3s var(--ease)}
 .gp-card:hover{border-color:rgba(255,255,255,.18);transform:translateY(-3px)}
-.gp-body{padding:18px;display:flex;flex-direction:column;gap:14px;height:100%}
+.gp-body{padding:18px;display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}
 .gp-name{font-family:var(--f-display);font-weight:700;font-size:16px;line-height:1.15;color:var(--text-on-dark-bright)}
 .gp-colors{display:flex;flex-direction:column;gap:8px}
 .gp-colors-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em}
@@ -1122,13 +1122,13 @@ const GUTTER_SYSTEMS = [
 const SOFFIT_SYSTEMS = [
   { id:'Стандарт', name:'Стандарт', tagline:'Базовая серия для подшивки кровли', price:448,
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
-    colors:[{name:'Пломбир',hex:'#f1efe8'},{name:'Шоколад',hex:'#352721'},{name:'Графит',hex:'#383b3e'},{name:'Каштан',hex:'#5a3a2a'}] },
+    colors:[{name:'Пломбир',hex:'#f1efe8',price:448},{name:'Шоколад',hex:'#352721',price:495},{name:'Графит',hex:'#383b3e',price:495},{name:'Каштан',hex:'#5a3a2a',price:495}] },
   { id:'Премиум', name:'Премиум', tagline:'Усиленная серия, расширенная палитра', price:509,
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
-    colors:[{name:'Пломбир',hex:'#f1efe8'},{name:'Шоколад',hex:'#352721'},{name:'Графит',hex:'#383b3e'},{name:'Карбон',hex:'#1c1c1e'},{name:'Каштан',hex:'#5a3a2a'}] },
+    colors:[{name:'Пломбир',hex:'#f1efe8',price:509},{name:'Шоколад',hex:'#352721',price:600},{name:'Графит',hex:'#383b3e',price:600},{name:'Карбон',hex:'#1c1c1e',price:600},{name:'Каштан',hex:'#5a3a2a',price:600}] },
   { id:'Люкс', name:'Люкс', tagline:'Древесные текстуры под Lux-сайдинг', price:846, tag:'Премиум',
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
-    colors:[{name:'Зрелый каштан',hex:'#4a2e22'},{name:'Миндаль',hex:'#c9a877'},{name:'Орех',hex:'#6b4327'},{name:'Фундук',hex:'#8a5a36'}] },
+    colors:[{name:'Зрелый каштан',hex:'#4a2e22',price:846},{name:'Миндаль',hex:'#c9a877',price:846},{name:'Орех',hex:'#6b4327',price:846},{name:'Фундук',hex:'#8a5a36',price:846}] },
 ];
 
 /* ═══ ЗАБОР «ЕВРОЖАЛЮЗИ» ═══
@@ -1438,7 +1438,17 @@ $grid.addEventListener('click', e => {
     sw.classList.add('active');
     const nameEl = card.querySelector('.gp-color-name');
     if (nameEl) nameEl.textContent = sw.dataset.name;
-    try { const it = JSON.parse(card.dataset.item); it.colorName = sw.dataset.name; card.dataset.item = JSON.stringify(it); } catch (_) {}
+    // цена зависит от цвета (софиты) — если у свотча есть data-price
+    if (sw.dataset.price) {
+      const priceEl = card.querySelector('.gp-new');
+      if (priceEl) priceEl.textContent = `${formatPrice(Number(sw.dataset.price))} ₽`;
+    }
+    try {
+      const it = JSON.parse(card.dataset.item);
+      it.colorName = sw.dataset.name;
+      if (sw.dataset.price) it.price = Number(sw.dataset.price);
+      card.dataset.item = JSON.stringify(it);
+    } catch (_) {}
     return;
   }
   const opt = e.target.closest('.dropdown-option');
@@ -1613,18 +1623,7 @@ function renderGutter($toolbar){
   const back = $grid.querySelector('.gutter-back');
   if (back) back.addEventListener('click', () => { state.sub = null; renderProducts(); refreshFilterStates(); });
 
-  // выбор цвета
-  $grid.querySelectorAll('.gp-swatch').forEach(sw => sw.addEventListener('click', e => {
-    e.preventDefault(); e.stopPropagation();
-    const card = sw.closest('.gp-card');
-    card.querySelectorAll('.gp-swatch').forEach(s => s.classList.remove('active'));
-    sw.classList.add('active');
-    const nameEl = card.querySelector('.gp-color-name');
-    if (nameEl) nameEl.textContent = sw.dataset.name;
-    const item = JSON.parse(card.dataset.item);
-    item.colorName = sw.dataset.name;
-    card.dataset.item = JSON.stringify(item);
-  }));
+  // выбор цвета — через делегированный обработчик $grid (colorName + цена по data-price)
 
   // в заявку
   $grid.querySelectorAll('.gp-card .add-to-cart-btn').forEach(btn => btn.addEventListener('click', e => {
@@ -1711,18 +1710,7 @@ function renderSoffit($toolbar){
   $count.textContent = `— ${list.length} ${pluralize(list.length,'система','системы','систем')}`;
   $grid.innerHTML = `<div class="soffit-grid">${list.map(soffitProductCardHTML).join('')}</div>` + customBannerHTML();
 
-  // выбор цвета
-  $grid.querySelectorAll('.gp-swatch').forEach(sw => sw.addEventListener('click', e => {
-    e.preventDefault(); e.stopPropagation();
-    const card = sw.closest('.gp-card');
-    card.querySelectorAll('.gp-swatch').forEach(s => s.classList.remove('active'));
-    sw.classList.add('active');
-    const nameEl = card.querySelector('.gp-color-name');
-    if (nameEl) nameEl.textContent = sw.dataset.name;
-    const item = JSON.parse(card.dataset.item);
-    item.colorName = sw.dataset.name;
-    card.dataset.item = JSON.stringify(item);
-  }));
+  // выбор цвета — через делегированный обработчик $grid (colorName + цена по data-price)
 
   // в заявку
   $grid.querySelectorAll('.gp-card .add-to-cart-btn').forEach(btn => btn.addEventListener('click', e => {
@@ -1738,10 +1726,10 @@ function renderSoffit($toolbar){
 function soffitProductCardHTML(s){
   const initColor = s.colors[0];
   const initView = s.views[0];
-  const item = { name: `Софит DOCKE ${s.name}`, meta: `Подшивка кровли · DOCKE ${s.name}`, price: s.price, unit: 'шт', view: initView, colorName: initColor.name };
+  const item = { name: `Софит DOCKE ${s.name}`, meta: `Подшивка кровли · DOCKE ${s.name}`, price: initColor.price, unit: 'шт', view: initView, colorName: initColor.name };
   const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
   const viewOpts = s.views.map((v,i) => `<button type="button" class="dropdown-option${i===0?' active':''}" role="option" data-value="${v}">${v}</button>`).join('');
-  const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" data-price="${c.price}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card sf-card pat-soffit" data-item="${itemJSON}">
       ${s.tag ? `<span class="sf-tag">${s.tag}</span>` : ''}
@@ -1759,7 +1747,7 @@ function soffitProductCardHTML(s){
           <div class="gp-swatches">${swatches}</div>
         </div>
         <div class="gp-foot">
-          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(s.price)} ₽</span><span class="gp-unit">/ шт</span></div>
+          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(initColor.price)} ₽</span><span class="gp-unit">/ шт</span></div>
           <button class="add-to-cart-btn" aria-label="В заявку">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
             <span>В заявку</span>
