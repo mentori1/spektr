@@ -391,6 +391,21 @@ p{margin:0}
 .sf-tag{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 10px;border-radius:999px}
 .gp-card:has(.dropdown--interactive.open){overflow:visible;z-index:6}
 
+/* еврожалюзи: 2 карточки с фото-слотом + выбор покрытия (меняет палитру) + цвет */
+.jaluzi-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media (max-width:760px){.jaluzi-grid{grid-template-columns:1fr}}
+.jz-card{position:relative}
+.jz-card .gp-name{font-size:18px}
+.jz-card .gp-body{padding:18px 20px 20px}
+.jz-photo{
+  position:relative;aspect-ratio:16/10;border-radius:var(--r-md) var(--r-md) 0 0;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background-color:var(--card-tint,#1b1d22);background-image:var(--pattern,none);
+  background-size:var(--pattern-size,40px 40px);background-position:center;
+}
+.jz-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.jz-photo-hint{font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-on-dark-deep)}
+
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
 .price-old{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-deep);text-decoration:line-through;letter-spacing:.04em}
 .price-from{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-dim);letter-spacing:.18em;text-transform:uppercase;margin-right:2px}
@@ -1020,10 +1035,7 @@ const PRODUCTS = [
   { cat:'rolled', sub:'20×20', name:'Труба профильная 20×20', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
     defThk:'1.50', variants:[{thickness:'1.50',price:78},{thickness:'2.00',price:98}] },
 
-  /* ── Забор «Еврожалюзи» (ламель + П-профиль) ── */
-  { cat:'jaluzi', sub:'Ламель',    name:'Еврожалюзи ламель',         meta:'Полимер · одностороннее покрытие', coating:'Полимер',           thickness:'0.50', color:'7024', priceNew:1980, unit:'м²' },
-  { cat:'jaluzi', sub:'Ламель',    name:'Еврожалюзи ламель Premium', meta:'Двусторонний полимер · усиленная', coating:'Полимер двусторонний', thickness:'0.50', color:'8017', priceNew:2540, unit:'м²', tag:'Премиум' },
-  { cat:'jaluzi', sub:'П-профиль', name:'П-профиль для еврожалюзи',  meta:'40 × 60 × 40 · крепёж/каркас',     coating:'Полимер',           thickness:'1.50', color:'9005', priceNew:340,  unit:'м.п.' },
+  /* ── Забор «Еврожалюзи» — вынесен в JALUZI_PRODUCTS (2 карточки, выбор покрытия→цвет в карточке) ── */
 
   /* ── Софиты DOCKE — вынесены в SOFFIT_SYSTEMS (категория → 3 системы → карточка с выбором «Вид» + цвет) ── */
 
@@ -1095,6 +1107,26 @@ const SOFFIT_SYSTEMS = [
   { id:'Люкс', name:'Люкс', tagline:'Древесные текстуры под Lux-сайдинг', price:846, tag:'Премиум',
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
     colors:[{name:'Зрелый каштан',hex:'#4a2e22'},{name:'Миндаль',hex:'#c9a877'},{name:'Орех',hex:'#6b4327'},{name:'Фундук',hex:'#8a5a36'}] },
+];
+
+/* ═══ ЗАБОР «ЕВРОЖАЛЮЗИ» ═══
+   2 карточки (ламель / П-профиль), выбор прямо в карточке: вид покрытия → набор цветов меняется.
+   Под «под дерево» — коллекции SteelWood/SteelArt (sib-profil). Цены/толщина — sib-profil. */
+const JALUZI_COATINGS = ['Полимер','Двухсторонний полимер','Велюр','Под дерево','Под дерево двухсторонний'];
+/* обычные цвета (полимер/велюр) — палитра sib-profil для еврожалюзи */
+const JALUZI_COLORS_RAL = COLORS.filter(c => c.ral !== '8016'); // 20 цветов RAL (8016 уже удалён)
+/* «под дерево» — SteelWood (Дуб 3D) + SteelArt (hex — ориентир текстуры дерева) */
+const JALUZI_COLORS_WOOD = [
+  {name:'Дуб 3D Атланта', hex:'#6e4a2a'}, {name:'Дуб 3D Бренди', hex:'#7c4a26'},
+  {name:'Дуб 3D Грэй', hex:'#5b524a'},    {name:'Дуб 3D Рустик', hex:'#4a3422'},
+  {name:'SteelArt W001', hex:'#8a6038'},  {name:'SteelArt W003', hex:'#6b4327'},
+  {name:'SteelArt W004', hex:'#5a3a26'},  {name:'SteelArt W005', hex:'#3f2c20'},
+];
+function jaluziColorsFor(coating){ return /Под дерево/.test(coating) ? JALUZI_COLORS_WOOD : JALUZI_COLORS_RAL; }
+
+const JALUZI_PRODUCTS = [
+  { id:'lamel',    name:'Еврожалюзи (ламель)',   thickness:'0,5',  price:151, unit:'м.п.', photo:null, coatings:JALUZI_COATINGS },
+  { id:'pprofile', name:'П-профиль-Еврожалюзи',  thickness:'0,45', price:270, unit:'м.п.', photo:null, coatings:JALUZI_COATINGS },
 ];
 
 /* ─── STATE ─── */
@@ -1170,8 +1202,8 @@ function renderFilters(){
     renderProducts(); refreshFilterStates();
   }));
 
-  // Водосток / Софиты DOCKE: покрытие/толщина/цвет неприменимы — выбор в карточке под систему
-  const hideExtra = (state.cat === 'gutter' || state.cat === 'soffit');
+  // Водосток / Софиты / Еврожалюзи DOCKE: покрытие/толщина/цвет неприменимы — выбор в карточке
+  const hideExtra = (state.cat === 'gutter' || state.cat === 'soffit' || state.cat === 'jaluzi');
   const grp = el => el && el.closest('.filter-group');
   [grp($coating), grp($thickness), grp($color)].forEach(g => { if (g) g.style.display = hideExtra ? 'none' : ''; });
   // подсказка над подкатегориями для систем
@@ -1202,6 +1234,7 @@ function renderProducts(){
   // Водосток / Софиты DOCKE — двухуровневая навигация (3 системы → товары)
   if (state.cat === 'gutter') { renderGutter($toolbar); return; }
   if (state.cat === 'soffit') { renderSoffit($toolbar); return; }
+  if (state.cat === 'jaluzi') { renderJaluzi($toolbar); return; }
 
   if ($toolbar) $toolbar.style.display = '';
 
@@ -1340,6 +1373,18 @@ document.addEventListener('keydown', e => {
 });
 // делегированный обработчик дропдаунов (один раз; работает и после пересборки списка толщин)
 $grid.addEventListener('click', e => {
+  // цвет (делегировано — работает и для пересобранных свотчей еврожалюзи)
+  const sw = e.target.closest('.gp-swatch');
+  if (sw) {
+    e.preventDefault(); e.stopPropagation();
+    const card = sw.closest('.gp-card');
+    card.querySelectorAll('.gp-swatch').forEach(s => s.classList.remove('active'));
+    sw.classList.add('active');
+    const nameEl = card.querySelector('.gp-color-name');
+    if (nameEl) nameEl.textContent = sw.dataset.name;
+    try { const it = JSON.parse(card.dataset.item); it.colorName = sw.dataset.name; card.dataset.item = JSON.stringify(it); } catch (_) {}
+    return;
+  }
   const opt = e.target.closest('.dropdown-option');
   if (opt) {
     e.preventDefault(); e.stopPropagation();
@@ -1356,6 +1401,8 @@ $grid.addEventListener('click', e => {
     if (card && card.dataset.item && !card.dataset.variants) {
       try { const it = JSON.parse(card.dataset.item); it[dd.dataset.kind] = opt.dataset.value; card.dataset.item = JSON.stringify(it); } catch (_) {}
     }
+    // еврожалюзи: смена покрытия → пересобрать палитру (RAL ↔ SteelWood/SteelArt)
+    if (dd.dataset.kind === 'coating' && card && card.classList.contains('jz-card')) rebuildJaluziColors(card);
     return;
   }
   const dd = e.target.closest('.dropdown--interactive');
@@ -1660,6 +1707,72 @@ function soffitProductCardHTML(s){
         </div>
       </div>
     </div>`;
+}
+
+/* ─── ЗАБОР «ЕВРОЖАЛЮЗИ»: 2 карточки, выбор покрытия (меняет палитру цветов) + цвет ─── */
+function renderJaluzi($toolbar){
+  if ($toolbar) $toolbar.style.display = 'none';
+  const list = !state.sub ? JALUZI_PRODUCTS : JALUZI_PRODUCTS.filter(p => (state.sub === 'Ламель') === (p.id === 'lamel'));
+  $count.textContent = `— ${list.length} ${pluralize(list.length,'позиция','позиции','позиций')}`;
+  $grid.innerHTML = `<div class="jaluzi-grid">${list.map(jaluziProductCardHTML).join('')}</div>` + customBannerHTML();
+
+  // в заявку (выбор покрытия/цвета — через делегированный обработчик $grid)
+  $grid.querySelectorAll('.gp-card .add-to-cart-btn').forEach(btn => btn.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const card = btn.closest('.gp-card');
+    const item = JSON.parse(card.dataset.item);
+    if (window.SMCart) window.SMCart.add(item);
+    btn.classList.add('added'); setTimeout(() => btn.classList.remove('added'), 1500);
+    if (window.SMGoal) SMGoal('cart_add', {product: item.name});
+  }));
+}
+
+function jaluziProductCardHTML(p){
+  const initCoat  = p.coatings[0];
+  const colors    = jaluziColorsFor(initCoat);
+  const initColor = colors[0];
+  const item = { name: p.name, meta: `Толщина ${p.thickness} мм`, price: p.price, unit: p.unit, coating: initCoat, thickness: `${p.thickness} мм`, colorName: initColor.name };
+  const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
+  const coatOpts = p.coatings.map((c,i) => `<button type="button" class="dropdown-option${i===0?' active':''}" role="option" data-value="${c}">${c}</button>`).join('');
+  const swatches = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const photoHTML = p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="jz-photo-hint">фото</span>';
+  return `
+    <div class="gp-card jz-card pat-fence-jal" data-item="${itemJSON}">
+      <div class="jz-photo">${photoHTML}</div>
+      <div class="gp-body">
+        <div class="gp-name">${p.name}</div>
+        <div class="dropdowns">
+          <span class="dropdown dropdown--interactive" data-kind="coating" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+            <span class="key">Вид покрытия</span><span class="val" data-value="${initCoat}">${initCoat}</span>
+            <div class="dropdown-menu" role="listbox">${coatOpts}</div>
+          </span>
+          <span class="dropdown"><span class="key">Толщина</span><span class="val">${p.thickness} мм</span></span>
+        </div>
+        <div class="gp-colors">
+          <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${initColor.name}</span></div>
+          <div class="gp-swatches">${swatches}</div>
+        </div>
+        <div class="gp-foot">
+          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(p.price)} ₽</span><span class="gp-unit">/ ${p.unit}</span></div>
+          <button class="add-to-cart-btn" aria-label="В заявку">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span>В заявку</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+// смена «Вид покрытия» → пересобрать палитру (RAL ↔ SteelWood/SteelArt) + обновить корзину
+function rebuildJaluziColors(card){
+  const coatEl = card.querySelector('.dropdown[data-kind="coating"] .val');
+  const colors = jaluziColorsFor(coatEl ? coatEl.dataset.value : '');
+  const wrap = card.querySelector('.gp-swatches');
+  if (!wrap) return;
+  wrap.innerHTML = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const nameEl = card.querySelector('.gp-color-name');
+  if (nameEl) nameEl.textContent = colors[0].name;
+  try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0].name; card.dataset.item = JSON.stringify(it); } catch (_) {}
 }
 
 function doborBlockHTML(){
