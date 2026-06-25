@@ -401,6 +401,7 @@ p{margin:0}
 .jz-card .gp-name{font-size:16px}
 .jz-card .gp-body{padding:15px 16px 16px;gap:11px}
 .jz-card .gp-swatch{width:18px;height:18px}
+.gd-spec{font-family:var(--f-mono);font-size:11px;letter-spacing:.02em;color:var(--text-on-dark-dim);margin-top:-2px}
 /* универсальный слот под фото — еврожалюзи / софиты / водосток (паттерн = заглушка до реального фото) */
 .media-slot{
   position:relative;aspect-ratio:16/8;border-radius:var(--r-md) var(--r-md) 0 0;overflow:hidden;
@@ -1065,9 +1066,7 @@ const PRODUCTS = [
 
   /* ── Водосточная система DOCKE — вынесена в GUTTER_SYSTEMS (двухуровневая навигация: категория → 3 системы → товары) ── */
 
-  /* ── Грядки и клумбы (sib-profil) ── */
-  { cat:'garden', sub:'Грядка', name:'Грядка металлическая «Фактурная»', meta:'Ширина 0.4–1 м · Высота 19 см · Полимер', coating:'Полимер', thickness:'0.45', color:'6005', priceNew:1319, unit:'шт', tag:'Сезон' },
-  { cat:'garden', sub:'Клумба', name:'Клумба металлическая «Фактурная»', meta:'Круглая Ø 0.69–1.73 м · Полимер',          coating:'Полимер', thickness:'0.50', color:'3005', priceNew:1139, unit:'шт' },
+  /* ── Грядки и клумбы — вынесены в GARDEN_PRODUCTS (выбор параметров: размеры + цвет; sib-profil) ── */
 ];
 
 /* ═══ ВОДОСТОЧНЫЕ СИСТЕМЫ DOCKE ═══
@@ -1158,6 +1157,25 @@ const JALUZI_PRODUCTS = [
   { id:'pprofile', name:'П-профиль-Еврожалюзи',  thickness:'0,45', price:270, unit:'м.п.', photo:null, coatings:JALUZI_COATINGS },
 ];
 
+/* ═══ ГРЯДКИ И КЛУМБЫ ═══
+   Расширенные карточки: выбор параметров (размеры) + цвет (только доступные). Размеры/цвета — sib-profil.
+   Цена — «от» (точная сетка по размерам у sib-profil не отдаётся ботом — клиент пришлёт прайс). */
+const GARDEN_COLORS = [
+  {name:'Зелёный (6005)', hex:'#2e4a36'}, {name:'Графит (7024)', hex:'#4a4d52'}, {name:'Шоколад (8017)', hex:'#3f2b22'},
+  {name:'Оцинковка', hex:'#b8bcc2'}, {name:'Дуб 3D', hex:'#6e4a2a', wood:true},
+];
+const GARDEN_PRODUCTS = [
+  { sub:'Грядка', name:'Грядка «Фактурная»', price:1319, unit:'шт', spec:'Высота 190 мм · толщина 0.45–0.5 мм', meta:'Грядка металлическая фактурная',
+    params:[
+      {kind:'width',  label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
+      {kind:'length', label:'Длина',  options:[{value:'1000',label:'1000 мм'},{value:'1840',label:'1840 мм'},{value:'2000',label:'2000 мм'}]},
+    ] },
+  { sub:'Клумба', name:'Клумба «Фактурная»', price:1139, unit:'шт', spec:'Круглая · толщина 0.45–0.5 мм', meta:'Клумба металлическая фактурная',
+    params:[
+      {kind:'diameter', label:'Диаметр', options:[{value:'690',label:'Ø 0.69 м'},{value:'1000',label:'Ø 1.0 м'},{value:'1380',label:'Ø 1.38 м'},{value:'1730',label:'Ø 1.73 м'}]},
+    ] },
+];
+
 /* ─── STATE ─── */
 const state = { cat:'corrugated', sub:null, coating:null, thickness:null, color:null, sort:'default', priceMin:null, priceMax:null };
 
@@ -1232,7 +1250,7 @@ function renderFilters(){
   }));
 
   // Водосток / Софиты / Еврожалюзи DOCKE: покрытие/толщина/цвет неприменимы — выбор в карточке
-  const hideExtra = (state.cat === 'gutter' || state.cat === 'soffit' || state.cat === 'jaluzi');
+  const hideExtra = (state.cat === 'gutter' || state.cat === 'soffit' || state.cat === 'jaluzi' || state.cat === 'garden');
   const grp = el => el && el.closest('.filter-group');
   [grp($coating), grp($thickness), grp($color)].forEach(g => { if (g) g.style.display = hideExtra ? 'none' : ''; });
   // подсказка над подкатегориями для систем
@@ -1271,6 +1289,7 @@ function renderProducts(){
   if (state.cat === 'gutter') { renderGutter($toolbar); return; }
   if (state.cat === 'soffit') { renderSoffit($toolbar); return; }
   if (state.cat === 'jaluzi') { renderJaluzi($toolbar); return; }
+  if (state.cat === 'garden') { renderGarden($toolbar); return; }
 
   if ($toolbar) $toolbar.style.display = '';
 
@@ -1428,7 +1447,7 @@ $grid.addEventListener('click', e => {
     const dd = opt.closest('.dropdown'); const card = opt.closest('.product, .gp-card');
     const valEl = dd.querySelector('.val');
     valEl.dataset.value = opt.dataset.value;
-    valEl.textContent = dd.dataset.kind === 'thickness' ? `${opt.dataset.value} мм` : opt.dataset.value;
+    valEl.textContent = opt.textContent.trim(); // показываем ярлык опции (мм / Ø / название)
     dd.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('active'));
     opt.classList.add('active');
     dd.classList.remove('open'); dd.setAttribute('aria-expanded','false');
@@ -1814,6 +1833,52 @@ function rebuildJaluziColors(card){
   const nameEl = card.querySelector('.gp-color-name');
   if (nameEl) nameEl.textContent = colors[0].name;
   try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0].name; card.dataset.item = JSON.stringify(it); } catch (_) {}
+}
+
+/* ─── ГРЯДКИ/КЛУМБЫ: карточки с выбором параметров (размеры) + цвет (ограниченный набор) ─── */
+function renderGarden($toolbar){
+  if ($toolbar) $toolbar.style.display = 'none';
+  const list = !state.sub ? GARDEN_PRODUCTS : GARDEN_PRODUCTS.filter(p => p.sub === state.sub);
+  $count.textContent = `— ${list.length} ${pluralize(list.length,'позиция','позиции','позиций')}`;
+  $grid.innerHTML = `<div class="jaluzi-grid">${list.map(gardenCardHTML).join('')}</div>` + customBannerHTML();
+
+  $grid.querySelectorAll('.gp-card .add-to-cart-btn').forEach(btn => btn.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const card = btn.closest('.gp-card');
+    const item = JSON.parse(card.dataset.item);
+    if (window.SMCart) window.SMCart.add(item);
+    btn.classList.add('added'); setTimeout(() => btn.classList.remove('added'), 1500);
+    if (window.SMGoal) SMGoal('cart_add', {product: item.name});
+  }));
+}
+
+function gardenCardHTML(p){
+  const initColor = GARDEN_COLORS[0];
+  const item = { name: p.name, meta: p.meta, price: p.price, unit: p.unit, colorName: initColor.name };
+  p.params.forEach(par => { item[par.kind] = par.options[0].value; });
+  const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
+  const dropdowns = p.params.map(par => dropdownHTML(par.kind, par.label, par.options, par.options[0].value)).join('');
+  const swatches = GARDEN_COLORS.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  return `
+    <div class="gp-card jz-card gd-card pat-garden" data-item="${itemJSON}">
+      <div class="media-slot"><span class="media-hint">фото</span></div>
+      <div class="gp-body">
+        <div class="gp-name">${p.name}</div>
+        ${p.spec ? `<div class="gd-spec">${p.spec}</div>` : ''}
+        <div class="dropdowns">${dropdowns}</div>
+        <div class="gp-colors">
+          <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${initColor.name}</span></div>
+          <div class="gp-swatches">${swatches}</div>
+        </div>
+        <div class="gp-foot">
+          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(p.price)} ₽</span><span class="gp-unit">/ ${p.unit}</span></div>
+          <button class="add-to-cart-btn" aria-label="В заявку">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span>В заявку</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
 }
 
 function doborBlockHTML(){
