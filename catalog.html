@@ -926,7 +926,7 @@ const CATEGORIES = [
   { id:'siding',     name:'Сайдинг',                 pat:'pat-siding',     sub:['Евро-брус','Блокхаус','Корабельная доска'] },
   { id:'fence',      name:'Евроштакетник',           pat:'pat-fence',      sub:['Ш1','Ш2','Ш10','Ш18','Ш19'] },
   { id:'flatsheet',  name:'Плоский лист',            pat:'pat-flatsheet',  sub:['В плёнке','Без плёнки'] },
-  { id:'rolled',     name:'Чёрный металл',           pat:'pat-rolled',     sub:['80×80','60×60','60×40','40×20','20×20'] },
+  { id:'rolled',     name:'Чёрный металл',           pat:'pat-rolled',     sub:['Квадратная','Прямоугольная'] },
   { id:'jaluzi',     name:'Забор «Еврожалюзи»',      pat:'pat-fence-jal',  sub:['Ламель','П-профиль'] },
   { id:'dobor',      name:'Доборные элементы',       pat:'pat-dobor',      sub:[] },
   { id:'soffit',     name:'Софиты DOCKE',            pat:'pat-soffit',     sub:['Стандарт','Премиум','Люкс'] },
@@ -934,7 +934,7 @@ const CATEGORIES = [
   { id:'garden',     name:'Грядки и клумбы',         pat:'pat-garden',     sub:['Грядка','Клумба'] },
 ];
 
-const COATINGS    = ['Полимер','Полимер двусторонний','Под дерево','Велюр','Оцинковка','SteelWood'];
+const COATINGS    = ['Полимер','Двухсторонний полимер','Велюр','Под дерево','Под дерево двухсторонний','Оцинковка'];
 const THICKNESSES = ['0.35','0.40','0.45','0.50','0.60','0.65','0.70','0.80'];
 
 /* Палитра RAL — синхронизирована с sib-profil.ru */
@@ -1015,14 +1015,31 @@ const PRODUCTS = [
     {coating:'Велюр',thickness:'0.45',price:1015},{coating:'Под дерево',thickness:'0.40',price:966},{coating:'Под дерево',thickness:'0.45',price:1050} ] },
 
   /* ── Евроштакетник (Ш1/Ш2 клин+прямой, Ш10, Ш18, Ш19) ── */
-  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 (69 мм) клин',    meta:'Полимер · одностороннее',  coating:'Полимер', thickness:'0.50', color:'6005', priceNew:68,  unit:'м.п.', stock:'in' },
-  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 (69 мм) прямой',  meta:'Полимер · прямой срез',    coating:'Полимер', thickness:'0.50', color:'7024', priceNew:71,  unit:'м.п.', stock:'in' },
-  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 (87 мм) клин',    meta:'Полимер · клин 0.5',       coating:'Полимер', thickness:'0.50', color:'8017', priceNew:90,  unit:'м.п.', stock:'in' },
-  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 (87 мм) прямой',  meta:'Полимер · прямой 0.5',     coating:'Полимер', thickness:'0.50', color:'3005', priceNew:95,  unit:'м.п.' },
-  { cat:'fence', sub:'Ш10',name:'Штакетник Ш10 (100 мм) радиус',meta:'Полимер · радиус 0.5',     coating:'Полимер', thickness:'0.50', color:'9005', priceNew:101, unit:'м.п.' },
-  { cat:'fence', sub:'Ш18',name:'Штакетник Ш18 (118 мм) клин',  meta:'Полимер · клин 0.5',       coating:'Полимер', thickness:'0.50', color:'6002', priceNew:131, unit:'м.п.' },
-  { cat:'fence', sub:'Ш18',name:'Штакетник Ш18 (118 мм) радиус',meta:'Полимер · радиус 0.5',     coating:'Полимер', thickness:'0.50', color:'7024', priceNew:123, unit:'м.п.' },
-  { cat:'fence', sub:'Ш19',name:'Штакетник Ш19 (126 мм) радиус',meta:'Полимер · радиус 0.5',     coating:'Полимер', thickness:'0.50', color:'8017', priceNew:123, unit:'м.п.' },
+  /* выбор «Вид покрытия» в карточке (цена зависит от покрытия), толщина 0.5; цены — прайс «Сибтрансэфир» */
+  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 «Кветник» (69 мм) клин', meta:'Ширина 69 мм · обработка края — клин', color:'6005', unit:'м.п.', stock:'in',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Полимер',thickness:'0.50',price:68},{coating:'Двухсторонний полимер',thickness:'0.50',price:79},{coating:'Под дерево',thickness:'0.50',price:89} ] },
+  { cat:'fence', sub:'Ш1', name:'Штакетник Ш1 «Кветник» (69 мм) прямой', meta:'Ширина 69 мм · обработка края — прямой', color:'7024', unit:'м.п.', stock:'in',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Полимер',thickness:'0.50',price:71},{coating:'Двухсторонний полимер',thickness:'0.50',price:84},{coating:'Под дерево',thickness:'0.50',price:95} ] },
+  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 «Меридиан» (87 мм) клин', meta:'Ширина 87 мм · обработка края — клин', color:'8017', unit:'м.п.', stock:'in',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Полимер',thickness:'0.50',price:90},{coating:'Двухсторонний полимер',thickness:'0.50',price:105},{coating:'Под дерево',thickness:'0.50',price:119} ] },
+  { cat:'fence', sub:'Ш2', name:'Штакетник Ш2 «Меридиан» (87 мм) прямой', meta:'Ширина 87 мм · обработка края — прямой', color:'3005', unit:'м.п.',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Полимер',thickness:'0.50',price:95},{coating:'Двухсторонний полимер',thickness:'0.50',price:111},{coating:'Под дерево',thickness:'0.50',price:126} ] },
+  { cat:'fence', sub:'Ш10', name:'Штакетник Ш10 «Палисад» (100 мм) радиус', meta:'Ширина 100 мм · обработка края — радиус', color:'9005', unit:'м.п.',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Полимер',thickness:'0.50',price:101},{coating:'Двухсторонний полимер',thickness:'0.50',price:119},{coating:'Под дерево',thickness:'0.50',price:128},{coating:'Под дерево двухсторонний',thickness:'0.50',price:150} ] },
+  { cat:'fence', sub:'Ш18', name:'Штакетник Ш18 «Barrera» (118 мм) клин', meta:'Ширина 118 мм · обработка края — клин', color:'6002', unit:'м.п.',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Полимер',thickness:'0.50',price:131},{coating:'Двухсторонний полимер',thickness:'0.50',price:133},{coating:'Под дерево',thickness:'0.50',price:173},{coating:'Под дерево двухсторонний',thickness:'0.50',price:220} ] },
+  { cat:'fence', sub:'Ш18', name:'Штакетник Ш18 «Barrera» (118 мм) радиус', meta:'Ширина 118 мм · обработка края — радиус', color:'7024', unit:'м.п.',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Полимер',thickness:'0.50',price:123},{coating:'Двухсторонний полимер',thickness:'0.50',price:144},{coating:'Велюр',thickness:'0.50',price:146},{coating:'Под дерево',thickness:'0.50',price:163},{coating:'Под дерево двухсторонний',thickness:'0.50',price:206} ] },
+  { cat:'fence', sub:'Ш19', name:'Штакетник Ш19 «Эллипс» (126 мм) радиус', meta:'Ширина 126 мм · обработка края — радиус', color:'8017', unit:'м.п.',
+    defCoat:'Полимер', defThk:'0.50', variants:[
+    {coating:'Полимер',thickness:'0.50',price:123},{coating:'Двухсторонний полимер',thickness:'0.50',price:144},{coating:'Велюр',thickness:'0.50',price:146},{coating:'Под дерево',thickness:'0.50',price:163},{coating:'Под дерево двухсторонний',thickness:'0.50',price:206} ] },
 
   /* ── Плоский лист (в плёнке / без плёнки) ── */
   { cat:'flatsheet', sub:'В плёнке', name:'Лист плоский в плёнке', meta:'Ширина 1250 мм · полимер + защитная плёнка', color:'7024', unit:'м²', stock:'in',
@@ -1032,17 +1049,15 @@ const PRODUCTS = [
     defCoat:'Оцинковка', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.35',price:403},{coating:'Оцинковка',thickness:'0.40',price:443},{coating:'Оцинковка',thickness:'0.45',price:483},{coating:'Оцинковка',thickness:'0.50',price:503} ] },
 
-  /* ── Чёрный металл — труба профильная (выбор толщины, без покрытия и цвета; цены — ориентир, клиент корректирует) ── */
-  { cat:'rolled', sub:'80×80', name:'Труба профильная 80×80', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
-    defThk:'3.00', variants:[{thickness:'3.00',price:612}] },
-  { cat:'rolled', sub:'60×60', name:'Труба профильная 60×60', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
-    defThk:'2.00', variants:[{thickness:'2.00',price:298}] },
-  { cat:'rolled', sub:'60×40', name:'Труба профильная 60×40', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
-    defThk:'2.00', variants:[{thickness:'2.00',price:248},{thickness:'3.00',price:356}] },
-  { cat:'rolled', sub:'40×20', name:'Труба профильная 40×20', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
-    defThk:'1.50', variants:[{thickness:'1.50',price:126},{thickness:'2.00',price:165}] },
-  { cat:'rolled', sub:'20×20', name:'Труба профильная 20×20', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coating:'Без покрытия', unit:'м.п.',
-    defThk:'1.50', variants:[{thickness:'1.50',price:78},{thickness:'2.00',price:98}] },
+  /* ── Чёрный металл — труба профильная: 2 карточки (квадратная/прямоугольная), выбор сечения+толщины; без цвета. Цены — ориентир ── */
+  { cat:'rolled', sub:'Квадратная', name:'Труба профильная квадратная', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coatLabel:'Сечение', unit:'м.п.',
+    defCoat:'20×20', defThk:'1.50', variants:[
+    {coating:'20×20', thickness:'1.50', price:78}, {coating:'20×20', thickness:'2.00', price:98},
+    {coating:'60×60', thickness:'2.00', price:298}, {coating:'80×80', thickness:'3.00', price:612} ] },
+  { cat:'rolled', sub:'Прямоугольная', name:'Труба профильная прямоугольная', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coatLabel:'Сечение', unit:'м.п.',
+    defCoat:'40×20', defThk:'1.50', variants:[
+    {coating:'40×20', thickness:'1.50', price:126}, {coating:'40×20', thickness:'2.00', price:165},
+    {coating:'60×40', thickness:'2.00', price:248}, {coating:'60×40', thickness:'3.00', price:356} ] },
 
   /* ── Забор «Еврожалюзи» — вынесен в JALUZI_PRODUCTS (2 карточки, выбор покрытия→цвет в карточке) ── */
 
@@ -1052,7 +1067,6 @@ const PRODUCTS = [
 
   /* ── Грядки и клумбы (sib-profil) ── */
   { cat:'garden', sub:'Грядка', name:'Грядка металлическая «Фактурная»', meta:'Ширина 0.4–1 м · Высота 19 см · Полимер', coating:'Полимер', thickness:'0.45', color:'6005', priceNew:1319, unit:'шт', tag:'Сезон' },
-  { cat:'garden', sub:'Грядка', name:'Грядка высокая «Фактурная»',       meta:'Высота 60 см · Полимер · в цвет',          coating:'Полимер', thickness:'0.50', color:'8017', priceNew:2890, unit:'шт' },
   { cat:'garden', sub:'Клумба', name:'Клумба металлическая «Фактурная»', meta:'Круглая Ø 0.69–1.73 м · Полимер',          coating:'Полимер', thickness:'0.50', color:'3005', priceNew:1139, unit:'шт' },
 ];
 
@@ -1469,7 +1483,7 @@ function productCard(p, pat){
 
   // селекторы «вид покрытия» и «толщина»
   const coatDD = (coatings.length && curCoat)
-    ? dropdownHTML('coating', 'Вид покрытия', coatings.map(c => ({ value: c, label: c })), curCoat) : '';
+    ? dropdownHTML('coating', p.coatLabel || 'Вид покрытия', coatings.map(c => ({ value: c, label: c })), curCoat) : '';
   const thkDD = (thicknesses.length && curThk)
     ? dropdownHTML('thickness', 'Толщина', thicknesses.map(t => ({ value: t, label: `${t} мм` })), curThk) : '';
   const dropdownsHTML = (coatDD || thkDD) ? `<div class="dropdowns">${coatDD}${thkDD}</div>` : '';
