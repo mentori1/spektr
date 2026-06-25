@@ -381,11 +381,14 @@ p{margin:0}
 .gp-new{font-family:var(--f-display);font-weight:800;font-size:19px;color:var(--accent);white-space:nowrap}
 .gp-unit{font-family:var(--f-mono);font-size:10px;color:var(--text-on-dark-dim);white-space:nowrap}
 
-/* софиты: описание на карточке системы + одиночная карточка с выбором «Вид» */
-.gsys-desc{font-family:var(--f-mono);font-size:12px;line-height:1.45;color:var(--text-on-dark-dim);margin:0}
-.soffit-detail{max-width:380px}
+/* софиты: 3 карточки сразу, вид перфорации + цвет выбираются прямо в карточке */
+.soffit-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:900px){.soffit-grid{grid-template-columns:1fr}}
 .sf-card{position:relative}
-.sf-card .dropdowns{margin:0}
+.sf-card .gp-body{padding:24px;gap:18px}
+.sf-card .gp-name{display:flex;flex-direction:column;gap:5px;font-size:clamp(22px,2.2vw,28px);line-height:1.05}
+.sf-eyebrow{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-on-dark-dim);font-weight:400}
+.sf-tag{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 10px;border-radius:999px}
 .gp-card:has(.dropdown--interactive.open){overflow:visible;z-index:6}
 
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
@@ -1596,29 +1599,11 @@ function gutterProductCardHTML(p, s){
 /* ─── СОФИТЫ DOCKE: уровень 1 (3 системы) / уровень 2 (карточка «Вид» перфорации + цвет) ─── */
 function renderSoffit($toolbar){
   if ($toolbar) $toolbar.style.display = 'none';
-  const sys = state.sub ? SOFFIT_SYSTEMS.find(s => s.id === state.sub) : null;
-
-  if (!sys){
-    $count.textContent = `— ${SOFFIT_SYSTEMS.length} ${pluralize(SOFFIT_SYSTEMS.length,'система','системы','систем')}`;
-    $grid.innerHTML = `<div class="gutter-systems">${SOFFIT_SYSTEMS.map(soffitSystemCardHTML).join('')}</div>`;
-    $grid.querySelectorAll('.gsys').forEach(card => card.addEventListener('click', () => {
-      state.sub = card.dataset.sys;
-      renderProducts(); refreshFilterStates();
-      const ofs = document.querySelector('.products-head').getBoundingClientRect().top + window.scrollY - 90;
-      window.scrollTo({top:ofs, behavior:'smooth'});
-    }));
-    return;
-  }
-
-  $count.textContent = `— ${sys.name}`;
-  $grid.innerHTML =
-    `<div class="gutter-detail">
-      <button class="gutter-back" type="button">← Все системы</button>
-      <div class="soffit-detail">${soffitProductCardHTML(sys)}</div>
-    </div>` + customBannerHTML();
-
-  const back = $grid.querySelector('.gutter-back');
-  if (back) back.addEventListener('click', () => { state.sub = null; renderProducts(); refreshFilterStates(); });
+  // 3 карточки напрямую (Стандарт/Премиум/Люкс), вид и цвет выбираются прямо в карточке.
+  // Боковой фильтр «Система» — необязательное сужение до одной серии.
+  const list = state.sub ? SOFFIT_SYSTEMS.filter(s => s.id === state.sub) : SOFFIT_SYSTEMS;
+  $count.textContent = `— ${list.length} ${pluralize(list.length,'система','системы','систем')}`;
+  $grid.innerHTML = `<div class="soffit-grid">${list.map(soffitProductCardHTML).join('')}</div>` + customBannerHTML();
 
   // выбор цвета
   $grid.querySelectorAll('.gp-swatch').forEach(sw => sw.addEventListener('click', e => {
@@ -1644,25 +1629,6 @@ function renderSoffit($toolbar){
   }));
 }
 
-function soffitSystemCardHTML(s){
-  const swatches = s.colors.map(c => `<span class="gsys-sw" style="background:${c.hex}" title="${c.name}"></span>`).join('');
-  return `
-    <button type="button" class="gsys" data-sys="${s.id}">
-      ${s.tag ? `<span class="gsys-tag">${s.tag}</span>` : ''}
-      <div class="gsys-name">${s.name}</div>
-      <p class="gsys-desc">${s.tagline}</p>
-      <ul class="gsys-specs">
-        <li><span>Вид</span><b>3 перфорации</b></li>
-        <li><span>Цена</span><b>от ${formatPrice(s.price)} ₽/шт</b></li>
-      </ul>
-      <div class="gsys-colors">${swatches}<span class="gsys-colors-n">${s.colors.length} ${pluralize(s.colors.length,'цвет','цвета','цветов')}</span></div>
-      <div class="gsys-foot">
-        <span class="gsys-cta">Смотреть продукцию</span>
-        <span class="gsys-arrow" aria-hidden="true">→</span>
-      </div>
-    </button>`;
-}
-
 function soffitProductCardHTML(s){
   const initColor = s.colors[0];
   const initView = s.views[0];
@@ -1672,8 +1638,9 @@ function soffitProductCardHTML(s){
   const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card sf-card" data-item="${itemJSON}">
+      ${s.tag ? `<span class="sf-tag">${s.tag}</span>` : ''}
       <div class="gp-body">
-        <div class="gp-name">Софит DOCKE ${s.name}</div>
+        <div class="gp-name"><span class="sf-eyebrow">Софит DOCKE</span>${s.name}</div>
         <div class="dropdowns">
           <span class="dropdown dropdown--interactive" data-kind="view" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
             <span class="key">Вид</span><span class="val" data-value="${initView}">${initView}</span>
