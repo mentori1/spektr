@@ -330,6 +330,35 @@ p{margin:0}
   h1{font-size:clamp(22px, 7vw, 30px) !important}
   h2{font-size:clamp(19px, 5.5vw, 26px) !important}
 }
+
+/* ═══ РЕКВИЗИТЫ для юридических лиц ═══ */
+.req-card{
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  background:rgba(255,255,255,.025);
+  backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  padding:clamp(22px,3vw,36px);
+}
+.req-title{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--line-strong);
+  font-family:var(--f-display);font-weight:800;font-size:clamp(19px,2vw,26px);color:var(--text-on-dark-bright);
+}
+.req-copy{
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--accent);background:transparent;
+  border:1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  border-radius:999px;padding:9px 18px;transition:background .2s,color .2s,border-color .2s;
+}
+.req-copy:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.req-copy.done{background:#1a854a;border-color:#1a854a;color:#fff}
+.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px;margin:0}
+.req-row{display:flex;flex-direction:column;gap:4px;padding:12px 0;border-bottom:1px solid var(--line)}
+.req-row--wide{grid-column:1 / -1}
+.req-row dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-dark-dim)}
+.req-row dd{margin:0;font-family:var(--f-mono);font-size:13.5px;color:var(--text-on-dark-bright);letter-spacing:.02em;word-break:break-word}
+.req-note{margin-top:18px;font-family:var(--f-mono);font-size:11.5px;line-height:1.5;color:var(--text-on-dark-dim)}
+@media (max-width:640px){.req-grid{grid-template-columns:1fr}}
 </style>
 
 <!-- ═══ SEO: OG + Schema.org — вставлено site-bootstrap ═══ -->
@@ -613,6 +642,43 @@ p{margin:0}
   </section>
 
 
+  <!-- ════════ РЕКВИЗИТЫ для юрлиц ════════ -->
+  <section class="section" id="requisites">
+    <div class="container">
+
+      <div class="section-head">
+        <div>
+          <div class="section-index">04 — Реквизиты</div>
+          <h2 class="reveal">Реквизиты<br/>для юрлиц.</h2>
+        </div>
+        <p class="lead reveal d2">Для безналичной оплаты, счетов и договоров с организациями. Розничным (физическим) покупателям продажа оформляется от ООО «Спектр».</p>
+      </div>
+
+      <div class="req-card reveal">
+        <div class="req-title">
+          <span>ООО «Сибтрансэфир»</span>
+          <button type="button" class="req-copy" id="reqCopy" aria-label="Скопировать реквизиты">Скопировать</button>
+        </div>
+        <dl class="req-grid">
+          <div class="req-row"><dt>ИНН</dt><dd>5506034571</dd></div>
+          <div class="req-row"><dt>КПП</dt><dd>550701001</dd></div>
+          <div class="req-row"><dt>ОГРН</dt><dd>1025501262050</dd></div>
+          <div class="req-row"><dt>ОКПО</dt><dd>49506449</dd></div>
+          <div class="req-row req-row--wide"><dt>Юридический адрес</dt><dd>644119, Омская обл., г. Омск, ул. Кабанова, д. 2, кв. 798</dd></div>
+          <div class="req-row req-row--wide"><dt>Почтовый адрес</dt><dd>644085, г. Омск, ул. Мира, 191</dd></div>
+          <div class="req-row req-row--wide"><dt>Расчётный счёт</dt><dd>40702810923440002499</dd></div>
+          <div class="req-row req-row--wide"><dt>Банк</dt><dd>Филиал «Новосибирский» АО «Альфа-Банк»</dd></div>
+          <div class="req-row"><dt>Корр. счёт</dt><dd>30101810600000000774</dd></div>
+          <div class="req-row"><dt>БИК</dt><dd>045004774</dd></div>
+          <div class="req-row req-row--wide"><dt>Директор</dt><dd>Троян Вероника Вячеславовна</dd></div>
+        </dl>
+        <p class="req-note">Счёт на оплату и УПД выставляем по запросу — пришлите заявку с позициями и реквизитами вашей организации.</p>
+      </div>
+
+    </div>
+  </section>
+
+
   <!-- ════════ CTA — Запросить расчёт ════════ -->
   <section class="section">
     <div class="container">
@@ -792,6 +858,36 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   </div>
 </aside>
 
+<script>
+/* Копирование реквизитов юрлица в буфер */
+(function(){
+  var btn = document.getElementById('reqCopy');
+  if (!btn) return;
+  btn.addEventListener('click', function(){
+    var rows = [].slice.call(document.querySelectorAll('#requisites .req-row'));
+    var lines = ['ООО «Сибтрансэфир»'];
+    rows.forEach(function(r){
+      lines.push(r.querySelector('dt').textContent.trim() + ': ' + r.querySelector('dd').textContent.trim());
+    });
+    var text = lines.join('\n');
+    function done(){
+      var prev = btn.textContent;
+      btn.textContent = 'Скопировано'; btn.classList.add('done');
+      setTimeout(function(){ btn.textContent = prev; btn.classList.remove('done'); }, 1800);
+    }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta); done();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(fallback);
+    } else { fallback(); }
+  });
+})();
+</script>
 <script src="assets/site.js?v=81" defer></script>
 
 </body>
