@@ -394,8 +394,8 @@ p{margin:0}
 .gp-card:has(.dropdown--interactive.open){overflow:visible;z-index:6}
 
 /* еврожалюзи: 2 карточки с фото-слотом + выбор покрытия (меняет палитру) + цвет */
-.jaluzi-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media (max-width:760px){.jaluzi-grid{grid-template-columns:1fr}}
+.jaluzi-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,360px));justify-content:start;gap:16px}
+@media (max-width:760px){.jaluzi-grid{grid-template-columns:1fr;max-width:380px}}
 /* компактная карточка еврожалюзи */
 .jz-card{position:relative}
 .jz-card .gp-name{font-size:16px}
@@ -464,6 +464,7 @@ p{margin:0}
 /* сетка карточек доборных */
 .dobor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .dobor-card{
+  display:flex;flex-direction:column;
   padding:22px 22px 24px;border-radius:var(--r-md);
   background:linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
   backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
@@ -474,6 +475,9 @@ p{margin:0}
 .dobor-card-name{font-family:var(--f-display);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:-.005em;color:var(--text-on-dark-bright);line-height:1.15;margin-bottom:8px}
 .dobor-card-art{font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;color:var(--accent);margin-bottom:12px}
 .dobor-card-desc{font-size:12.5px;color:var(--text-on-dark-dim);line-height:1.55}
+.dobor-card-foot{margin-top:auto;padding-top:14px;display:flex;flex-direction:column;gap:11px;align-items:stretch}
+.dobor-card-price{font-family:var(--f-mono);font-size:10.5px;line-height:1.4;color:var(--text-on-dark-dim);letter-spacing:.02em;padding-top:12px;border-top:1px solid var(--line)}
+.dobor-add{justify-content:center}
 .dobor-note{
   margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);
   font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--text-on-dark-dim);
@@ -1239,6 +1243,13 @@ function renderProducts(){
     $count.textContent = '— под ваши размеры';
     if ($toolbar) $toolbar.style.display = 'none';
     $grid.innerHTML = doborBlockHTML();
+    $grid.querySelectorAll('.dobor-add').forEach(btn => btn.addEventListener('click', e => {
+      e.preventDefault(); e.stopPropagation();
+      const item = { name: btn.dataset.name, meta: `Доборный элемент · ${btn.dataset.art}`, unit: 'шт', custom: true };
+      if (window.SMCart) window.SMCart.add(item);
+      btn.classList.add('added'); setTimeout(() => btn.classList.remove('added'), 1500);
+      if (window.SMGoal) SMGoal('cart_add', {product: item.name});
+    }));
     return;
   }
 
@@ -1253,7 +1264,8 @@ function renderProducts(){
   if (state.sub)       list = list.filter(p => p.sub === state.sub);
   if (state.coating)   list = list.filter(p => prodCoatings(p).includes(state.coating));
   if (state.thickness) list = list.filter(p => prodThicknesses(p).includes(state.thickness));
-  if (state.color)     list = list.filter(p => p.color === state.color);
+  // цвет: крашеный металл доступен в любом RAL → показываем все цветные товары, скрываем бесцветные (чёрный металл)
+  if (state.color)     list = list.filter(p => !p.noColor);
 
   // фильтр по цене (по минимальной цене среди вариантов)
   if (state.priceMin != null) list = list.filter(p => repPrice(p) >= state.priceMin);
@@ -1796,6 +1808,13 @@ function doborBlockHTML(){
       <div class="dobor-card-name">${d.name}</div>
       <div class="dobor-card-art">${d.art}</div>
       <div class="dobor-card-desc">${d.desc}</div>
+      <div class="dobor-card-foot">
+        <span class="dobor-card-price">Стоимость рассчитывается индивидуально</span>
+        <button type="button" class="add-to-cart-btn dobor-add" data-name="${d.name}" data-art="${d.art}" aria-label="В заявку">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          <span>В заявку</span>
+        </button>
+      </div>
     </div>`).join('');
   return `
     <div class="dobor-wrap">
@@ -1987,7 +2006,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=81" defer></script>
+<script src="assets/site.js?v=82" defer></script>
 
 </body>
 </html>
