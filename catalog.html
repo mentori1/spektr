@@ -323,15 +323,17 @@ p{margin:0}
 .gutter-systems{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 @media (max-width:900px){.gutter-systems{grid-template-columns:1fr}}
 .gsys{
-  position:relative;display:flex;flex-direction:column;gap:18px;text-align:left;cursor:pointer;color:inherit;
-  padding:clamp(22px,2.6vw,30px);border-radius:var(--r-lg);
+  position:relative;display:flex;flex-direction:column;gap:0;text-align:left;cursor:pointer;color:inherit;
+  padding:0;overflow:hidden;border-radius:var(--r-lg);
   background:rgba(255,255,255,.025);border:1px solid var(--line);
   backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
   transition:transform .4s var(--ease-out),border-color .4s var(--ease-out),box-shadow .4s var(--ease-out);
 }
+.gsys .media-slot{border-radius:0}
+.gsys-body{display:flex;flex-direction:column;gap:16px;flex:1;padding:clamp(20px,2.4vw,26px)}
 .gsys:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.22);box-shadow:0 24px 50px rgba(0,0,0,.45)}
-.gsys-tag{position:absolute;top:16px;right:16px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 10px;border-radius:999px}
-.gsys-name{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.01em;color:var(--text-on-dark-bright)}
+.gsys-tag{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 10px;border-radius:999px}
+.gsys-name{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,34px);letter-spacing:-.01em;color:var(--text-on-dark-bright)}
 .gsys-specs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
 .gsys-specs li{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:12px}
 .gsys-specs span{color:var(--text-on-dark-dim);letter-spacing:.04em}
@@ -392,19 +394,22 @@ p{margin:0}
 .gp-card:has(.dropdown--interactive.open){overflow:visible;z-index:6}
 
 /* еврожалюзи: 2 карточки с фото-слотом + выбор покрытия (меняет палитру) + цвет */
-.jaluzi-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.jaluzi-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 @media (max-width:760px){.jaluzi-grid{grid-template-columns:1fr}}
+/* компактная карточка еврожалюзи */
 .jz-card{position:relative}
-.jz-card .gp-name{font-size:18px}
-.jz-card .gp-body{padding:18px 20px 20px}
-.jz-photo{
-  position:relative;aspect-ratio:16/10;border-radius:var(--r-md) var(--r-md) 0 0;overflow:hidden;
+.jz-card .gp-name{font-size:16px}
+.jz-card .gp-body{padding:15px 16px 16px;gap:11px}
+.jz-card .gp-swatch{width:18px;height:18px}
+/* универсальный слот под фото — еврожалюзи / софиты / водосток (паттерн = заглушка до реального фото) */
+.media-slot{
+  position:relative;aspect-ratio:16/8;border-radius:var(--r-md) var(--r-md) 0 0;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
   background-color:var(--card-tint,#1b1d22);background-image:var(--pattern,none);
   background-size:var(--pattern-size,40px 40px);background-position:center;
 }
-.jz-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.jz-photo-hint{font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-on-dark-deep)}
+.media-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.media-hint{font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-on-dark-deep);position:relative;z-index:1}
 
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
 .price-old{font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark-deep);text-decoration:line-through;letter-spacing:.04em}
@@ -1117,12 +1122,18 @@ const JALUZI_COATINGS = ['Полимер','Двухсторонний полим
 const JALUZI_COLORS_RAL = COLORS.filter(c => c.ral !== '8016'); // 20 цветов RAL (8016 уже удалён)
 /* «под дерево» — SteelWood (Дуб 3D) + SteelArt (hex — ориентир текстуры дерева) */
 const JALUZI_COLORS_WOOD = [
-  {name:'Дуб 3D Атланта', hex:'#6e4a2a'}, {name:'Дуб 3D Бренди', hex:'#7c4a26'},
-  {name:'Дуб 3D Грэй', hex:'#5b524a'},    {name:'Дуб 3D Рустик', hex:'#4a3422'},
-  {name:'SteelArt W001', hex:'#8a6038'},  {name:'SteelArt W003', hex:'#6b4327'},
-  {name:'SteelArt W004', hex:'#5a3a26'},  {name:'SteelArt W005', hex:'#3f2c20'},
+  {name:'Дуб 3D Атланта', hex:'#6e4a2a', wood:true}, {name:'Дуб 3D Бренди', hex:'#7c4a26', wood:true},
+  {name:'Дуб 3D Грэй', hex:'#5b524a', wood:true},    {name:'Дуб 3D Рустик', hex:'#4a3422', wood:true},
+  {name:'SteelArt W001', hex:'#8a6038', wood:true},  {name:'SteelArt W003', hex:'#6b4327', wood:true},
+  {name:'SteelArt W004', hex:'#5a3a26', wood:true},  {name:'SteelArt W005', hex:'#3f2c20', wood:true},
 ];
 function jaluziColorsFor(coating){ return /Под дерево/.test(coating) ? JALUZI_COLORS_WOOD : JALUZI_COLORS_RAL; }
+// фон свотча: для «дерева» — текстура (вертикальные волокна + перепад тона), иначе сплошной цвет
+function swatchBg(c){
+  if (!c || !c.wood) return c ? c.hex : '#888';
+  const b = c.hex;
+  return `repeating-linear-gradient(86deg, rgba(0,0,0,.30) 0 1px, transparent 1px 3px, rgba(255,255,255,.14) 3px 4px, transparent 4px 7px), linear-gradient(180deg, color-mix(in srgb,${b} 80%,#fff) 0%, ${b} 46%, color-mix(in srgb,${b} 78%,#000) 100%)`;
+}
 
 const JALUZI_PRODUCTS = [
   { id:'lamel',    name:'Еврожалюзи (ламель)',   thickness:'0,5',  price:151, unit:'м.п.', photo:null, coatings:JALUZI_COATINGS },
@@ -1584,19 +1595,22 @@ function renderGutter($toolbar){
 function gutterSystemCardHTML(s){
   const swatches = s.colors.map(c => `<span class="gsys-sw" style="background:${c.hex}" title="${c.name}"></span>`).join('');
   return `
-    <button type="button" class="gsys" data-sys="${s.id}">
+    <button type="button" class="gsys pat-gutter" data-sys="${s.id}">
       ${s.tag ? `<span class="gsys-tag">${s.tag}</span>` : ''}
-      <div class="gsys-name">${s.name}</div>
-      <ul class="gsys-specs">
-        <li><span>Для кровли</span><b>${s.tagline}</b></li>
-        <li><span>Пропуск. способность</span><b>${s.flow}</b></li>
-        <li><span>Толщина стенок</span><b>${s.wall}</b></li>
-      </ul>
-      <div class="gsys-colors">${swatches}<span class="gsys-colors-n">${s.colors.length} ${pluralize(s.colors.length,'цвет','цвета','цветов')}</span></div>
-      <div class="gsys-foot">
-        <span class="gsys-cta">Смотреть продукцию</span>
-        <span class="gsys-arrow" aria-hidden="true">→</span>
-      </div>
+      <span class="media-slot"><span class="media-hint">фото</span></span>
+      <span class="gsys-body">
+        <span class="gsys-name">${s.name}</span>
+        <ul class="gsys-specs">
+          <li><span>Для кровли</span><b>${s.tagline}</b></li>
+          <li><span>Пропуск. способность</span><b>${s.flow}</b></li>
+          <li><span>Толщина стенок</span><b>${s.wall}</b></li>
+        </ul>
+        <span class="gsys-colors">${swatches}<span class="gsys-colors-n">${s.colors.length} ${pluralize(s.colors.length,'цвет','цвета','цветов')}</span></span>
+        <span class="gsys-foot">
+          <span class="gsys-cta">Смотреть продукцию</span>
+          <span class="gsys-arrow" aria-hidden="true">→</span>
+        </span>
+      </span>
     </button>`;
 }
 
@@ -1684,8 +1698,9 @@ function soffitProductCardHTML(s){
   const viewOpts = s.views.map((v,i) => `<button type="button" class="dropdown-option${i===0?' active':''}" role="option" data-value="${v}">${v}</button>`).join('');
   const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
-    <div class="gp-card sf-card" data-item="${itemJSON}">
+    <div class="gp-card sf-card pat-soffit" data-item="${itemJSON}">
       ${s.tag ? `<span class="sf-tag">${s.tag}</span>` : ''}
+      <div class="media-slot"><span class="media-hint">фото</span></div>
       <div class="gp-body">
         <div class="gp-name"><span class="sf-eyebrow">Софит DOCKE</span>${s.name}</div>
         <div class="dropdowns">
@@ -1734,11 +1749,11 @@ function jaluziProductCardHTML(p){
   const item = { name: p.name, meta: `Толщина ${p.thickness} мм`, price: p.price, unit: p.unit, coating: initCoat, thickness: `${p.thickness} мм`, colorName: initColor.name };
   const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
   const coatOpts = p.coatings.map((c,i) => `<button type="button" class="dropdown-option${i===0?' active':''}" role="option" data-value="${c}">${c}</button>`).join('');
-  const swatches = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
-  const photoHTML = p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="jz-photo-hint">фото</span>';
+  const swatches = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const photoHTML = p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>';
   return `
     <div class="gp-card jz-card pat-fence-jal" data-item="${itemJSON}">
-      <div class="jz-photo">${photoHTML}</div>
+      <div class="media-slot">${photoHTML}</div>
       <div class="gp-body">
         <div class="gp-name">${p.name}</div>
         <div class="dropdowns">
@@ -1769,7 +1784,7 @@ function rebuildJaluziColors(card){
   const colors = jaluziColorsFor(coatEl ? coatEl.dataset.value : '');
   const wrap = card.querySelector('.gp-swatches');
   if (!wrap) return;
-  wrap.innerHTML = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  wrap.innerHTML = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   const nameEl = card.querySelector('.gp-color-name');
   if (nameEl) nameEl.textContent = colors[0].name;
   try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0].name; card.dataset.item = JSON.stringify(it); } catch (_) {}
