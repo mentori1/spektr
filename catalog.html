@@ -1379,6 +1379,9 @@ function renderProducts(){
       // снимаем active со всех swatches этой карточки
       card.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
       sw.classList.add('active');
+      // перекрашиваем фото товара под выбранный цвет
+      const pimg = card.querySelector('.product-image img');
+      if (pimg) recolorProductImg(pimg, sw.dataset.hex);
       // обновляем подпись с текущим цветом
       const codeEl = card.querySelector('.color-picker-current-code');
       const nameEl = card.querySelector('.color-picker-current-name');
@@ -1476,6 +1479,9 @@ $grid.addEventListener('click', e => {
     const card = sw.closest('.gp-card');
     card.querySelectorAll('.gp-swatch').forEach(s => s.classList.remove('active'));
     sw.classList.add('active');
+    // перекраска фото под выбранный цвет (media-slot)
+    const gimg = card.querySelector('.media-slot img');
+    if (gimg && sw.dataset.hex) recolorProductImg(gimg, sw.dataset.hex);
     const nameEl = card.querySelector('.gp-color-name');
     if (nameEl) nameEl.textContent = sw.dataset.name;
     // цена зависит от цвета (софиты) — если у свотча есть data-price
@@ -1571,7 +1577,7 @@ function productCard(p, pat){
   const swatchesHTML = noColor ? '' : COLORS.map(c => `
     <button type="button" class="color-swatch ${c.ral === initialColor.ral ? 'active' : ''}"
       style="background:${c.hex}"
-      data-ral="${c.ral}" data-name="${c.name}"
+      data-ral="${c.ral}" data-name="${c.name}" data-hex="${c.hex}"
       title="RAL ${c.ral} · ${c.name}"
       aria-label="Цвет RAL ${c.ral} ${c.name}"></button>`).join('');
   const colorHTML = noColor ? '' : `
@@ -1611,6 +1617,53 @@ function productCard(p, pat){
         </div>
       </div>
     </div>`;
+}
+
+/* ─── ПЕРЕКРАСКА ФОТО ПОД ВЫБРАННЫЙ ЦВЕТ (клиентская, canvas gradient-map) ───
+   Базовое фото (нейтральный металл) → тени переходят в #0F0E11, средние тона = выбранный
+   цвет, блики → к белому (сохраняется металлический отблеск). Фон не трогаем. Результат
+   кэшируется по (base|hex), повторный клик — мгновенно. */
+const _recolorCache = {};
+function _hexToRgb(h){ h=(h||'').trim().replace('#',''); if(h.length===3) h=h.split('').map(x=>x+x).join(''); const n=parseInt(h,16); return isNaN(n)?null:[(n>>16)&255,(n>>8)&255,n&255]; }
+function recolorProductImg(img, hex){
+  const t = _hexToRgb(hex);
+  if (!img || !t) return;
+  if (!img.dataset.base) img.dataset.base = img.getAttribute('src');
+  const base = img.dataset.base;
+  if (!base) return;
+  const key = base + '|' + hex;
+  if (_recolorCache[key]) { img.src = _recolorCache[key]; return; }
+  const src = new Image();
+  src.onload = () => {
+    const W = src.naturalWidth, H = src.naturalHeight;
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d'); ctx.drawImage(src, 0, 0);
+    let id; try { id = ctx.getImageData(0,0,W,H); } catch(_){ return; }
+    const d = id.data, bg = [15,14,17], BGT = 18; // BGT — порог фона по яркости (lum 0..255)
+    const tr=t[0], tg=t[1], tb=t[2];
+    // проход 1 — гистограмма яркости товара (без фона): берём 2-й перцентиль (тень), медиану (основная
+    // поверхность) и 98-й (блик). Центрируем целевой цвет на медиане — работает для любой базы.
+    const hist = new Float64Array(256); let cnt=0;
+    for (let i=0;i<d.length;i+=4){ const L=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2]; if (L>BGT){ hist[L|0]++; cnt++; } }
+    let lo=BGT, med=128, hi=255;
+    if (cnt>0){
+      let acc=0; for(let k=0;k<256;k++){acc+=hist[k]; if(acc>=cnt*0.02){lo=k;break;}}
+      acc=0;     for(let k=0;k<256;k++){acc+=hist[k]; if(acc>=cnt*0.5){med=k;break;}}
+      acc=0;     for(let k=255;k>=0;k--){acc+=hist[k]; if(acc>=cnt*0.02){hi=k;break;}}
+    }
+    if (med<=lo) med=lo+1; if (med>=hi) med=hi-1;
+    const loRange=Math.max(1,med-lo), hiRange=Math.max(1,hi-med);
+    // проход 2 — медиана→целевой цвет; темнее→затемнённый целевой; ярче→к белому (блик)
+    for (let i=0;i<d.length;i+=4){
+      const L=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+      if (L<=BGT){ d[i]=bg[0]; d[i+1]=bg[1]; d[i+2]=bg[2]; continue; }
+      if (L<=med){ let k=(L-lo)/loRange; k=k<0?0:k>1?1:k; const f=0.20+0.80*k; d[i]=tr*f; d[i+1]=tg*f; d[i+2]=tb*f; }
+      else { let k=(L-med)/hiRange; k=k<0?0:k>1?1:k; d[i]=tr+(255-tr)*k; d[i+1]=tg+(255-tg)*k; d[i+2]=tb+(255-tb)*k; }
+    }
+    ctx.putImageData(id,0,0);
+    try { const url = cv.toDataURL('image/png'); _recolorCache[key]=url; img.src=url; } catch(_){}
+  };
+  src.src = base;
 }
 
 function customBannerHTML(){
@@ -1731,7 +1784,7 @@ function gutterProductCardHTML(p, s){
   const init = s.colors[0];
   const item = { name: `${p.name} · DOCKE ${s.name}`, meta: `Водосток DOCKE ${s.name}`, price: p.price, unit: 'шт', colorName: init.name };
   const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
-  const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card" data-item="${itemJSON}">
       <div class="gp-body">
@@ -1779,11 +1832,11 @@ function soffitProductCardHTML(s){
   const item = { name: `Софит DOCKE ${s.name}`, meta: `Подшивка кровли · DOCKE ${s.name}`, price: initColor.price, unit: 'шт', view: initView, colorName: initColor.name };
   const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
   const viewOpts = s.views.map((v,i) => `<button type="button" class="dropdown-option${i===0?' active':''}" role="option" data-value="${v}">${v}</button>`).join('');
-  const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" data-price="${c.price}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const swatches = s.colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${c.hex}" data-name="${c.name}" data-hex="${c.hex}" data-price="${c.price}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card sf-card pat-soffit" data-item="${itemJSON}">
       ${s.tag ? `<span class="sf-tag">${s.tag}</span>` : ''}
-      <div class="media-slot">${s.photo ? `<img src="${s.photo}" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
+      <div class="media-slot">${s.photo ? `<img src="${s.photo}" data-base="assets/gen_soffit_panel.png" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name"><span class="sf-eyebrow">Софит DOCKE</span>${s.name}</div>
         <div class="dropdowns">
@@ -1832,7 +1885,7 @@ function jaluziProductCardHTML(p){
   const item = { name: p.name, meta: `Толщина ${p.thickness} мм`, price: p.price, unit: p.unit, coating: initCoat, thickness: `${p.thickness} мм`, colorName: initColor.name };
   const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
   const coatOpts = p.coatings.map((c,i) => `<button type="button" class="dropdown-option${i===0?' active':''}" role="option" data-value="${c}">${c}</button>`).join('');
-  const swatches = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const swatches = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   const photoHTML = p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>';
   return `
     <div class="gp-card jz-card pat-fence-jal" data-item="${itemJSON}">
@@ -1867,7 +1920,7 @@ function rebuildJaluziColors(card){
   const colors = jaluziColorsFor(coatEl ? coatEl.dataset.value : '');
   const wrap = card.querySelector('.gp-swatches');
   if (!wrap) return;
-  wrap.innerHTML = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  wrap.innerHTML = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   const nameEl = card.querySelector('.gp-color-name');
   if (nameEl) nameEl.textContent = colors[0].name;
   try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0].name; card.dataset.item = JSON.stringify(it); } catch (_) {}
@@ -1901,7 +1954,7 @@ function gardenCardHTML(p){
   const gardenJSON = JSON.stringify({ coatings, dims: p.dims.map(d => ({kind:d.kind})) }).replace(/"/g,'&quot;');
   const coatDD = dropdownHTML('coating','Вид покрытия', coatings.map(c=>({value:c.name,label:c.name})), c0.name);
   const dimDDs = p.dims.map(d => dropdownHTML(d.kind, d.label, d.options, d.options[0].value)).join('');
-  const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card jz-card gd-card pat-garden" data-item="${itemJSON}" data-garden="${gardenJSON}">
       <div class="media-slot">${p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
@@ -1934,7 +1987,7 @@ function rebuildGardenColors(card){
   const { coat } = gardenCoatOf(card);
   const colors = coat ? coat.colors : [];
   const wrap = card.querySelector('.gp-swatches');
-  if (wrap) wrap.innerHTML = colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  if (wrap) wrap.innerHTML = colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   const nameEl = card.querySelector('.gp-color-name');
   if (nameEl) nameEl.textContent = colors[0] ? colors[0].name : '';
   try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0] ? colors[0].name : ''; card.dataset.item = JSON.stringify(it); } catch(_){}
@@ -1975,7 +2028,7 @@ function fenceCardHTML(m){
   const fenceJSON = JSON.stringify({coatings}).replace(/"/g,'&quot;');
   const coatDD = dropdownHTML('coating','Вид покрытия', coatings.map(c=>({value:c.name,label:c.name})), c0.name);
   const edgeDD = dropdownHTML('edge','Вид обработки края', m.edges.map(e=>({value:e,label:e})), e0);
-  const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card jz-card fence-card pat-fence" data-item="${itemJSON}" data-fence="${fenceJSON}">
       <div class="media-slot">${m.photo ? `<img src="${m.photo}" alt="${m.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
@@ -2012,7 +2065,7 @@ function rebuildFenceColors(card){
   const { coat } = fenceCoatOf(card);
   const colors = coat ? coat.colors : [];
   const wrap = card.querySelector('.gp-swatches');
-  if (wrap) wrap.innerHTML = colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
+  if (wrap) wrap.innerHTML = colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   const nameEl = card.querySelector('.gp-color-name');
   if (nameEl) nameEl.textContent = colors[0] ? colors[0].name : '';
   try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0] ? colors[0].name : ''; card.dataset.item = JSON.stringify(it); } catch(_){}
