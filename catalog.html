@@ -412,7 +412,8 @@ p{margin:0}
   background-color:var(--card-tint,#1b1d22);background-image:var(--pattern,none);
   background-size:var(--pattern-size,40px 40px);background-position:center;
 }
-.media-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.media-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.media-slot:has(img){aspect-ratio:4/3;background-color:#0f0e11;background-image:none}
 .media-hint{font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-on-dark-deep);position:relative;z-index:1}
 
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
@@ -975,45 +976,45 @@ const PRODUCTS = [
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:605},{coating:'Полимер',thickness:'0.45',price:694},{coating:'Полимер',thickness:'0.50',price:789},
     {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
-  { cat:'corrugated', sub:'С10', name:'Профнастил С10', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:621},{coating:'Полимер',thickness:'0.45',price:710},{coating:'Полимер',thickness:'0.50',price:854},
     {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
-  { cat:'corrugated', sub:'С10', name:'Профнастил С10 обратный прокат', meta:'Ширина 1146 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:621, unit:'м²' },
-  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20', meta:'Ширина 1150/1100 мм · кровля/стена', color:'3005', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10 обратный прокат', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1146 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:621, unit:'м²' },
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20', photo:'assets/gen_profnastil_mp20.png', meta:'Ширина 1150/1100 мм · кровля/стена', color:'3005', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:489},{coating:'Оцинковка',thickness:'0.45',price:534},{coating:'Оцинковка',thickness:'0.50',price:555},{coating:'Оцинковка',thickness:'0.65',price:725},
     {coating:'Полимер',thickness:'0.40',price:630},{coating:'Полимер',thickness:'0.45',price:766},{coating:'Полимер',thickness:'0.50',price:884},{coating:'Полимер',thickness:'0.65',price:913},
     {coating:'Велюр',thickness:'0.45',price:843},{coating:'Под дерево',thickness:'0.45',price:994} ] },
-  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', meta:'Ширина 1130 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:630, unit:'м²' },
-  { cat:'corrugated', sub:'С21', name:'Профнастил С21', meta:'Ширина 1090/1030 мм · кровельный', color:'7024', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', photo:'assets/gen_profnastil_mp20.png', meta:'Ширина 1130 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:630, unit:'м²' },
+  { cat:'corrugated', sub:'С21', name:'Профнастил С21', photo:'assets/gen_profnastil_s21.png', meta:'Ширина 1090/1030 мм · кровельный', color:'7024', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:534},{coating:'Оцинковка',thickness:'0.45',price:583},{coating:'Оцинковка',thickness:'0.50',price:603},
     {coating:'Полимер',thickness:'0.40',price:819},{coating:'Полимер',thickness:'0.45',price:863},{coating:'Полимер',thickness:'0.50',price:948} ] },
-  { cat:'corrugated', sub:'НС35', name:'Профнастил НС35', meta:'Ширина 1090/1000 мм · несущий', color:'8017', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'НС35', name:'Профнастил НС35', photo:'assets/gen_profnastil_ns35.png', meta:'Ширина 1090/1000 мм · несущий', color:'8017', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.45',price:591},{coating:'Оцинковка',thickness:'0.50',price:613},{coating:'Оцинковка',thickness:'0.60',price:723},
     {coating:'Полимер',thickness:'0.45',price:844},{coating:'Полимер',thickness:'0.50',price:890},{coating:'Полимер',thickness:'0.65',price:838} ] }, /* НС35 0.65=838 — колонка в .doc неоднозначна, клиенту на сверку */
-  { cat:'corrugated', sub:'НС44', name:'Профнастил НС44', meta:'Ширина 1070/970 мм · несущий', color:'3005', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'НС44', name:'Профнастил НС44', photo:'assets/gen_profnastil_ns44.png', meta:'Ширина 1070/970 мм · несущий', color:'3005', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.50', variants:[
     {coating:'Оцинковка',thickness:'0.50',price:624},{coating:'Оцинковка',thickness:'0.60',price:736},{coating:'Оцинковка',thickness:'0.65',price:779},{coating:'Оцинковка',thickness:'0.70',price:809},{coating:'Оцинковка',thickness:'0.80',price:903},
     {coating:'Полимер',thickness:'0.50',price:919},{coating:'Полимер',thickness:'0.65',price:981},{coating:'Полимер',thickness:'0.70',price:1036} ] },
 
   /* ── Металлочерепица Супер-Монтерей — выбор покрытия+толщины ── */
-  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей', meta:'Ширина 1180/1100 мм', color:'3005', unit:'м²', tag:'Топ', stock:'in',
+  { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей', photo:'assets/gen_metallocherepica.png', meta:'Ширина 1180/1100 мм', color:'3005', unit:'м²', tag:'Топ', stock:'in',
     defCoat:'Полимер', defThk:'0.40', variants:[
     {coating:'Полимер',thickness:'0.40',price:779},{coating:'Полимер',thickness:'0.50',price:890},
     {coating:'Велюр',thickness:'0.40',price:878},{coating:'Велюр',thickness:'0.50',price:935} ] },
 
   /* ── Сайдинг — выбор покрытия+толщины ── */
-  { cat:'siding', sub:'Евро-брус', name:'Сайдинг Евро-брус', meta:'Ширина 258/232 мм', color:'8017', unit:'м²', stock:'in',
+  { cat:'siding', sub:'Евро-брус', name:'Сайдинг Евро-брус', photo:'assets/gen_saiding_evrobrus.png', meta:'Ширина 258/232 мм', color:'8017', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Полимер',thickness:'0.45',price:896},{coating:'Велюр',thickness:'0.45',price:1002},{coating:'Под дерево',thickness:'0.45',price:1070} ] },
-  { cat:'siding', sub:'Блокхаус', name:'Сайдинг Блокхаус', meta:'Ширина 383/362 мм', color:'1015', unit:'м²', stock:'in',
+  { cat:'siding', sub:'Блокхаус', name:'Сайдинг Блокхаус', photo:'assets/gen_saiding_blockhaus.png', meta:'Ширина 383/362 мм', color:'1015', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Полимер',thickness:'0.45',price:906},{coating:'Велюр',thickness:'0.45',price:964},{coating:'Под дерево',thickness:'0.45',price:1050} ] },
-  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска', meta:'Ширина 267/236 мм', color:'1014', unit:'м²', stock:'in',
+  { cat:'siding', sub:'Корабельная доска', name:'Сайдинг Корабельная доска', photo:'assets/gen_saiding_korabel.png', meta:'Ширина 267/236 мм', color:'1014', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Полимер',thickness:'0.40',price:738},{coating:'Полимер',thickness:'0.45',price:880},
     {coating:'Велюр',thickness:'0.45',price:1015},{coating:'Под дерево',thickness:'0.40',price:966},{coating:'Под дерево',thickness:'0.45',price:1050} ] },
@@ -1021,19 +1022,19 @@ const PRODUCTS = [
   /* ── Евроштакетник — вынесен в FENCE_MODELS (5 карточек: покрытие→цвет меняется, край-селектор; данные sib-profil) ── */
 
   /* ── Плоский лист (в плёнке / без плёнки) ── */
-  { cat:'flatsheet', sub:'В плёнке', name:'Лист плоский в плёнке', meta:'Ширина 1250 мм · полимер + защитная плёнка', color:'7024', unit:'м²', stock:'in',
+  { cat:'flatsheet', sub:'В плёнке', name:'Лист плоский в плёнке', photo:'assets/gen_flatsheet_polymer.png', meta:'Ширина 1250 мм · полимер + защитная плёнка', color:'7024', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Полимер',thickness:'0.35',price:575},{coating:'Полимер',thickness:'0.40',price:613},{coating:'Полимер',thickness:'0.45',price:729},{coating:'Полимер',thickness:'0.50',price:800} ] },
-  { cat:'flatsheet', sub:'Без плёнки', name:'Лист плоский без плёнки', meta:'Ширина 1250 мм · оцинковка', color:'9003', unit:'м²', stock:'in',
+  { cat:'flatsheet', sub:'Без плёнки', name:'Лист плоский без плёнки', photo:'assets/gen_flatsheet_zinc.png', meta:'Ширина 1250 мм · оцинковка', color:'9003', unit:'м²', stock:'in',
     defCoat:'Оцинковка', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.35',price:403},{coating:'Оцинковка',thickness:'0.40',price:443},{coating:'Оцинковка',thickness:'0.45',price:483},{coating:'Оцинковка',thickness:'0.50',price:503} ] },
 
   /* ── Чёрный металл — труба профильная: 2 карточки (квадратная/прямоугольная), выбор сечения+толщины; без цвета. Цены — ориентир ── */
-  { cat:'rolled', sub:'Квадратная', name:'Труба профильная квадратная', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coatLabel:'Сечение', unit:'м.п.',
+  { cat:'rolled', sub:'Квадратная', name:'Труба профильная квадратная', photo:'assets/gen_truba_kvadrat.png', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coatLabel:'Сечение', unit:'м.п.',
     defCoat:'20×20', defThk:'1.50', variants:[
     {coating:'20×20', thickness:'1.50', price:78}, {coating:'20×20', thickness:'2.00', price:98},
     {coating:'60×60', thickness:'2.00', price:298}, {coating:'80×80', thickness:'3.00', price:612} ] },
-  { cat:'rolled', sub:'Прямоугольная', name:'Труба профильная прямоугольная', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coatLabel:'Сечение', unit:'м.п.',
+  { cat:'rolled', sub:'Прямоугольная', name:'Труба профильная прямоугольная', photo:'assets/gen_truba_pryamoug.png', meta:'Длина 6 м · Ст3 · под заказ', noColor:true, coatLabel:'Сечение', unit:'м.п.',
     defCoat:'40×20', defThk:'1.50', variants:[
     {coating:'40×20', thickness:'1.50', price:126}, {coating:'40×20', thickness:'2.00', price:165},
     {coating:'60×40', thickness:'2.00', price:248}, {coating:'60×40', thickness:'3.00', price:356} ] },
@@ -1098,13 +1099,13 @@ const GUTTER_SYSTEMS = [
    Двухуровневая навигация: категория → 3 системы → карточка с выбором «Вид» (перфорация) + цвет.
    Цвета/виды/цены — с docke.ru (/siding/soffits/...). Цена = «от» (нижняя граница, зависит от цвета). */
 const SOFFIT_SYSTEMS = [
-  { id:'Стандарт', name:'Стандарт', tagline:'Базовая серия для подшивки кровли', price:448,
+  { id:'Стандарт', name:'Стандарт', photo:'assets/gen_soffit.png', tagline:'Базовая серия для подшивки кровли', price:448,
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
     colors:[{name:'Пломбир',hex:'#f1efe8',price:448},{name:'Шоколад',hex:'#352721',price:495},{name:'Графит',hex:'#383b3e',price:495},{name:'Каштан',hex:'#5a3a2a',price:495}] },
-  { id:'Премиум', name:'Премиум', tagline:'Усиленная серия, расширенная палитра', price:509,
+  { id:'Премиум', name:'Премиум', photo:'assets/gen_soffit.png', tagline:'Усиленная серия, расширенная палитра', price:509,
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
     colors:[{name:'Пломбир',hex:'#f1efe8',price:509},{name:'Шоколад',hex:'#352721',price:600},{name:'Графит',hex:'#383b3e',price:600},{name:'Карбон',hex:'#1c1c1e',price:600},{name:'Каштан',hex:'#5a3a2a',price:600}] },
-  { id:'Люкс', name:'Люкс', tagline:'Древесные текстуры под Lux-сайдинг', price:846, tag:'Премиум',
+  { id:'Люкс', name:'Люкс', photo:'assets/gen_soffit.png', tagline:'Древесные текстуры под Lux-сайдинг', price:846, tag:'Премиум',
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
     colors:[{name:'Зрелый каштан',hex:'#4a2e22',price:846},{name:'Миндаль',hex:'#c9a877',price:846},{name:'Орех',hex:'#6b4327',price:846},{name:'Фундук',hex:'#8a5a36',price:846}] },
 ];
@@ -1131,15 +1132,15 @@ function swatchBg(c){
 }
 
 const JALUZI_PRODUCTS = [
-  { id:'lamel',    name:'Еврожалюзи (ламель)',   thickness:'0,5',  price:151, unit:'м.п.', photo:null, coatings:JALUZI_COATINGS },
-  { id:'pprofile', name:'П-профиль-Еврожалюзи',  thickness:'0,45', price:270, unit:'м.п.', photo:null, coatings:JALUZI_COATINGS },
+  { id:'lamel',    name:'Еврожалюзи (ламель)',   thickness:'0,5',  price:151, unit:'м.п.', photo:'assets/gen_jaluzi_lamel.png', coatings:JALUZI_COATINGS },
+  { id:'pprofile', name:'П-профиль-Еврожалюзи',  thickness:'0,45', price:270, unit:'м.п.', photo:'assets/gen_jaluzi_pprofile.png', coatings:JALUZI_COATINGS },
 ];
 
 /* ═══ ГРЯДКИ И КЛУМБЫ ═══
    Карточки с выбором покрытия (→ меняет цвета) + размеры; цена = f(покрытие × размеры).
    Данные/цвета/цены — с реального конфигуратора sib-profil (Bitrix-офферы). Ключ цены = значения dims через "|". */
 const GARDEN_PRODUCTS = [
-  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', spec:'Высота 190 мм · толщина 0,45–0,5 мм', meta:'Грядка металлическая фактурная',
+  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', photo:'assets/gen_gryadka.png', spec:'Высота 190 мм · толщина 0,45–0,5 мм', meta:'Грядка металлическая фактурная',
     dims:[
       {kind:'width',  label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
       {kind:'length', label:'Длина',  options:[{value:'1000',label:'1000 мм'},{value:'1840',label:'1840 мм'},{value:'2000',label:'2000 мм'}]},
@@ -1149,7 +1150,7 @@ const GARDEN_PRODUCTS = [
       {name:'Полимер', colors:['6005','7024','8017'], price:{'400|1000':848,'400|1840':1249,'400|2000':1319,'600|1000':942,'600|1840':1343,'600|2000':1413,'800|1000':1030,'800|1840':1432,'800|2000':1502,'1000|1000':1125,'1000|1840':1526,'1000|2000':1596}},
       {name:'SteelWood', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400|1000':1147,'400|1840':1697,'400|2000':1792,'600|1000':1276,'600|1840':1826,'600|2000':1921,'800|1000':1397,'800|1840':1947,'800|2000':2043,'1000|1000':1526,'1000|1840':2076,'1000|2000':2172}},
     ] },
-  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', spec:'Круглая · толщина 0,45–0,5 мм', meta:'Клумба металлическая фактурная',
+  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', photo:'assets/gen_klumba.png', spec:'Круглая · толщина 0,45–0,5 мм', meta:'Клумба металлическая фактурная',
     dims:[
       {kind:'width', label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
     ],
@@ -1180,23 +1181,23 @@ function fenceColorObj(s){
   return { name: c ? `${ral} · ${c.name}` : s, hex: c ? c.hex : '#9a9a9c' };
 }
 const FENCE_MODELS = [
-  { id:'Ш1', name:'Евроштакетник Ш1 «Кветник»', width:'69 мм', thickness:'0,50', edges:['Клин','Прямой'], coatings:[
+  { id:'Ш1', photo:'assets/gen_shtaketnik_sh1.png', name:'Евроштакетник Ш1 «Кветник»', width:'69 мм', thickness:'0,50', edges:['Клин','Прямой'], coatings:[
     {name:'Полимер', price:{'Клин':70,'Прямой':73}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
     {name:'Велюр', price:{'Клин':83,'Прямой':87}, colors:['6005']},
     {name:'SteelArt', price:{'Клин':92,'Прямой':96}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']} ] },
-  { id:'Ш2', name:'Евроштакетник Ш2 «Меридиан»', width:'87 мм', thickness:'0,50', edges:['Клин','Прямой'], coatings:[
+  { id:'Ш2', photo:'assets/gen_shtaketnik_sh2.png', name:'Евроштакетник Ш2 «Меридиан»', width:'87 мм', thickness:'0,50', edges:['Клин','Прямой'], coatings:[
     {name:'Полимер', price:{'Клин':93,'Прямой':97}, colors:['1014','1015','3003','3005','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
     {name:'Двухсторонний полимер', price:{'Клин':109,'Прямой':114}, colors:['7024','8017']},
     {name:'Велюр', price:{'Клин':111,'Прямой':116}, colors:['6005']},
     {name:'SteelArt', price:{'Клин':123,'Прямой':129}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']} ] },
-  { id:'Ш10', name:'Евроштакетник Ш10 «Палисад»', width:'100 мм', thickness:'0,50', edges:['Радиус'], coatings:[
+  { id:'Ш10', photo:'assets/gen_shtaketnik_sh10.png', name:'Евроштакетник Ш10 «Палисад»', width:'100 мм', thickness:'0,50', edges:['Радиус'], coatings:[
     {name:'Полимер', price:{'Радиус':107}, colors:['3005','6005','7024','8017','9003']},
     {name:'Двухсторонний полимер', price:{'Радиус':125}, colors:['7024','8017']},
     {name:'Велюр', price:{'Радиус':139}, colors:['7024','8017','9005']},
     {name:'SteelArt', price:{'Радиус':134}, colors:['Золотой орех 3D (W003)','Античный дуб R (W004)']},
     {name:'SteelWood', price:{'Радиус':134}, colors:['Дуб 3D Атланта','Дуб 3D Бренди']},
     {name:'SteelWood двухсторонний', price:{'Радиус':158}, colors:['Дуб 3D Бренди двухсторонний']} ] },
-  { id:'Ш18', name:'Евроштакетник Ш18 «Баррера»', width:'118 мм', thickness:'0,50', edges:['Клин','Радиус'], coatings:[
+  { id:'Ш18', photo:'assets/gen_shtaketnik_sh18.png', name:'Евроштакетник Ш18 «Баррера»', width:'118 мм', thickness:'0,50', edges:['Клин','Радиус'], coatings:[
     {name:'Полимер', price:{'Клин':133,'Радиус':127}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
     {name:'Двухсторонний полимер', price:{'Клин':156,'Радиус':149}, colors:['7024','8017']},
     {name:'Велюр', price:{'Клин':159,'Радиус':151}, colors:['6005','7024','8017','9005']},
@@ -1204,7 +1205,7 @@ const FENCE_MODELS = [
     {name:'SteelArt двухсторонний', price:{'Клин':224,'Радиус':213}, colors:['Дуб 3D (W001/W001)','Античный дуб R (W004/W004)']},
     {name:'SteelWood', price:{'Клин':168,'Радиус':160}, colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D Рустик','Дуб 3D Грэй']},
     {name:'SteelWood двухсторонний', price:{'Клин':197,'Радиус':188}, colors:['Дуб 3D Бренди двухсторонний','Дуб 3D Рустик двухсторонний']} ] },
-  { id:'Ш19', name:'Евроштакетник Ш19 «Эллипс»', width:'126 мм', thickness:'0,50', edges:['Радиус'], coatings:[
+  { id:'Ш19', photo:'assets/gen_shtaketnik_sh19.png', name:'Евроштакетник Ш19 «Эллипс»', width:'126 мм', thickness:'0,50', edges:['Радиус'], coatings:[
     {name:'Полимер', price:{'Радиус':127}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
     {name:'Двухсторонний полимер', price:{'Радиус':149}, colors:['7024','8017']},
     {name:'Велюр', price:{'Радиус':151}, colors:['6005','7024','8017','9005']},
@@ -1782,7 +1783,7 @@ function soffitProductCardHTML(s){
   return `
     <div class="gp-card sf-card pat-soffit" data-item="${itemJSON}">
       ${s.tag ? `<span class="sf-tag">${s.tag}</span>` : ''}
-      <div class="media-slot"><span class="media-hint">фото</span></div>
+      <div class="media-slot">${s.photo ? `<img src="${s.photo}" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name"><span class="sf-eyebrow">Софит DOCKE</span>${s.name}</div>
         <div class="dropdowns">
@@ -1903,7 +1904,7 @@ function gardenCardHTML(p){
   const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card jz-card gd-card pat-garden" data-item="${itemJSON}" data-garden="${gardenJSON}">
-      <div class="media-slot"><span class="media-hint">фото</span></div>
+      <div class="media-slot">${p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name">${p.name}</div>
         ${p.spec ? `<div class="gd-spec">${p.spec}</div>` : ''}
@@ -1977,7 +1978,7 @@ function fenceCardHTML(m){
   const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card jz-card fence-card pat-fence" data-item="${itemJSON}" data-fence="${fenceJSON}">
-      <div class="media-slot"><span class="media-hint">фото</span></div>
+      <div class="media-slot">${m.photo ? `<img src="${m.photo}" alt="${m.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name">${m.name}</div>
         <div class="dropdowns">
