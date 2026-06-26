@@ -1369,31 +1369,8 @@ function renderProducts(){
     });
   });
 
-  // Цветовой пикер — клик подсвечивает + обновляет данные карточки
-  $grid.querySelectorAll('.color-swatch').forEach(sw => {
-    sw.addEventListener('click', e => {
-      e.preventDefault(); e.stopPropagation();
-      const ral  = sw.dataset.ral;
-      const name = sw.dataset.name;
-      const card = sw.closest('.product');
-      // снимаем active со всех swatches этой карточки
-      card.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-      sw.classList.add('active');
-      // перекрашиваем фото товара под выбранный цвет
-      const pimg = card.querySelector('.product-image img');
-      if (pimg) recolorProductImg(pimg, sw.dataset.hex);
-      // обновляем подпись с текущим цветом
-      const codeEl = card.querySelector('.color-picker-current-code');
-      const nameEl = card.querySelector('.color-picker-current-name');
-      if (codeEl) codeEl.textContent = ral;
-      if (nameEl) nameEl.textContent = name;
-      // обновляем data-item для корзины
-      const item = JSON.parse(card.dataset.item);
-      item.color = ral;
-      item.colorName = name;
-      card.dataset.item = JSON.stringify(item).replace(/"/g, '&quot;').replace(/&quot;/g, '"');
-    });
-  });
+  // Цветовой пикер variant-товаров — клик обрабатывается делегированно на $grid (см. ниже),
+  // чтобы работать и после пересборки свотчей при смене покрытия.
 
   // дропдауны покрытие/толщина — через делегирование на $grid (см. ниже, навешено один раз)
 }
@@ -1472,6 +1449,23 @@ document.addEventListener('keydown', e => {
 });
 // делегированный обработчик дропдаунов (один раз; работает и после пересборки списка толщин)
 $grid.addEventListener('click', e => {
+  // цвет variant-товаров (делегировано — работает и для пересобранных под покрытие свотчей)
+  const csw = e.target.closest('.color-swatch');
+  if (csw) {
+    e.preventDefault(); e.stopPropagation();
+    const card = csw.closest('.product');
+    if (!card) return;
+    card.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+    csw.classList.add('active');
+    const pimg = card.querySelector('.product-image img');
+    if (pimg) recolorProductImg(pimg, csw.dataset.hex);
+    const ral = csw.dataset.ral, name = csw.dataset.name, isRAL = /^\d{4}$/.test(ral);
+    const codeEl = card.querySelector('.color-picker-current-code'); if (codeEl) codeEl.textContent = isRAL ? ral : '';
+    const nameEl = card.querySelector('.color-picker-current-name'); if (nameEl) nameEl.textContent = name;
+    const labelEl = card.querySelector('.color-picker-label'); if (labelEl) labelEl.textContent = isRAL ? 'Цвет RAL' : 'Цвет';
+    try { const it = JSON.parse(card.dataset.item); it.color = ral; it.colorName = name; card.dataset.item = JSON.stringify(it); } catch(_){}
+    return;
+  }
   // цвет (делегировано — работает и для пересобранных свотчей еврожалюзи)
   const sw = e.target.closest('.gp-swatch');
   if (sw) {
@@ -1507,7 +1501,7 @@ $grid.addEventListener('click', e => {
     dd.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('active'));
     opt.classList.add('active');
     dd.classList.remove('open'); dd.setAttribute('aria-expanded','false');
-    if (dd.dataset.kind === 'coating') rebuildThickness(card);
+    if (dd.dataset.kind === 'coating') { rebuildThickness(card); rebuildVariantColors(card); }
     refreshCardPrice(card);
     // не-variant карточки (напр. софит «Вид») — синхронизируем выбор в data-item
     if (card && card.dataset.item && !card.dataset.variants) {
@@ -1536,6 +1530,48 @@ $grid.addEventListener('click', e => {
   }
 });
 
+/* ─── ЦВЕТА ПО ВИДУ ПОКРЫТИЯ (variant-товары) ───
+   Оцинковка → 1 вариант (цинк, без RAL); под дерево → древесные; полимер/велюр → палитра RAL. */
+const WOOD_COLORS = [
+  { ral:'Дуб Атланта', name:'Дуб 3D Атланта', hex:'#6e4a2a', wood:true },
+  { ral:'Дуб Бренди',  name:'Дуб 3D Бренди',  hex:'#7c4a26', wood:true },
+  { ral:'Дуб Рустик',  name:'Дуб 3D Рустик',  hex:'#4a3422', wood:true },
+  { ral:'Дуб Грэй',    name:'Дуб 3D Грэй',    hex:'#5b524a', wood:true },
+];
+const ZINC_COLOR = { ral:'Цинк', name:'Оцинкованная сталь', hex:'#b8bcc2' };
+function colorsForCoating(coating){
+  if (!coating) return COLORS;
+  if (/оцинк|цинк/i.test(coating)) return [ZINC_COLOR];
+  if (/дерев/i.test(coating))      return WOOD_COLORS;
+  return COLORS; // полимер / велюр
+}
+function defaultColorOf(colors, coating){
+  if (/полимер|велюр/i.test(coating||'')) return colors.find(c => c.ral === '7024') || colors[0];
+  return colors[0];
+}
+function colorSwatchHTML(c, activeRal){
+  const isRAL = /^\d{4}$/.test(c.ral);
+  return `<button type="button" class="color-swatch ${c.ral === activeRal ? 'active' : ''}" style="background:${c.wood ? swatchBg(c) : c.hex}" data-ral="${c.ral}" data-name="${c.name}" data-hex="${c.hex}" title="${isRAL ? 'RAL '+c.ral+' · '+c.name : c.name}" aria-label="${c.name}"></button>`;
+}
+// смена покрытия → пересобрать доступные цвета + перекрасить фото под дефолтный цвет покрытия
+function rebuildVariantColors(card){
+  if (!card.dataset.variants) return;
+  const picker = card.querySelector('.color-picker');
+  if (!picker) return;
+  const coatEl = card.querySelector('.dropdown[data-kind="coating"] .val');
+  const coat = coatEl ? coatEl.dataset.value : null;
+  const colors = colorsForCoating(coat);
+  const def = defaultColorOf(colors, coat) || colors[0];
+  const wrap = picker.querySelector('.color-picker-swatches');
+  if (wrap) wrap.innerHTML = colors.map(c => colorSwatchHTML(c, def ? def.ral : '')).join('');
+  const isRAL = def && /^\d{4}$/.test(def.ral);
+  const labelEl = picker.querySelector('.color-picker-label'); if (labelEl) labelEl.textContent = isRAL ? 'Цвет RAL' : 'Цвет';
+  const codeEl  = picker.querySelector('.color-picker-current-code'); if (codeEl) codeEl.textContent = isRAL ? def.ral : '';
+  const nameEl  = picker.querySelector('.color-picker-current-name'); if (nameEl) nameEl.textContent = def ? def.name : '';
+  const img = card.querySelector('.product-image img'); if (img && def) recolorProductImg(img, def.hex);
+  try { const it = JSON.parse(card.dataset.item); if (def){ it.color = def.ral; it.colorName = def.name; } card.dataset.item = JSON.stringify(it); } catch(_){}
+}
+
 function productCard(p, pat){
   const hasVar  = Array.isArray(p.variants) && p.variants.length > 0;
   const noColor = p.noColor === true;
@@ -1551,7 +1587,9 @@ function productCard(p, pat){
 
   const curPrice = hasVar ? (variantPrice(p, curCoat, curThk) ?? repPrice(p)) : p.priceNew;
 
-  const initialColor = COLORS.find(c => c.ral === p.color) || COLORS[14]; // 7024 fallback
+  const curColors = noColor ? [] : colorsForCoating(curCoat);
+  // на старте показываем нейтральный дефолт покрытия (графит для полимера) — совпадает с базовым фото
+  const initialColor = defaultColorOf(curColors, curCoat) || curColors[0] || COLORS[14];
   const old = p.priceOld ? `<span class="price-old">${p.priceOld} ₽</span>` : '';
 
   // данные для корзины (цвет/спеки обновляются при выборе)
@@ -1573,19 +1611,15 @@ function productCard(p, pat){
     ? dropdownHTML('thickness', 'Толщина', thicknesses.map(t => ({ value: t, label: `${t} мм` })), curThk) : '';
   const dropdownsHTML = (coatDD || thkDD) ? `<div class="dropdowns">${coatDD}${thkDD}</div>` : '';
 
-  // цветовой пикер — нет у чёрного металла
-  const swatchesHTML = noColor ? '' : COLORS.map(c => `
-    <button type="button" class="color-swatch ${c.ral === initialColor.ral ? 'active' : ''}"
-      style="background:${c.hex}"
-      data-ral="${c.ral}" data-name="${c.name}" data-hex="${c.hex}"
-      title="RAL ${c.ral} · ${c.name}"
-      aria-label="Цвет RAL ${c.ral} ${c.name}"></button>`).join('');
+  // цветовой пикер — нет у чёрного металла; набор цветов зависит от выбранного покрытия
+  const initIsRAL = /^\d{4}$/.test(initialColor.ral);
+  const swatchesHTML = noColor ? '' : curColors.map(c => colorSwatchHTML(c, initialColor.ral)).join('');
   const colorHTML = noColor ? '' : `
         <div class="color-picker">
           <div class="color-picker-head">
-            <span class="color-picker-label">Цвет RAL</span>
+            <span class="color-picker-label">${initIsRAL ? 'Цвет RAL' : 'Цвет'}</span>
             <span class="color-picker-current">
-              <span class="color-picker-current-code">${initialColor.ral}</span>
+              <span class="color-picker-current-code">${initIsRAL ? initialColor.ral : ''}</span>
               <span class="color-picker-current-name">${initialColor.name}</span>
             </span>
           </div>
@@ -1658,7 +1692,7 @@ function recolorProductImg(img, hex){
       const L=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
       if (L<=BGT){ d[i]=bg[0]; d[i+1]=bg[1]; d[i+2]=bg[2]; continue; }
       if (L<=med){ let k=(L-lo)/loRange; k=k<0?0:k>1?1:k; const f=0.20+0.80*k; d[i]=tr*f; d[i+1]=tg*f; d[i+2]=tb*f; }
-      else { let k=(L-med)/hiRange; k=k<0?0:k>1?1:k; d[i]=tr+(255-tr)*k; d[i+1]=tg+(255-tg)*k; d[i+2]=tb+(255-tb)*k; }
+      else { let k=(L-med)/hiRange; k=k<0?0:k>1?1:k; k*=0.62; d[i]=tr+(255-tr)*k; d[i+1]=tg+(255-tg)*k; d[i+2]=tb+(255-tb)*k; } // блик → осветлённый цвет, не чистый белый
     }
     ctx.putImageData(id,0,0);
     try { const url = cv.toDataURL('image/png'); _recolorCache[key]=url; img.src=url; } catch(_){}
