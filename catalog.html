@@ -369,6 +369,7 @@ p{margin:0}
 .gp-card:hover{border-color:rgba(255,255,255,.18);transform:translateY(-3px)}
 .gp-body{padding:18px;display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}
 .gp-name{font-family:var(--f-display);font-weight:700;font-size:16px;line-height:1.15;color:var(--text-on-dark-bright)}
+.fence-code{font-family:var(--f-body);font-weight:800;letter-spacing:.01em}
 .gp-colors{display:flex;flex-direction:column;gap:8px}
 .gp-colors-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em}
 .gp-colors-label{color:var(--text-on-dark-dim);text-transform:uppercase}
@@ -981,13 +982,21 @@ const PRODUCTS = [
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:621},{coating:'Полимер',thickness:'0.45',price:710},{coating:'Полимер',thickness:'0.50',price:854},
     {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
-  { cat:'corrugated', sub:'С10', name:'Профнастил С10 обратный прокат', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1146 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'7024', priceNew:621, unit:'м²' },
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10 обратный прокат', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1146 мм · изнанка · эконом', color:'7024', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Полимер',thickness:'0.40',price:675},{coating:'Полимер',thickness:'0.45',price:716},{coating:'Полимер',thickness:'0.50',price:825},
+    {coating:'Велюр',thickness:'0.40',price:779},{coating:'Велюр',thickness:'0.45',price:800},{coating:'Велюр',thickness:'0.50',price:860},
+    {coating:'Под дерево',thickness:'0.40',price:886},{coating:'Под дерево',thickness:'0.45',price:936},{coating:'Под дерево',thickness:'0.50',price:990} ] },
   { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20', photo:'assets/gen_profnastil_mp20.png', meta:'Ширина 1150/1100 мм · кровля/стена', color:'3005', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:489},{coating:'Оцинковка',thickness:'0.45',price:534},{coating:'Оцинковка',thickness:'0.50',price:555},{coating:'Оцинковка',thickness:'0.65',price:725},
     {coating:'Полимер',thickness:'0.40',price:630},{coating:'Полимер',thickness:'0.45',price:766},{coating:'Полимер',thickness:'0.50',price:884},{coating:'Полимер',thickness:'0.65',price:913},
     {coating:'Велюр',thickness:'0.45',price:843},{coating:'Под дерево',thickness:'0.45',price:994} ] },
-  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', photo:'assets/gen_profnastil_mp20.png', meta:'Ширина 1130 мм · изнанка · эконом', coating:'Полимер', thickness:'0.45', color:'8017', priceNew:630, unit:'м²' },
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', photo:'assets/gen_profnastil_mp20.png', meta:'Ширина 1130 мм · изнанка · эконом', color:'8017', unit:'м²', stock:'in',
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Полимер',thickness:'0.40',price:698},{coating:'Полимер',thickness:'0.45',price:748},{coating:'Полимер',thickness:'0.50',price:856},
+    {coating:'Велюр',thickness:'0.40',price:819},{coating:'Велюр',thickness:'0.45',price:864},{coating:'Велюр',thickness:'0.50',price:905},
+    {coating:'Под дерево',thickness:'0.40',price:925},{coating:'Под дерево',thickness:'0.45',price:994} ] },
   { cat:'corrugated', sub:'С21', name:'Профнастил С21', photo:'assets/gen_profnastil_s21.png', meta:'Ширина 1090/1030 мм · кровельный', color:'7024', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:534},{coating:'Оцинковка',thickness:'0.45',price:583},{coating:'Оцинковка',thickness:'0.50',price:603},
@@ -1003,9 +1012,9 @@ const PRODUCTS = [
 
   /* ── Металлочерепица Супер-Монтерей — выбор покрытия+толщины ── */
   { cat:'roofing', sub:'Супер-Монтерей', name:'Супер-Монтерей', photo:'assets/gen_metallocherepica.png', meta:'Ширина 1180/1100 мм', color:'3005', unit:'м²', tag:'Топ', stock:'in',
-    defCoat:'Полимер', defThk:'0.40', variants:[
-    {coating:'Полимер',thickness:'0.40',price:779},{coating:'Полимер',thickness:'0.50',price:890},
-    {coating:'Велюр',thickness:'0.40',price:878},{coating:'Велюр',thickness:'0.50',price:935} ] },
+    defCoat:'Полимер', defThk:'0.45', variants:[
+    {coating:'Полимер',thickness:'0.45',price:779},{coating:'Полимер',thickness:'0.50',price:890},
+    {coating:'Велюр',thickness:'0.45',price:878},{coating:'Велюр',thickness:'0.50',price:935} ] },
 
   /* ── Сайдинг — выбор покрытия+толщины ── */
   { cat:'siding', sub:'Евро-брус', name:'Сайдинг Евро-брус', photo:'assets/gen_saiding_evrobrus.png', meta:'Ширина 258/232 мм', color:'8017', unit:'м²', stock:'in',
@@ -1113,15 +1122,16 @@ const SOFFIT_SYSTEMS = [
 /* ═══ ЗАБОР «ЕВРОЖАЛЮЗИ» ═══
    2 карточки (ламель / П-профиль), выбор прямо в карточке: вид покрытия → набор цветов меняется.
    Под «под дерево» — коллекции SteelWood/SteelArt (sib-profil). Цены/толщина — sib-profil. */
-const JALUZI_COATINGS = ['Полимер','Двухсторонний полимер','Велюр','Под дерево','Под дерево двухсторонний'];
+const JALUZI_COATINGS = ['Полимер','Велюр','Под дерево','Полимер двусторонний','Под дерево двусторонний'];
+/* цена ламели зависит от покрытия (толщина 0,5; прайс клиента) */
+const JALUZI_PRICES = { 'Полимер':176, 'Велюр':184, 'Под дерево':189, 'Полимер двусторонний':184, 'Под дерево двусторонний':242 };
 /* обычные цвета (полимер/велюр) — палитра sib-profil для еврожалюзи */
 const JALUZI_COLORS_RAL = COLORS.filter(c => c.ral !== '8016'); // 20 цветов RAL (8016 уже удалён)
 /* «под дерево» — SteelWood (Дуб 3D) + SteelArt (hex — ориентир текстуры дерева) */
 const JALUZI_COLORS_WOOD = [
-  {name:'Дуб 3D Атланта', hex:'#6e4a2a', wood:true}, {name:'Дуб 3D Бренди', hex:'#7c4a26', wood:true},
-  {name:'Дуб 3D Грэй', hex:'#5b524a', wood:true},    {name:'Дуб 3D Рустик', hex:'#4a3422', wood:true},
-  {name:'SteelArt W001', hex:'#8a6038', wood:true},  {name:'SteelArt W003', hex:'#6b4327', wood:true},
-  {name:'SteelArt W004', hex:'#5a3a26', wood:true},  {name:'SteelArt W005', hex:'#3f2c20', wood:true},
+  {name:'Дуб 3D Атланта', hex:'#6e4a2a', wood:true},        {name:'Дуб 3D Бренди', hex:'#7c4a26', wood:true},
+  {name:'Дуб 3D (W001)', hex:'#8a6038', wood:true},         {name:'Золотой орех 3D (W003)', hex:'#9a6a3a', wood:true},
+  {name:'Античный дуб R (W004)', hex:'#5a3a26', wood:true}, {name:'Орех (W005)', hex:'#3f2c20', wood:true},
 ];
 function jaluziColorsFor(coating){ return /Под дерево/.test(coating) ? JALUZI_COLORS_WOOD : JALUZI_COLORS_RAL; }
 // фон свотча: для «дерева» — текстура (вертикальные волокна + перепад тона), иначе сплошной цвет
@@ -1132,7 +1142,7 @@ function swatchBg(c){
 }
 
 const JALUZI_PRODUCTS = [
-  { id:'lamel',    name:'Еврожалюзи (ламель)',   thickness:'0,5',  price:151, unit:'м.п.', photo:'assets/gen_jaluzi_lamel.png', coatings:JALUZI_COATINGS },
+  { id:'lamel',    name:'Еврожалюзи (ламель)',   thickness:'0,5',  prices:JALUZI_PRICES, price:176, unit:'м.п.', photo:'assets/gen_jaluzi_lamel.png', coatings:JALUZI_COATINGS },
   { id:'pprofile', name:'П-профиль-Еврожалюзи',  thickness:'0,45', price:270, unit:'м.п.', photo:'assets/gen_jaluzi_pprofile.png', coatings:JALUZI_COATINGS },
 ];
 
@@ -1146,18 +1156,16 @@ const GARDEN_PRODUCTS = [
       {kind:'length', label:'Длина',  options:[{value:'1000',label:'1000 мм'},{value:'1840',label:'1840 мм'},{value:'2000',label:'2000 мм'}]},
     ],
     coatings:[
-      {name:'Оцинкованный', colors:['Цинк'], price:{'400|1000':678,'400|1840':1007,'400|2000':1064,'600|1000':755,'600|1840':1084,'600|2000':1141,'800|1000':828,'800|1840':1156,'800|2000':1214,'1000|1000':905,'1000|1840':1234,'1000|2000':1291}},
       {name:'Полимер', colors:['6005','7024','8017'], price:{'400|1000':848,'400|1840':1249,'400|2000':1319,'600|1000':942,'600|1840':1343,'600|2000':1413,'800|1000':1030,'800|1840':1432,'800|2000':1502,'1000|1000':1125,'1000|1840':1526,'1000|2000':1596}},
-      {name:'SteelWood', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400|1000':1147,'400|1840':1697,'400|2000':1792,'600|1000':1276,'600|1840':1826,'600|2000':1921,'800|1000':1397,'800|1840':1947,'800|2000':2043,'1000|1000':1526,'1000|1840':2076,'1000|2000':2172}},
+      {name:'Под дерево', colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)'], price:{'400|1000':1147,'400|1840':1697,'400|2000':1792,'600|1000':1276,'600|1840':1826,'600|2000':1921,'800|1000':1397,'800|1840':1947,'800|2000':2043,'1000|1000':1526,'1000|1840':2076,'1000|2000':2172}},
     ] },
   { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', photo:'assets/gen_klumba.png', spec:'Круглая · толщина 0,45–0,5 мм', meta:'Клумба металлическая фактурная',
     dims:[
       {kind:'width', label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
     ],
     coatings:[
-      {name:'Оцинкованный', colors:['Цинк'], price:{'400':677,'600':908,'800':1126,'1000':1357}},
       {name:'Полимер', colors:['6005','7024','8017'], price:{'400':856,'600':1139,'800':1404,'1000':1687}},
-      {name:'SteelWood', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400':1151,'600':1538,'800':1902,'1000':2289}},
+      {name:'Под дерево', colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)'], price:{'400':1151,'600':1538,'800':1902,'1000':2289}},
     ] },
 ];
 
@@ -1180,39 +1188,37 @@ function fenceColorObj(s){
   const c = ral ? COLORS.find(x => x.ral === ral) : null;
   return { name: c ? `${ral} · ${c.name}` : s, hex: c ? c.hex : '#9a9a9c' };
 }
+// штакетник — единые наборы цветов покрытий
+const F_POLY = ['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006'];
+const F_POLY2 = ['7024','8017'];
+const F_VELOUR = ['6005','7024','8017','9005'];
+const F_WOOD = ['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)'];
 const FENCE_MODELS = [
   { id:'Ш1', photo:'assets/gen_shtaketnik_sh1.png', name:'Евроштакетник Ш1 «Кветник»', width:'69 мм', thickness:'0,50', edges:['Клин','Прямой'], coatings:[
-    {name:'Полимер', price:{'Клин':70,'Прямой':73}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
-    {name:'Велюр', price:{'Клин':83,'Прямой':87}, colors:['6005']},
-    {name:'SteelArt', price:{'Клин':92,'Прямой':96}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']} ] },
+    {name:'Полимер', price:{'Клин':68,'Прямой':71}, colors:F_POLY},
+    {name:'Полимер двусторонний', price:{'Клин':79,'Прямой':84}, colors:F_POLY2},
+    {name:'Под дерево', price:{'Клин':89,'Прямой':95}, colors:F_WOOD} ] },
   { id:'Ш2', photo:'assets/gen_shtaketnik_sh2.png', name:'Евроштакетник Ш2 «Меридиан»', width:'87 мм', thickness:'0,50', edges:['Клин','Прямой'], coatings:[
-    {name:'Полимер', price:{'Клин':93,'Прямой':97}, colors:['1014','1015','3003','3005','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
-    {name:'Двухсторонний полимер', price:{'Клин':109,'Прямой':114}, colors:['7024','8017']},
-    {name:'Велюр', price:{'Клин':111,'Прямой':116}, colors:['6005']},
-    {name:'SteelArt', price:{'Клин':123,'Прямой':129}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']} ] },
+    {name:'Полимер', price:{'Клин':90,'Прямой':95}, colors:F_POLY},
+    {name:'Полимер двусторонний', price:{'Клин':105,'Прямой':111}, colors:F_POLY2},
+    {name:'Под дерево', price:{'Клин':119,'Прямой':126}, colors:F_WOOD} ] },
   { id:'Ш10', photo:'assets/gen_shtaketnik_sh10.png', name:'Евроштакетник Ш10 «Палисад»', width:'100 мм', thickness:'0,50', edges:['Радиус'], coatings:[
-    {name:'Полимер', price:{'Радиус':107}, colors:['3005','6005','7024','8017','9003']},
-    {name:'Двухсторонний полимер', price:{'Радиус':125}, colors:['7024','8017']},
-    {name:'Велюр', price:{'Радиус':139}, colors:['7024','8017','9005']},
-    {name:'SteelArt', price:{'Радиус':134}, colors:['Золотой орех 3D (W003)','Античный дуб R (W004)']},
-    {name:'SteelWood', price:{'Радиус':134}, colors:['Дуб 3D Атланта','Дуб 3D Бренди']},
-    {name:'SteelWood двухсторонний', price:{'Радиус':158}, colors:['Дуб 3D Бренди двухсторонний']} ] },
+    {name:'Полимер', price:{'Радиус':101}, colors:F_POLY},
+    {name:'Полимер двусторонний', price:{'Радиус':119}, colors:F_POLY2},
+    {name:'Под дерево', price:{'Радиус':128}, colors:F_WOOD},
+    {name:'Под дерево двусторонний', price:{'Радиус':150}, colors:F_WOOD} ] },
   { id:'Ш18', photo:'assets/gen_shtaketnik_sh18.png', name:'Евроштакетник Ш18 «Баррера»', width:'118 мм', thickness:'0,50', edges:['Клин','Радиус'], coatings:[
-    {name:'Полимер', price:{'Клин':133,'Радиус':127}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
-    {name:'Двухсторонний полимер', price:{'Клин':156,'Радиус':149}, colors:['7024','8017']},
-    {name:'Велюр', price:{'Клин':159,'Радиус':151}, colors:['6005','7024','8017','9005']},
-    {name:'SteelArt', price:{'Клин':176,'Радиус':168}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']},
-    {name:'SteelArt двухсторонний', price:{'Клин':224,'Радиус':213}, colors:['Дуб 3D (W001/W001)','Античный дуб R (W004/W004)']},
-    {name:'SteelWood', price:{'Клин':168,'Радиус':160}, colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D Рустик','Дуб 3D Грэй']},
-    {name:'SteelWood двухсторонний', price:{'Клин':197,'Радиус':188}, colors:['Дуб 3D Бренди двухсторонний','Дуб 3D Рустик двухсторонний']} ] },
+    {name:'Полимер', price:{'Клин':131,'Радиус':123}, colors:F_POLY},
+    {name:'Полимер двусторонний', price:{'Клин':133,'Радиус':144}, colors:F_POLY2},
+    {name:'Велюр', price:{'Радиус':146}, colors:F_VELOUR},
+    {name:'Под дерево', price:{'Клин':173,'Радиус':163}, colors:F_WOOD},
+    {name:'Под дерево двусторонний', price:{'Клин':220,'Радиус':206}, colors:F_WOOD} ] },
   { id:'Ш19', photo:'assets/gen_shtaketnik_sh19.png', name:'Евроштакетник Ш19 «Эллипс»', width:'126 мм', thickness:'0,50', edges:['Радиус'], coatings:[
-    {name:'Полимер', price:{'Радиус':127}, colors:['1014','1015','3003','3005','3011','5002','5005','5021','6002','6005','6029','7004','7024','8017','9002','9003','9006']},
-    {name:'Двухсторонний полимер', price:{'Радиус':149}, colors:['7024','8017']},
-    {name:'Велюр', price:{'Радиус':151}, colors:['6005','7024','8017','9005']},
-    {name:'SteelArt', price:{'Радиус':168}, colors:['Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)']},
-    {name:'SteelArt двухсторонний', price:{'Радиус':213}, colors:['Дуб 3D (W001/W001)','Античный дуб R (W004/W004)']},
-    {name:'SteelWood', price:{'Радиус':160}, colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D Рустик','Дуб 3D Грэй']},
-    {name:'SteelWood двухсторонний', price:{'Радиус':188}, colors:['Дуб 3D Бренди двухсторонний','Дуб 3D Рустик двухсторонний']} ] },
+    {name:'Полимер', price:{'Радиус':123}, colors:F_POLY},
+    {name:'Полимер двусторонний', price:{'Радиус':144}, colors:F_POLY2},
+    {name:'Велюр', price:{'Радиус':146}, colors:F_VELOUR},
+    {name:'Под дерево', price:{'Радиус':163}, colors:F_WOOD},
+    {name:'Под дерево двусторонний', price:{'Радиус':206}, colors:F_WOOD} ] },
 ];
 
 /* ─── STATE ─── */
@@ -1532,11 +1538,14 @@ $grid.addEventListener('click', e => {
 
 /* ─── ЦВЕТА ПО ВИДУ ПОКРЫТИЯ (variant-товары) ───
    Оцинковка → 1 вариант (цинк, без RAL); под дерево → древесные; полимер/велюр → палитра RAL. */
+// 6 единых цветов «под дерево» — SteelWood (Атланта/Бренди) + SteelArt (W001/W003/W004/W005)
 const WOOD_COLORS = [
-  { ral:'Дуб Атланта', name:'Дуб 3D Атланта', hex:'#6e4a2a', wood:true },
-  { ral:'Дуб Бренди',  name:'Дуб 3D Бренди',  hex:'#7c4a26', wood:true },
-  { ral:'Дуб Рустик',  name:'Дуб 3D Рустик',  hex:'#4a3422', wood:true },
-  { ral:'Дуб Грэй',    name:'Дуб 3D Грэй',    hex:'#5b524a', wood:true },
+  { ral:'Атланта', name:'Дуб 3D Атланта',         hex:'#6e4a2a', wood:true },
+  { ral:'Бренди',  name:'Дуб 3D Бренди',          hex:'#7c4a26', wood:true },
+  { ral:'W001',    name:'Дуб 3D (W001)',          hex:'#8a6038', wood:true },
+  { ral:'W003',    name:'Золотой орех 3D (W003)', hex:'#9a6a3a', wood:true },
+  { ral:'W004',    name:'Античный дуб R (W004)',  hex:'#5a3a26', wood:true },
+  { ral:'W005',    name:'Орех (W005)',            hex:'#3f2c20', wood:true },
 ];
 const ZINC_COLOR = { ral:'Цинк', name:'Оцинкованная сталь', hex:'#b8bcc2' };
 function colorsForCoating(coating){
@@ -1916,13 +1925,15 @@ function jaluziProductCardHTML(p){
   const initCoat  = p.coatings[0];
   const colors    = jaluziColorsFor(initCoat);
   const initColor = colors[0];
-  const item = { name: p.name, meta: `Толщина ${p.thickness} мм`, price: p.price, unit: p.unit, coating: initCoat, thickness: `${p.thickness} мм`, colorName: initColor.name };
+  const initPrice = p.prices ? p.prices[initCoat] : p.price;
+  const item = { name: p.name, meta: `Толщина ${p.thickness} мм`, price: initPrice, unit: p.unit, coating: initCoat, thickness: `${p.thickness} мм`, colorName: initColor.name };
   const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
+  const pricesAttr = p.prices ? ` data-prices="${JSON.stringify(p.prices).replace(/"/g, '&quot;')}"` : '';
   const coatOpts = p.coatings.map((c,i) => `<button type="button" class="dropdown-option${i===0?' active':''}" role="option" data-value="${c}">${c}</button>`).join('');
   const swatches = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   const photoHTML = p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>';
   return `
-    <div class="gp-card jz-card pat-fence-jal" data-item="${itemJSON}">
+    <div class="gp-card jz-card pat-fence-jal" data-item="${itemJSON}"${pricesAttr}>
       <div class="media-slot">${photoHTML}</div>
       <div class="gp-body">
         <div class="gp-name">${p.name}</div>
@@ -1938,7 +1949,7 @@ function jaluziProductCardHTML(p){
           <div class="gp-swatches">${swatches}</div>
         </div>
         <div class="gp-foot">
-          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(p.price)} ₽</span><span class="gp-unit">/ ${p.unit}</span></div>
+          <div class="gp-price"><span class="gp-from">от</span><span class="gp-new">${formatPrice(initPrice)} ₽</span><span class="gp-unit">/ ${p.unit}</span></div>
           <button class="add-to-cart-btn" aria-label="В заявку">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
             <span>В заявку</span>
@@ -1948,16 +1959,21 @@ function jaluziProductCardHTML(p){
     </div>`;
 }
 
-// смена «Вид покрытия» → пересобрать палитру (RAL ↔ SteelWood/SteelArt) + обновить корзину
+// смена «Вид покрытия» → пересобрать палитру (RAL ↔ дерево) + цену по покрытию + корзину
 function rebuildJaluziColors(card){
   const coatEl = card.querySelector('.dropdown[data-kind="coating"] .val');
-  const colors = jaluziColorsFor(coatEl ? coatEl.dataset.value : '');
+  const coat = coatEl ? coatEl.dataset.value : '';
+  const colors = jaluziColorsFor(coat);
   const wrap = card.querySelector('.gp-swatches');
   if (!wrap) return;
   wrap.innerHTML = colors.map((c,i) => `<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   const nameEl = card.querySelector('.gp-color-name');
   if (nameEl) nameEl.textContent = colors[0].name;
-  try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0].name; card.dataset.item = JSON.stringify(it); } catch (_) {}
+  // цена ламели зависит от покрытия
+  let price = null;
+  if (card.dataset.prices) { try { price = JSON.parse(card.dataset.prices)[coat]; } catch(_){} }
+  if (price != null) { const pe = card.querySelector('.gp-new'); if (pe) pe.textContent = `${formatPrice(price)} ₽`; }
+  try { const it = JSON.parse(card.dataset.item); it.colorName = colors[0].name; it.coating = coat; if (price != null) it.price = price; card.dataset.item = JSON.stringify(it); } catch (_) {}
 }
 
 /* ─── ГРЯДКИ/КЛУМБЫ: карточки с выбором параметров (размеры) + цвет (ограниченный набор) ─── */
@@ -2067,7 +2083,7 @@ function fenceCardHTML(m){
     <div class="gp-card jz-card fence-card pat-fence" data-item="${itemJSON}" data-fence="${fenceJSON}">
       <div class="media-slot">${m.photo ? `<img src="${m.photo}" alt="${m.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
-        <div class="gp-name">${m.name}</div>
+        <div class="gp-name">${m.name.replace(/(Ш\d+)/, '<span class="fence-code">$1</span>')}</div>
         <div class="dropdowns">
           ${coatDD}
           ${edgeDD}
