@@ -207,6 +207,8 @@ p{margin:0}
   transition:transform .45s var(--ease-out), border-color .45s var(--ease-out), box-shadow .45s var(--ease-out);
 }
 .product:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.20);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.product:has(.product-divider){border:2px solid var(--accent)}
+.product:has(.product-divider):hover{border-color:var(--accent-hover);box-shadow:0 24px 50px rgba(185,28,28,.28)}
 
 .product-image{position:relative;aspect-ratio:5/4;overflow:hidden;background:#fff}
 .product-divider{height:3px;width:100%;background:var(--accent);flex:none}
