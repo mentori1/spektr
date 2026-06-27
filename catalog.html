@@ -981,40 +981,40 @@ const COLORS = [
    Цены DOCKE и труб профильных — стартовые ориентиры, клиент корректирует. */
 const PRODUCTS = [
   /* ── Профнастил — выбор покрытия+толщины в карточке (матрица из прайса сибтрансэфир, июнь 2026) ── */
-  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', divider:true, photo:'assets/gen_profnastil_s8.png',
+  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', divider:true, photo:'assets/gen_profnastil_s8.png', photoPaint:'assets/gen_profnastil_s8_paint.png',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:605},{coating:'Полимер',thickness:'0.45',price:694},{coating:'Полимер',thickness:'0.50',price:789},
     {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
-  { cat:'corrugated', sub:'С10', name:'Профнастил С10', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in', framed:true,
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10', photo:'assets/gen_profnastil_s10.png', photoPaint:'assets/gen_profnastil_s10_paint.png', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in', framed:true,
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:621},{coating:'Полимер',thickness:'0.45',price:710},{coating:'Полимер',thickness:'0.50',price:854},
     {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
-  { cat:'corrugated', sub:'С10', name:'Профнастил С10 обратный прокат', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1146 мм · изнанка · эконом', color:'7024', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10 обратный прокат', photo:'assets/gen_profnastil_s10.png', photoPaint:'assets/gen_profnastil_s10_paint.png', meta:'Ширина 1146 мм · изнанка · эконом', color:'7024', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Полимер',thickness:'0.40',price:675},{coating:'Полимер',thickness:'0.45',price:716},{coating:'Полимер',thickness:'0.50',price:825},
     {coating:'Велюр',thickness:'0.40',price:779},{coating:'Велюр',thickness:'0.45',price:800},{coating:'Велюр',thickness:'0.50',price:860},
     {coating:'Под дерево',thickness:'0.40',price:886},{coating:'Под дерево',thickness:'0.45',price:936},{coating:'Под дерево',thickness:'0.50',price:990} ] },
-  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20', photo:'assets/gen_profnastil_mp20.png', meta:'Ширина 1150/1100 мм · кровля/стена', color:'3005', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20', photo:'assets/gen_profnastil_mp20.png', photoPaint:'assets/gen_profnastil_mp20_paint.png', meta:'Ширина 1150/1100 мм · кровля/стена', color:'3005', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:489},{coating:'Оцинковка',thickness:'0.45',price:534},{coating:'Оцинковка',thickness:'0.50',price:555},{coating:'Оцинковка',thickness:'0.65',price:725},
     {coating:'Полимер',thickness:'0.40',price:630},{coating:'Полимер',thickness:'0.45',price:766},{coating:'Полимер',thickness:'0.50',price:884},{coating:'Полимер',thickness:'0.65',price:913},
     {coating:'Велюр',thickness:'0.45',price:843},{coating:'Под дерево',thickness:'0.45',price:994} ] },
-  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', photo:'assets/gen_profnastil_mp20.png', meta:'Ширина 1130 мм · изнанка · эконом', color:'8017', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'МП-20', name:'Профлист МП-20 обратный прокат', photo:'assets/gen_profnastil_mp20.png', photoPaint:'assets/gen_profnastil_mp20_paint.png', meta:'Ширина 1130 мм · изнанка · эконом', color:'8017', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Полимер',thickness:'0.40',price:698},{coating:'Полимер',thickness:'0.45',price:748},{coating:'Полимер',thickness:'0.50',price:856},
     {coating:'Велюр',thickness:'0.40',price:819},{coating:'Велюр',thickness:'0.45',price:864},{coating:'Велюр',thickness:'0.50',price:905},
     {coating:'Под дерево',thickness:'0.40',price:925},{coating:'Под дерево',thickness:'0.45',price:994} ] },
-  { cat:'corrugated', sub:'С21', name:'Профнастил С21', photo:'assets/gen_profnastil_s21.png', meta:'Ширина 1090/1030 мм · кровельный', color:'7024', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'С21', name:'Профнастил С21', photo:'assets/gen_profnastil_s21.png', photoPaint:'assets/gen_profnastil_s21_paint.png', meta:'Ширина 1090/1030 мм · кровельный', color:'7024', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:534},{coating:'Оцинковка',thickness:'0.45',price:583},{coating:'Оцинковка',thickness:'0.50',price:603},
     {coating:'Полимер',thickness:'0.40',price:819},{coating:'Полимер',thickness:'0.45',price:863},{coating:'Полимер',thickness:'0.50',price:948} ] },
-  { cat:'corrugated', sub:'НС35', name:'Профнастил НС35', photo:'assets/gen_profnastil_ns35.png', meta:'Ширина 1090/1000 мм · несущий', color:'8017', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'НС35', name:'Профнастил НС35', photo:'assets/gen_profnastil_ns35.png', photoPaint:'assets/gen_profnastil_ns35_paint.png', meta:'Ширина 1090/1000 мм · несущий', color:'8017', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.45',price:591},{coating:'Оцинковка',thickness:'0.50',price:613},{coating:'Оцинковка',thickness:'0.60',price:723},
     {coating:'Полимер',thickness:'0.45',price:844},{coating:'Полимер',thickness:'0.50',price:890},{coating:'Полимер',thickness:'0.65',price:838} ] }, /* НС35 0.65=838 — колонка в .doc неоднозначна, клиенту на сверку */
-  { cat:'corrugated', sub:'НС44', name:'Профнастил НС44', photo:'assets/gen_profnastil_ns44.png', meta:'Ширина 1070/970 мм · несущий', color:'3005', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'НС44', name:'Профнастил НС44', photo:'assets/gen_profnastil_ns44.png', photoPaint:'assets/gen_profnastil_ns44_paint.png', meta:'Ширина 1070/970 мм · несущий', color:'3005', unit:'м²', stock:'in',
     defCoat:'Полимер', defThk:'0.50', variants:[
     {coating:'Оцинковка',thickness:'0.50',price:624},{coating:'Оцинковка',thickness:'0.60',price:736},{coating:'Оцинковка',thickness:'0.65',price:779},{coating:'Оцинковка',thickness:'0.70',price:809},{coating:'Оцинковка',thickness:'0.80',price:903},
     {coating:'Полимер',thickness:'0.50',price:919},{coating:'Полимер',thickness:'0.65',price:981},{coating:'Полимер',thickness:'0.70',price:1036} ] },
@@ -1473,7 +1473,11 @@ $grid.addEventListener('click', e => {
     card.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
     csw.classList.add('active');
     const pimg = card.querySelector('.product-image img');
-    if (pimg) recolorProductImg(pimg, csw.dataset.hex);
+    if (pimg) {
+      const swCoat = card.querySelector('.dropdown[data-kind="coating"] .val')?.dataset.value || '';
+      if (pimg.dataset.photoPaint && /оцинк|цинк/i.test(swCoat)) { pimg.src = pimg.dataset.photoGalv; } // оцинковка — галв-фото без перекраски
+      else recolorProductImg(pimg, csw.dataset.hex);
+    }
     const ral = csw.dataset.ral, name = csw.dataset.name, isRAL = /^\d{4}$/.test(ral);
     const codeEl = card.querySelector('.color-picker-current-code'); if (codeEl) codeEl.textContent = isRAL ? ral : '';
     const nameEl = card.querySelector('.color-picker-current-name'); if (nameEl) nameEl.textContent = name;
@@ -1586,7 +1590,12 @@ function rebuildVariantColors(card){
   const labelEl = picker.querySelector('.color-picker-label'); if (labelEl) labelEl.textContent = isRAL ? 'Цвет RAL' : 'Цвет';
   const codeEl  = picker.querySelector('.color-picker-current-code'); if (codeEl) codeEl.textContent = isRAL ? def.ral : '';
   const nameEl  = picker.querySelector('.color-picker-current-name'); if (nameEl) nameEl.textContent = def ? def.name : '';
-  const img = card.querySelector('.product-image img'); if (img && def) recolorProductImg(img, def.hex);
+  const img = card.querySelector('.product-image img');
+  if (img && img.dataset.photoPaint) {
+    // профнастил: оцинковка → галв-фото (без перекраски); полимер/велюр/под дерево → гладкое фото, перекрашенное
+    if (/оцинк|цинк/i.test(coat || '')) { img.dataset.base = img.dataset.photoGalv; img.src = img.dataset.photoGalv; }
+    else { img.dataset.base = img.dataset.photoPaint; if (def) recolorProductImg(img, def.hex); }
+  } else if (img && def) recolorProductImg(img, def.hex);
   try { const it = JSON.parse(card.dataset.item); if (def){ it.color = def.ral; it.colorName = def.name; } card.dataset.item = JSON.stringify(it); } catch(_){}
 }
 
@@ -1618,8 +1627,12 @@ function productCard(p, pat){
   const itemJSON = JSON.stringify(item).replace(/"/g, '&quot;');
   const variantsAttr = hasVar ? ` data-variants="${JSON.stringify(p.variants).replace(/"/g, '&quot;')}"` : '';
 
+  // профнастил: галв-фото (для оцинковки) + гладкое фото (photoPaint, для полимер/велюр/под дерево)
+  const galvDefault = /оцинк|цинк/i.test(curCoat || '');
+  const initSrc = p.photoPaint ? (galvDefault ? p.photo : p.photoPaint) : p.photo;
+  const twoPhotoAttrs = p.photoPaint ? ` data-photo-galv="${p.photo}" data-photo-paint="${p.photoPaint}" data-base="${galvDefault ? p.photo : p.photoPaint}"` : '';
   const photoHTML = p.photo
-    ? `<img src="${p.photo}" alt="${p.name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy">`
+    ? `<img src="${initSrc}"${twoPhotoAttrs} alt="${p.name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy">`
     : '';
 
   // селекторы «вид покрытия» и «толщина»
