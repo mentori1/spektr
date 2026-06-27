@@ -209,6 +209,12 @@ p{margin:0}
 .product:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.20);box-shadow:0 24px 50px rgba(0,0,0,.45)}
 .product:has(.product-divider){border:2px solid var(--accent)}
 .product:has(.product-divider):hover{border-color:var(--accent-hover);box-shadow:0 24px 50px rgba(185,28,28,.28)}
+/* вариант «в рамке»: красная обводка + фото с отступами по бокам/сверху + сильнее скругление */
+.product--framed{border:2px solid var(--accent);border-radius:18px}
+.product--framed:hover{border-color:var(--accent-hover);box-shadow:0 24px 50px rgba(185,28,28,.28)}
+.product--framed .product-image{padding:16px 16px 8px;display:flex;align-items:center;justify-content:center}
+.product--framed .product-image img{position:static !important;inset:auto !important;width:100% !important;height:100% !important;object-fit:contain !important}
+.product--framed .product-image::before,.product--framed .product-image::after{display:none !important}
 
 .product-image{position:relative;aspect-ratio:5/4;overflow:hidden;background:#fff}
 .product-divider{height:3px;width:100%;background:var(--accent);flex:none}
@@ -980,7 +986,7 @@ const PRODUCTS = [
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:605},{coating:'Полимер',thickness:'0.45',price:694},{coating:'Полимер',thickness:'0.50',price:789},
     {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
-  { cat:'corrugated', sub:'С10', name:'Профнастил С10', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in',
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in', framed:true,
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:621},{coating:'Полимер',thickness:'0.45',price:710},{coating:'Полимер',thickness:'0.50',price:854},
@@ -1639,7 +1645,7 @@ function productCard(p, pat){
         </div>`;
 
   return `
-    <div class="product ${pat}" data-item="${itemJSON}"${variantsAttr}>
+    <div class="product ${pat}${p.framed ? ' product--framed' : ''}" data-item="${itemJSON}"${variantsAttr}>
       <div class="product-image">
         ${photoHTML}
         ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
