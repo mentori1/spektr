@@ -103,16 +103,27 @@
     },
     sendToManager(){
       if (this.count() === 0) { toast('Заявка пуста — добавьте позиции из каталога'); return; }
-      const text = encodeURIComponent(
+      const name = ($('.cart-name')?.value || '').trim();
+      const msg = $('.cart-msg.active')?.dataset.msg || 'whatsapp';
+      const order =
+        (name ? `Заявка от: ${name}\n\n` : '') +
         'Здравствуйте! Хочу рассчитать заказ:\n\n' +
         this.items.map((i, idx) => {
           const colorLine = i.color ? `\n   Цвет RAL ${i.color}${i.colorName ? ' (' + i.colorName + ')' : ''}` : (i.colorName ? `\n   Цвет: ${i.colorName}` : '');
           const priceLine = (i.custom || i.price == null) ? 'цена по запросу' : `${formatPrice(i.price)} ₽ / ${i.unit || 'шт'}`;
           return `${idx+1}. ${i.name} — ${priceLine}\n   ${i.meta || ''}${colorLine}`;
         }).join('\n\n') +
-        `\n\nИтого ориентировочно: ${formatPrice(this.sum())} ₽`
-      );
-      window.open(`https://wa.me/79236819709?text=${text}`, '_blank');
+        `\n\nИтого ориентировочно: ${formatPrice(this.sum())} ₽`;
+      // WhatsApp умеет предзаполнить текст; Telegram/MAX — копируем заявку и открываем чат
+      const LINKS = { whatsapp:'https://wa.me/79236819709', telegram:'https://t.me/spectrum_metal', max:'https://max.ru/' };
+      if (msg === 'whatsapp') {
+        window.open(`${LINKS.whatsapp}?text=${encodeURIComponent(order)}`, '_blank');
+      } else {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(order).then(() => toast('Заявка скопирована — вставьте в чат и отправьте')).catch(() => toast('Открываю чат — продиктуйте заявку менеджеру'));
+        } else { toast('Открываю чат — продиктуйте заявку менеджеру'); }
+        window.open(LINKS[msg] || LINKS.whatsapp, '_blank');
+      }
     },
   };
 
@@ -126,6 +137,11 @@
     $('.cart-close')?.addEventListener('click', closeCart);
     $('.cart-send')?.addEventListener('click', () => cart.sendToManager());
     $('.cart-clear')?.addEventListener('click', () => { cart.items = []; cart.save(); cart.render(); toast('Заявка очищена'); });
+    // выбор мессенджера для заявки (радио — один активный)
+    $$('.cart-msg').forEach(b => b.addEventListener('click', () => {
+      $$('.cart-msg').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
+      b.classList.add('active'); b.setAttribute('aria-pressed', 'true');
+    }));
 
     // глобальная функция чтобы catalog мог добавлять
     window.SMCart = {

@@ -119,7 +119,7 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,2.4vw,32px)
 }
 </style>
 
-<link rel="stylesheet" href="assets/site.css?v=82">
+<link rel="stylesheet" href="assets/site.css?v=83">
 
 <script type="application/ld+json">
 {
@@ -288,8 +288,17 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,2.4vw,32px)
   <div class="cart-body"></div>
   <div class="cart-foot">
     <div class="cart-summary"><span>Итого ориентировочно</span><b>0 ₽</b></div>
+    <input class="cart-name" type="text" placeholder="Ваше имя" autocomplete="name" aria-label="Ваше имя">
+    <div class="cart-messengers">
+      <span class="cart-msg-label">Куда отправить заявку</span>
+      <div class="cart-msg-row">
+        <button type="button" class="cart-msg cart-msg--max" data-msg="max" aria-pressed="false"><span class="cart-msg-ic">M</span>MAX</button>
+        <button type="button" class="cart-msg cart-msg--wa active" data-msg="whatsapp" aria-pressed="true"><svg class="cart-msg-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15L2 21.7l4.8-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.4 7.4 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.2-.4v-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.3.3-1 .9-1 2.3s1 2.7 1.1 2.9c.2.2 2 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.3z"/></svg>WhatsApp</button>
+        <button type="button" class="cart-msg cart-msg--tg" data-msg="telegram" aria-pressed="false"><svg class="cart-msg-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.8 15.6l-.3 3.9c.4 0 .6-.2.9-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8L22.7 5c.3-1.1-.4-1.6-1.3-1.3L2.5 10.9c-1.1.4-1.1 1-.2 1.3l4.8 1.5L18.3 6.7c.5-.3 1-.2.6.2L9.8 15.6z"/></svg>Telegram</button>
+      </div>
+    </div>
     <div class="cart-actions">
-      <button class="btn btn-accent btn-block cart-send">Отправить в WhatsApp</button>
+      <button class="btn btn-accent btn-block cart-send">Отправить</button>
       <button class="btn btn-ghost btn-block cart-clear">Очистить заявку</button>
     </div>
   </div>
@@ -301,7 +310,7 @@ const bar=document.getElementById('progressBar'),hd=document.getElementById('hea
 addEventListener('scroll',()=>{const h=document.documentElement,m=h.scrollHeight-h.clientHeight,p=m>0?h.scrollTop/m:0;bar.style.width=(p*100).toFixed(2)+'%';hd.classList.toggle('scrolled',h.scrollTop>20)},{passive:true});
 document.querySelectorAll('.article[data-coming]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();SMToast?.('Статья скоро будет опубликована')}));
 </script>
-<script src="assets/site.js?v=82" defer></script>
+<script src="assets/site.js?v=83" defer></script>
 
 </body>
 </html>
