@@ -208,7 +208,7 @@ p{margin:0}
 }
 .product:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.20);box-shadow:0 24px 50px rgba(0,0,0,.45)}
 
-.product-image{position:relative;aspect-ratio:5/4;overflow:hidden;background:linear-gradient(135deg,#23262b 0%,#15171c 50%,#23262b 100%)}
+.product-image{position:relative;aspect-ratio:5/4;overflow:hidden;background:#fff}
 .product-image::before{
   content:"";position:absolute;inset:0;
   background-image:var(--pattern,none);background-size:var(--pattern-size,60px 60px);background-position:center;
@@ -242,7 +242,7 @@ p{margin:0}
 
 .product-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:12px;flex:1}
 .product-name{font-family:var(--f-display);font-weight:800;font-size:17px;color:var(--text-on-dark-bright);text-transform:uppercase;letter-spacing:-.005em;line-height:1.15}
-.product-meta{font-family:var(--f-body);font-size:12px;color:var(--text-on-dark-dim);line-height:1.5}
+.product-meta{font-family:var(--f-body);font-size:13.5px;color:var(--text-on-dark-dim);line-height:1.5}
 
 .dropdowns{display:grid;gap:6px;margin-top:4px}
 
@@ -250,13 +250,13 @@ p{margin:0}
 .color-picker{margin:14px 0 4px;display:flex;flex-direction:column;gap:8px}
 .color-picker-head{
   display:flex;align-items:baseline;justify-content:space-between;gap:8px;
-  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;
+  font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;
   color:var(--text-on-dark-dim);text-transform:uppercase;
 }
 .color-picker-current{display:flex;align-items:baseline;gap:6px}
 .color-picker-current-code{color:var(--accent);font-weight:600}
 .color-picker-current-name{
-  text-transform:none;letter-spacing:.04em;font-size:11px;
+  text-transform:none;letter-spacing:.04em;font-size:13px;
   color:var(--text-on-dark);font-family:var(--f-body);
 }
 .color-picker-swatches{
@@ -284,7 +284,7 @@ p{margin:0}
   position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;
   padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.03);
   border:1px solid rgba(255,255,255,.08);
-  font-family:var(--f-mono);font-size:11px;cursor:pointer;
+  font-family:var(--f-mono);font-size:13.5px;cursor:pointer;
   transition:border-color .25s var(--ease), background .25s var(--ease);
 }
 .dropdown:hover{border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.05)}
@@ -309,7 +309,7 @@ p{margin:0}
 .dropdown-option{
   appearance:none;-webkit-appearance:none;background:transparent;border:0;width:100%;
   text-align:left;padding:9px 11px;border-radius:9px;cursor:pointer;
-  font-family:var(--f-mono);font-size:11px;color:var(--text-on-dark);
+  font-family:var(--f-mono);font-size:13.5px;color:var(--text-on-dark);
   transition:background .15s var(--ease), color .15s var(--ease);
 }
 .dropdown-option:hover{background:rgba(255,255,255,.07);color:var(--text-on-dark-bright)}
@@ -371,7 +371,7 @@ p{margin:0}
 .gp-name{font-family:var(--f-display);font-weight:700;font-size:16px;line-height:1.15;color:var(--text-on-dark-bright)}
 .fence-code{font-family:var(--f-body);font-weight:800;letter-spacing:.01em}
 .gp-colors{display:flex;flex-direction:column;gap:8px}
-.gp-colors-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em}
+.gp-colors-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em}
 .gp-colors-label{color:var(--text-on-dark-dim);text-transform:uppercase}
 .gp-color-name{color:var(--text-on-dark-bright)}
 .gp-swatches{display:flex;gap:6px;flex-wrap:wrap}
@@ -414,7 +414,7 @@ p{margin:0}
   background-size:var(--pattern-size,40px 40px);background-position:center;
 }
 .media-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.media-slot:has(img){aspect-ratio:4/3;background-color:#0f0e11;background-image:none}
+.media-slot:has(img){aspect-ratio:4/3;background-color:#fff;background-image:none}
 .media-hint{font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-on-dark-deep);position:relative;z-index:1}
 
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
@@ -972,7 +972,7 @@ const COLORS = [
    Цены DOCKE и труб профильных — стартовые ориентиры, клиент корректирует. */
 const PRODUCTS = [
   /* ── Профнастил — выбор покрытия+толщины в карточке (матрица из прайса сибтрансэфир, июнь 2026) ── */
-  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', photo:'assets/profnastil_c8_graphite_bg0F0E11.png',
+  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', photo:'assets/gen_profnastil_s8.png',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:605},{coating:'Полимер',thickness:'0.45',price:694},{coating:'Полимер',thickness:'0.50',price:789},
@@ -1662,49 +1662,56 @@ function productCard(p, pat){
     </div>`;
 }
 
-/* ─── ПЕРЕКРАСКА ФОТО ПОД ВЫБРАННЫЙ ЦВЕТ (клиентская, canvas gradient-map) ───
-   Базовое фото (нейтральный металл) → тени переходят в #0F0E11, средние тона = выбранный
-   цвет, блики → к белому (сохраняется металлический отблеск). Фон не трогаем. Результат
-   кэшируется по (base|hex), повторный клик — мгновенно. */
+/* ─── ПЕРЕКРАСКА ФОТО ПОД ВЫБРАННЫЙ ЦВЕТ (клиентская, canvas) ───
+   Фото товара на БЕЛОМ фоне. Фон (белый, заливкой от краёв) остаётся белым; товар
+   перекрашивается: тень→тёмный целевой, медиана→целевой, блик→осветлённый целевой.
+   Маска фона + гистограмма товара считаются 1 раз на базу (_baseCache); результат — по (base|hex). */
 const _recolorCache = {};
+const _baseCache = {};
 function _hexToRgb(h){ h=(h||'').trim().replace('#',''); if(h.length===3) h=h.split('').map(x=>x+x).join(''); const n=parseInt(h,16); return isNaN(n)?null:[(n>>16)&255,(n>>8)&255,n&255]; }
+function _applyRecolor(img, key, bd, t){
+  const W=bd.W,H=bd.H,data=bd.data,mask=bd.mask;
+  const loRange=Math.max(1,bd.med-bd.lo), hiRange=Math.max(1,bd.hi-bd.med), lo=bd.lo, med=bd.med, tr=t[0],tg=t[1],tb=t[2];
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const ctx=cv.getContext('2d'); const out=ctx.createImageData(W,H); const d=out.data;
+  for (let i=0,p=0;i<data.length;i+=4,p++){
+    if (mask[p]===0){ d[i]=255; d[i+1]=255; d[i+2]=255; d[i+3]=255; continue; }
+    const L=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2];
+    if (L<=med){ let k=(L-lo)/loRange; k=k<0?0:k>1?1:k; const f=0.20+0.80*k; d[i]=tr*f; d[i+1]=tg*f; d[i+2]=tb*f; }
+    else { let k=(L-med)/hiRange; k=k<0?0:k>1?1:k; k*=0.62; d[i]=tr+(255-tr)*k; d[i+1]=tg+(255-tg)*k; d[i+2]=tb+(255-tb)*k; }
+    d[i+3]=255;
+  }
+  ctx.putImageData(out,0,0);
+  try { const url=cv.toDataURL('image/png'); _recolorCache[key]=url; img.src=url; } catch(_){}
+}
 function recolorProductImg(img, hex){
   const t = _hexToRgb(hex);
   if (!img || !t) return;
   if (!img.dataset.base) img.dataset.base = img.getAttribute('src');
-  const base = img.dataset.base;
-  if (!base) return;
+  const base = img.dataset.base; if (!base) return;
   const key = base + '|' + hex;
   if (_recolorCache[key]) { img.src = _recolorCache[key]; return; }
+  if (_baseCache[base]) { _applyRecolor(img, key, _baseCache[base], t); return; }
   const src = new Image();
   src.onload = () => {
     const W = src.naturalWidth, H = src.naturalHeight;
     const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
     const ctx = cv.getContext('2d'); ctx.drawImage(src, 0, 0);
     let id; try { id = ctx.getImageData(0,0,W,H); } catch(_){ return; }
-    const d = id.data, bg = [15,14,17], BGT = 18; // BGT — порог фона по яркости (lum 0..255)
-    const tr=t[0], tg=t[1], tb=t[2];
-    // проход 1 — гистограмма яркости товара (без фона): берём 2-й перцентиль (тень), медиану (основная
-    // поверхность) и 98-й (блик). Центрируем целевой цвет на медиане — работает для любой базы.
+    const data = id.data;
+    // маска фона: белые пиксели (L>WTH), связанные с краями (заливка)
+    const WTH = 228; const mask = new Uint8Array(W*H); mask.fill(1); const stack = [];
+    const seed = (x,y) => { const p=y*W+x; if(mask[p]===1){ const i=p*4; const L=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2]; if(L>WTH){ mask[p]=0; stack.push(p);} } };
+    for (let x=0;x<W;x++){ seed(x,0); seed(x,H-1); }
+    for (let y=0;y<H;y++){ seed(0,y); seed(W-1,y); }
+    while (stack.length){ const p=stack.pop(), x=p%W, y=(p/W)|0; if(x>0)seed(x-1,y); if(x<W-1)seed(x+1,y); if(y>0)seed(x,y-1); if(y<H-1)seed(x,y+1); }
+    // гистограмма яркости товара
     const hist = new Float64Array(256); let cnt=0;
-    for (let i=0;i<d.length;i+=4){ const L=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2]; if (L>BGT){ hist[L|0]++; cnt++; } }
-    let lo=BGT, med=128, hi=255;
-    if (cnt>0){
-      let acc=0; for(let k=0;k<256;k++){acc+=hist[k]; if(acc>=cnt*0.02){lo=k;break;}}
-      acc=0;     for(let k=0;k<256;k++){acc+=hist[k]; if(acc>=cnt*0.5){med=k;break;}}
-      acc=0;     for(let k=255;k>=0;k--){acc+=hist[k]; if(acc>=cnt*0.02){hi=k;break;}}
-    }
+    for (let i=0,p=0;i<data.length;i+=4,p++){ if(mask[p]===1){ const L=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2]; hist[L|0]++; cnt++; } }
+    let lo=0, med=128, hi=255;
+    if (cnt>0){ let acc=0; for(let k=0;k<256;k++){acc+=hist[k]; if(acc>=cnt*0.02){lo=k;break;}} acc=0; for(let k=0;k<256;k++){acc+=hist[k]; if(acc>=cnt*0.5){med=k;break;}} acc=0; for(let k=255;k>=0;k--){acc+=hist[k]; if(acc>=cnt*0.02){hi=k;break;}} }
     if (med<=lo) med=lo+1; if (med>=hi) med=hi-1;
-    const loRange=Math.max(1,med-lo), hiRange=Math.max(1,hi-med);
-    // проход 2 — медиана→целевой цвет; темнее→затемнённый целевой; ярче→к белому (блик)
-    for (let i=0;i<d.length;i+=4){
-      const L=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
-      if (L<=BGT){ d[i]=bg[0]; d[i+1]=bg[1]; d[i+2]=bg[2]; continue; }
-      if (L<=med){ let k=(L-lo)/loRange; k=k<0?0:k>1?1:k; const f=0.20+0.80*k; d[i]=tr*f; d[i+1]=tg*f; d[i+2]=tb*f; }
-      else { let k=(L-med)/hiRange; k=k<0?0:k>1?1:k; k*=0.62; d[i]=tr+(255-tr)*k; d[i+1]=tg+(255-tg)*k; d[i+2]=tb+(255-tb)*k; } // блик → осветлённый цвет, не чистый белый
-    }
-    ctx.putImageData(id,0,0);
-    try { const url = cv.toDataURL('image/png'); _recolorCache[key]=url; img.src=url; } catch(_){}
+    const bd = {W,H,data,mask,lo,med,hi}; _baseCache[base]=bd; _applyRecolor(img, key, bd, t);
   };
   src.src = base;
 }
