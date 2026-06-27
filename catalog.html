@@ -209,6 +209,7 @@ p{margin:0}
 .product:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.20);box-shadow:0 24px 50px rgba(0,0,0,.45)}
 
 .product-image{position:relative;aspect-ratio:5/4;overflow:hidden;background:#fff}
+.product-divider{height:3px;width:100%;background:var(--accent);flex:none}
 .product-image::before{
   content:"";position:absolute;inset:0;
   background-image:var(--pattern,none);background-size:var(--pattern-size,60px 60px);background-position:center;
@@ -972,7 +973,7 @@ const COLORS = [
    Цены DOCKE и труб профильных — стартовые ориентиры, клиент корректирует. */
 const PRODUCTS = [
   /* ── Профнастил — выбор покрытия+толщины в карточке (матрица из прайса сибтрансэфир, июнь 2026) ── */
-  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', photo:'assets/gen_profnastil_s8.png',
+  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', divider:true, photo:'assets/gen_profnastil_s8.png',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:605},{coating:'Полимер',thickness:'0.45',price:694},{coating:'Полимер',thickness:'0.50',price:789},
@@ -1641,6 +1642,7 @@ function productCard(p, pat){
         ${photoHTML}
         ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
       </div>
+      ${p.divider ? '<div class="product-divider"></div>' : ''}
       <div class="product-body">
         <div class="product-name">${p.name}</div>
         <div class="product-meta">${p.meta}</div>
