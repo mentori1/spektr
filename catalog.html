@@ -213,7 +213,7 @@ p{margin:0}
 .product--framed{border:2px solid var(--accent);border-radius:18px}
 .product--framed:hover{border-color:var(--accent-hover);box-shadow:0 24px 50px rgba(185,28,28,.28)}
 .product--framed .product-image{padding:16px 16px 8px;display:flex;align-items:center;justify-content:center;background:transparent}
-.product--framed .product-image img{position:static !important;inset:auto !important;width:100% !important;height:100% !important;object-fit:contain !important}
+.product--framed .product-image img{position:static !important;inset:auto !important;width:100% !important;height:100% !important;object-fit:contain !important;background:#fff !important;border-radius:8px}
 .product--framed .product-image::before,.product--framed .product-image::after{display:none !important}
 
 .product-image{position:relative;aspect-ratio:5/4;overflow:hidden;background:#fff}
@@ -986,7 +986,7 @@ const PRODUCTS = [
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:605},{coating:'Полимер',thickness:'0.45',price:694},{coating:'Полимер',thickness:'0.50',price:789},
     {coating:'Велюр',thickness:'0.45',price:808},{coating:'Под дерево',thickness:'0.45',price:936} ] },
-  { cat:'corrugated', sub:'С10', name:'Профнастил С10', photo:'assets/gen_profnastil_s10_t.png', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in', framed:true,
+  { cat:'corrugated', sub:'С10', name:'Профнастил С10', photo:'assets/gen_profnastil_s10.png', meta:'Ширина 1200/1150 мм · стеновой', color:'6005', unit:'м²', stock:'in', framed:true,
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:621},{coating:'Полимер',thickness:'0.45',price:710},{coating:'Полимер',thickness:'0.50',price:854},
@@ -1473,7 +1473,7 @@ $grid.addEventListener('click', e => {
     card.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
     csw.classList.add('active');
     const pimg = card.querySelector('.product-image img');
-    if (pimg && !card.classList.contains('product--framed')) recolorProductImg(pimg, csw.dataset.hex);
+    if (pimg) recolorProductImg(pimg, csw.dataset.hex);
     const ral = csw.dataset.ral, name = csw.dataset.name, isRAL = /^\d{4}$/.test(ral);
     const codeEl = card.querySelector('.color-picker-current-code'); if (codeEl) codeEl.textContent = isRAL ? ral : '';
     const nameEl = card.querySelector('.color-picker-current-name'); if (nameEl) nameEl.textContent = name;
