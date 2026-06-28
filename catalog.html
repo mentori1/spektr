@@ -374,8 +374,12 @@ p{margin:0}
 .gspec-v{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--text-on-dark-bright)}
 
 .gutter-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:16px}
-.gp-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(255,255,255,.025);transition:border-color .3s var(--ease),transform .3s var(--ease)}
-.gp-card:hover{border-color:rgba(255,255,255,.18);transform:translateY(-3px)}
+.gp-card{display:flex;flex-direction:column;border:2px solid var(--accent);border-radius:18px;background:rgba(255,255,255,.025);transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease)}
+.gp-card:hover{border-color:var(--accent-hover);transform:translateY(-3px);box-shadow:0 24px 50px rgba(185,28,28,.28)}
+/* все gp-карточки в рамке (как профнастил С10): фото-тайл с отступами на цвете карточки */
+.gp-card .media-slot{padding:16px 16px 8px;background-color:transparent;background-image:none;border-radius:0}
+.gp-card .media-slot:has(img){background-color:transparent}
+.gp-card .media-slot img{position:static;inset:auto;width:100%;height:100%;object-fit:contain;background:#fff;border-radius:8px}
 .gp-body{padding:18px;display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}
 .gp-name{font-family:var(--f-display);font-weight:700;font-size:16px;line-height:1.15;color:var(--text-on-dark-bright)}
 .fence-code{font-family:var(--f-body);font-weight:800;letter-spacing:.01em}
@@ -981,7 +985,7 @@ const COLORS = [
    Цены DOCKE и труб профильных — стартовые ориентиры, клиент корректирует. */
 const PRODUCTS = [
   /* ── Профнастил — выбор покрытия+толщины в карточке (матрица из прайса сибтрансэфир, июнь 2026) ── */
-  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', divider:true, photo:'assets/gen_profnastil_s8.png', photoPaint:'assets/gen_profnastil_s8_paint.png',
+  { cat:'corrugated', sub:'С8', name:'Профнастил С8', meta:'Ширина 1200/1150 мм · стеновой', color:'7024', unit:'м²', tag:'Хит', stock:'in', photo:'assets/gen_profnastil_s8.png', photoPaint:'assets/gen_profnastil_s8_paint.png',
     defCoat:'Полимер', defThk:'0.45', variants:[
     {coating:'Оцинковка',thickness:'0.40',price:469},{coating:'Оцинковка',thickness:'0.45',price:511},{coating:'Оцинковка',thickness:'0.50',price:533},
     {coating:'Полимер',thickness:'0.40',price:605},{coating:'Полимер',thickness:'0.45',price:694},{coating:'Полимер',thickness:'0.50',price:789},
@@ -1658,7 +1662,7 @@ function productCard(p, pat){
         </div>`;
 
   return `
-    <div class="product ${pat}${p.framed ? ' product--framed' : ''}" data-item="${itemJSON}"${variantsAttr}>
+    <div class="product ${pat} product--framed" data-item="${itemJSON}"${variantsAttr}>
       <div class="product-image">
         ${photoHTML}
         ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
