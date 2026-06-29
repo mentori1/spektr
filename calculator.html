@@ -304,21 +304,28 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
             <div class="field">
               <label for="r-mat">Материал</label>
               <select id="r-mat">
-                <option value="540">Металлочерепица Монтеррей — от 540 ₽/м²</option>
-                <option value="380" selected>Профнастил С21 — от 380 ₽/м²</option>
-                <option value="920">Фальцевая кровля — от 920 ₽/м²</option>
-                <option value="790">Андалузия MAT — от 790 ₽/м²</option>
+                <option value="Супер-Монтерей">Металлочерепица Супер-Монтерей</option>
+                <option value="Профнастил С21" selected>Профнастил С21</option>
+                <option value="Профлист МП-20">Профлист МП-20</option>
+                <option value="Профнастил НС35">Профнастил НС35</option>
+                <option value="Профнастил НС44">Профнастил НС44</option>
               </select>
             </div>
           </div>
 
-          <div class="field">
-            <label for="r-extras">Доборные элементы</label>
-            <select id="r-extras">
-              <option value="0">Без доборки</option>
-              <option value="0.1" selected>Базовая доборка (+10%)</option>
-              <option value="0.18">Полная доборка (+18%)</option>
-            </select>
+          <div class="field-row">
+            <div class="field">
+              <label for="r-coat">Покрытие</label>
+              <select id="r-coat"></select>
+            </div>
+            <div class="field">
+              <label for="r-extras">Доборные элементы</label>
+              <select id="r-extras">
+                <option value="0">Без доборки</option>
+                <option value="0.1" selected>Базовая доборка (+10%)</option>
+                <option value="0.18">Полная доборка (+18%)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -363,19 +370,32 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
             <div class="field">
               <label for="f-type">Тип материала</label>
               <select id="f-type">
-                <option value="380" selected>Профнастил С8 — 380 ₽/м²</option>
-                <option value="496">Профнастил С8 0.45мм — 496 ₽/м²</option>
-                <option value="65" data-mode="piece">Евроштакетник М — 65 ₽/шт</option>
-                <option value="75" data-mode="piece">Штакетник Premium — 75 ₽/шт</option>
+                <optgroup label="Профлист (сплошной)">
+                  <option value="sheet:Профнастил С8" selected>Профнастил С8</option>
+                  <option value="sheet:Профнастил С10">Профнастил С10</option>
+                  <option value="sheet:Профлист МП-20">Профлист МП-20</option>
+                </optgroup>
+                <optgroup label="Евроштакетник (с зазором)">
+                  <option value="shtaket:Ш1 «Кветник»">Ш1 «Кветник»</option>
+                  <option value="shtaket:Ш2 «Меридиан»">Ш2 «Меридиан»</option>
+                  <option value="shtaket:Ш10 «Палисад»">Ш10 «Палисад»</option>
+                  <option value="shtaket:Ш18 «Баррера»">Ш18 «Баррера»</option>
+                  <option value="shtaket:Ш19 «Эллипс»">Ш19 «Эллипс»</option>
+                </optgroup>
               </select>
             </div>
             <div class="field">
-              <label for="f-post">Столбы 60×60, шаг 2.5 м</label>
-              <select id="f-post">
-                <option value="1" selected>Включить</option>
-                <option value="0">Не нужны</option>
-              </select>
+              <label for="f-coat">Покрытие</label>
+              <select id="f-coat"></select>
             </div>
+          </div>
+
+          <div class="field">
+            <label for="f-post">Столбы 60×60, шаг 2.5 м</label>
+            <select id="f-post">
+              <option value="1" selected>Включить</option>
+              <option value="0">Не нужны</option>
+            </select>
           </div>
         </div>
 
@@ -425,11 +445,11 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
               </select>
             </div>
             <div class="field">
-              <label for="g-mat">Тип системы</label>
+              <label for="g-mat">Система Döcke</label>
               <select id="g-mat">
-                <option value="290" selected>Полукруглая Ø125 — 290 ₽/м.п.</option>
-                <option value="420">Прямоугольная — 420 ₽/м.п.</option>
-                <option value="520">Ø150 XL — 520 ₽/м.п.</option>
+                <option value="Стандарт" selected>Стандарт — до 150 м²</option>
+                <option value="Премиум">Премиум — 150…250 м²</option>
+                <option value="Люкс">Люкс — 250 м² и выше</option>
               </select>
             </div>
           </div>
@@ -558,72 +578,120 @@ document.querySelectorAll('.calc-tab').forEach(btn => btn.addEventListener('clic
   document.querySelectorAll('[data-panel]').forEach(p => p.style.display = p.dataset.panel === btn.dataset.calc ? '' : 'none');
 }));
 
-/* roof */
+/* ── Цены из каталога (Полимер 0.45 — дефолт; др. покрытия — выбор). Обновлять вместе с catalog.html ── */
+const CALC = {
+  // кровля: цена за м² при толщине по умолчанию (0.45, у НС44 — 0.50)
+  roof: {
+    'Супер-Монтерей': {'Полимер':779,'Велюр':878},
+    'Профнастил С21': {'Оцинковка':583,'Полимер':863},
+    'Профлист МП-20': {'Оцинковка':534,'Полимер':766,'Велюр':843,'Под дерево':994},
+    'Профнастил НС35': {'Оцинковка':591,'Полимер':844},
+    'Профнастил НС44': {'Оцинковка':624,'Полимер':919},
+  },
+  // забор сплошной (профлист): цена за м²
+  fenceSheet: {
+    'Профнастил С8': {'Оцинковка':511,'Полимер':694,'Велюр':808,'Под дерево':936},
+    'Профнастил С10': {'Оцинковка':511,'Полимер':710,'Велюр':808,'Под дерево':936},
+    'Профлист МП-20': {'Оцинковка':534,'Полимер':766,'Велюр':843,'Под дерево':994},
+  },
+  // евроштакетник: w — ширина планки (мм, для шага), c — цена за м.п. планки
+  fenceShtaket: {
+    'Ш1 «Кветник»':  {w:69,  c:{'Полимер':71,'Полимер двусторонний':84,'Под дерево':95}},
+    'Ш2 «Меридиан»': {w:87,  c:{'Полимер':95,'Полимер двусторонний':111,'Под дерево':126}},
+    'Ш10 «Палисад»': {w:100, c:{'Полимер':101,'Полимер двусторонний':119,'Под дерево':128}},
+    'Ш18 «Баррера»': {w:118, c:{'Полимер':123,'Полимер двусторонний':144,'Велюр':146,'Под дерево':163}},
+    'Ш19 «Эллипс»':  {w:126, c:{'Полимер':123,'Полимер двусторонний':144,'Велюр':146,'Под дерево':163}},
+  },
+  // водосток Döcke: за м.п. (жёлоб/труба) и за шт (воронка/кронштейн)
+  gutter: {
+    'Стандарт': {gutter:142, pipe:172, funnel:292, bracket:55},
+    'Премиум':  {gutter:215, pipe:259, funnel:435, bracket:78},
+    'Люкс':     {gutter:365, pipe:434, funnel:857, bracket:151},
+  },
+  postPriceMp: 298, // труба 60×60×2.0, ₽/м.п. (столб = высота + 0.8 м в грунт)
+};
+function pickCoat(sel, obj, prev){
+  const keys = Object.keys(obj);
+  sel.innerHTML = keys.map(k => `<option value="${k}">${k}</option>`).join('');
+  sel.value = (prev != null && obj[prev] != null) ? prev : (obj['Полимер'] != null ? 'Полимер' : keys[0]);
+}
+
+/* ── КРОВЛЯ ── */
+const rMat = document.getElementById('r-mat'), rCoat = document.getElementById('r-coat');
+function fillRoofCoat(){ pickCoat(rCoat, CALC.roof[rMat.value], rCoat.value); }
 function calcRoof(){
   const len = +document.getElementById('r-len').value || 0;
   const wid = +document.getElementById('r-wid').value || 0;
   const slopes = +document.getElementById('r-slopes').value;
-  const matPrice = +document.getElementById('r-mat').value;
+  const price = CALC.roof[rMat.value][rCoat.value] || 0;
   const extras = +document.getElementById('r-extras').value;
   const area = len * wid * slopes;
   const areaReal = area * 1.05; // нахлёсты +5%
-  const matCost = areaReal * matPrice;
+  const matCost = areaReal * price;
   const extrasCost = matCost * extras;
-  const total = matCost + extrasCost;
   document.getElementById('r-area').textContent = fmt(area) + ' м²';
   document.getElementById('r-area-real').textContent = fmt(areaReal) + ' м²';
   document.getElementById('r-mat-cost').textContent = fmt(matCost) + ' ₽';
   document.getElementById('r-extras-cost').textContent = fmt(extrasCost) + ' ₽';
-  document.getElementById('r-price').textContent = fmt(total);
+  document.getElementById('r-price').textContent = fmt(matCost + extrasCost);
 }
-['r-len','r-wid','r-slopes','r-mat','r-extras'].forEach(id => document.getElementById(id).addEventListener('input', calcRoof));
-calcRoof();
+rMat.addEventListener('change', () => { fillRoofCoat(); calcRoof(); });
+['r-len','r-wid','r-slopes','r-extras'].forEach(id => document.getElementById(id).addEventListener('input', calcRoof));
+rCoat.addEventListener('change', calcRoof);
+fillRoofCoat(); calcRoof();
 
-/* fence */
+/* ── ЗАБОР ── */
+const fType = document.getElementById('f-type'), fCoat = document.getElementById('f-coat');
+function fenceObj(){
+  const [mode, mat] = fType.value.split(':');
+  return mode === 'sheet' ? { mode, mat, coats: CALC.fenceSheet[mat] } : { mode, mat, coats: CALC.fenceShtaket[mat].c };
+}
+function fillFenceCoat(){ pickCoat(fCoat, fenceObj().coats, fCoat.value); }
 function calcFence(){
   const per = +document.getElementById('f-per').value || 0;
   const hgt = +document.getElementById('f-hgt').value || 0;
-  const typeSel = document.getElementById('f-type');
-  const price = +typeSel.value;
-  const isPiece = typeSel.selectedOptions[0].dataset.mode === 'piece';
   const post = +document.getElementById('f-post').value;
+  const { mode, mat, coats } = fenceObj();
+  const price = coats[fCoat.value] || 0;
   const area = per * hgt;
-
-  let fabricCost;
-  if (isPiece) {
-    // штакетник — шаг ~10см, перекрытие
-    const pieces = Math.ceil(per * 9);
-    fabricCost = pieces * price;
-  } else {
+  let fabricCost, fabricLabel;
+  if (mode === 'sheet') {
     fabricCost = area * price;
+    fabricLabel = `${fmt(area)} м² · ${fmt(fabricCost)} ₽`;
+  } else {
+    const pitch = (CALC.fenceShtaket[mat].w / 1000) * 1.6; // шаг планки с зазором
+    const pieces = Math.ceil(per / pitch);
+    const mp = pieces * hgt; // погонные метры штакетин
+    fabricCost = mp * price;
+    fabricLabel = `${pieces} шт · ${fmt(fabricCost)} ₽`;
   }
-  const postsCount = Math.ceil(per / 2.5);
-  const postCost = post ? postsCount * 405 : 0;
-  const total = fabricCost + postCost;
-
-  document.getElementById('f-fabric').textContent = fmt(fabricCost) + ' ₽';
+  const postsCount = Math.ceil(per / 2.5) + 1;
+  const postCost = post ? Math.round(postsCount * (hgt + 0.8) * CALC.postPriceMp) : 0;
+  document.getElementById('f-fabric').textContent = fabricLabel;
   document.getElementById('f-posts').textContent = post ? `${postsCount} шт · ${fmt(postCost)} ₽` : '—';
   document.getElementById('f-area').textContent = fmt(area) + ' м²';
-  document.getElementById('f-price').textContent = fmt(total);
+  document.getElementById('f-price').textContent = fmt(fabricCost + postCost);
 }
-['f-per','f-hgt','f-type','f-post'].forEach(id => document.getElementById(id).addEventListener('input', calcFence));
-calcFence();
+fType.addEventListener('change', () => { fillFenceCoat(); calcFence(); });
+fCoat.addEventListener('change', calcFence);
+['f-per','f-hgt','f-post'].forEach(id => document.getElementById(id).addEventListener('input', calcFence));
+fillFenceCoat(); calcFence();
 
-/* gutter */
+/* ── ВОДОСТОК ── */
+const gMat = document.getElementById('g-mat');
 function calcGutter(){
   const eaves = +document.getElementById('g-eaves').value || 0;
   const hgt = +document.getElementById('g-height').value || 0;
   const down = +document.getElementById('g-down').value;
-  const price = +document.getElementById('g-mat').value;
-  const gutters = eaves * price;
+  const s = CALC.gutter[gMat.value];
+  const guttersCost = eaves * s.gutter + down * s.funnel;   // жёлоб + воронки
   const pipesLen = down * hgt;
-  const pipesCost = pipesLen * price;
-  const mounts = (Math.ceil(eaves / 0.6) + down * 3) * 80;
-  const total = gutters + pipesCost + mounts;
-  document.getElementById('g-gutters').textContent = fmt(gutters) + ' ₽';
+  const pipesCost = pipesLen * s.pipe;
+  const mounts = (Math.ceil(eaves / 0.6) + down * Math.ceil(hgt / 1.5)) * s.bracket;
+  document.getElementById('g-gutters').textContent = fmt(guttersCost) + ' ₽';
   document.getElementById('g-pipes').textContent = `${fmt(pipesLen)} м · ${fmt(pipesCost)} ₽`;
   document.getElementById('g-mounts').textContent = fmt(mounts) + ' ₽';
-  document.getElementById('g-price').textContent = fmt(total);
+  document.getElementById('g-price').textContent = fmt(guttersCost + pipesCost + mounts);
 }
 ['g-eaves','g-height','g-down','g-mat'].forEach(id => document.getElementById(id).addEventListener('input', calcGutter));
 calcGutter();
