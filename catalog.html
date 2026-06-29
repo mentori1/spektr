@@ -1166,22 +1166,22 @@ const JALUZI_PRODUCTS = [
    Карточки с выбором покрытия (→ меняет цвета) + размеры; цена = f(покрытие × размеры).
    Данные/цвета/цены — с реального конфигуратора sib-profil (Bitrix-офферы). Ключ цены = значения dims через "|". */
 const GARDEN_PRODUCTS = [
-  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', photo:'assets/gen_gryadka.png', statics:[{label:'Высота грядки',value:'190 мм'},{label:'Толщина',value:'0,45–0,5 мм'}], meta:'Грядка металлическая фактурная',
+  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', photo:'assets/gen_gryadka.png', statics:[{label:'Высота грядки',value:'190 мм'},{label:'Толщина',value:'0,45 мм'}], meta:'Грядка металлическая фактурная',
     dims:[
       {kind:'width',  label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
       {kind:'length', label:'Длина',  options:[{value:'1000',label:'1000 мм'},{value:'1840',label:'1840 мм'},{value:'2000',label:'2000 мм'}]},
     ],
     coatings:[
-      {name:'Полимер', colors:['6005','7024','8017'], price:{'400|1000':848,'400|1840':1249,'400|2000':1319,'600|1000':942,'600|1840':1343,'600|2000':1413,'800|1000':1030,'800|1840':1432,'800|2000':1502,'1000|1000':1125,'1000|1840':1526,'1000|2000':1596}},
-      {name:'Под дерево', colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)'], price:{'400|1000':1147,'400|1840':1697,'400|2000':1792,'600|1000':1276,'600|1840':1826,'600|2000':1921,'800|1000':1397,'800|1840':1947,'800|2000':2043,'1000|1000':1526,'1000|1840':2076,'1000|2000':2172}},
+      {name:'Полимер', photo:'assets/gen_gryadka.png', colors:['6005','7024','8017'], price:{'400|1000':848,'400|1840':1249,'400|2000':1319,'600|1000':942,'600|1840':1343,'600|2000':1413,'800|1000':1030,'800|1840':1432,'800|2000':1502,'1000|1000':1125,'1000|1840':1526,'1000|2000':1596}},
+      {name:'Под дерево', photo:'assets/gen_gryadka_wood.png', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400|1000':1147,'400|1840':1697,'400|2000':1792,'600|1000':1276,'600|1840':1826,'600|2000':1921,'800|1000':1397,'800|1840':1947,'800|2000':2043,'1000|1000':1526,'1000|1840':2076,'1000|2000':2172}},
     ] },
-  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', photo:'assets/gen_klumba.png', statics:[{label:'Форма',value:'Круглая'},{label:'Толщина',value:'0,45–0,5 мм'}], meta:'Клумба металлическая фактурная',
+  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', photo:'assets/gen_klumba.png', statics:[{label:'Форма',value:'Круглая'},{label:'Толщина',value:'0,50 мм'}], meta:'Клумба металлическая фактурная',
     dims:[
       {kind:'width', label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
     ],
     coatings:[
       {name:'Полимер', colors:['6005','7024','8017'], price:{'400':856,'600':1139,'800':1404,'1000':1687}},
-      {name:'Под дерево', colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)'], price:{'400':1151,'600':1538,'800':1902,'1000':2289}},
+      {name:'Под дерево', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400':1151,'600':1538,'800':1902,'1000':2289}},
     ] },
 ];
 
@@ -1542,7 +1542,7 @@ $grid.addEventListener('click', e => {
     }
     // грядки/клумбы: покрытие → цвета + цена; размеры → цена
     if (card && card.classList.contains('gd-card')) {
-      if (dd.dataset.kind === 'coating') { rebuildGardenColors(card); updateGardenPrice(card); }
+      if (dd.dataset.kind === 'coating') { rebuildGardenColors(card); updateGardenPrice(card); swapGardenPhoto(card); }
       else { updateGardenPrice(card); }
     }
     return;
@@ -2035,7 +2035,7 @@ function renderGarden($toolbar){
 }
 
 function gardenCardHTML(p){
-  const coatings = p.coatings.map(c => ({ name:c.name, colors:c.colors.map(fenceColorObj), price:c.price }));
+  const coatings = p.coatings.map(c => ({ name:c.name, photo:c.photo, colors:c.colors.map(fenceColorObj), price:c.price }));
   const c0 = coatings[0], col0 = c0.colors[0];
   const dimVals = p.dims.map(d => d.options[0].value);
   const price = c0.price[dimVals.join('|')];
@@ -2072,6 +2072,12 @@ function gardenCoatOf(card){
   const data = JSON.parse(card.dataset.garden);
   const coatName = card.querySelector('.dropdown[data-kind="coating"] .val').dataset.value;
   return { data, coat: data.coatings.find(c => c.name === coatName) };
+}
+// смена покрытия → подменить фото (полимер ↔ под дерево), если у покрытия есть своё фото
+function swapGardenPhoto(card){
+  const { coat } = gardenCoatOf(card);
+  const img = card.querySelector('.media-slot img');
+  if (img && coat && coat.photo) img.src = coat.photo;
 }
 // смена покрытия → пересобрать цвета под покрытие
 function rebuildGardenColors(card){
