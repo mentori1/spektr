@@ -333,14 +333,15 @@ p{margin:0}
 @media (max-width:900px){.gutter-systems{grid-template-columns:1fr}}
 .gsys{
   position:relative;display:flex;flex-direction:column;gap:0;text-align:left;cursor:pointer;color:inherit;
-  padding:0;overflow:hidden;border-radius:var(--r-lg);
-  background:rgba(255,255,255,.025);border:1px solid var(--line);
+  padding:0;overflow:hidden;border-radius:18px;
+  background:rgba(255,255,255,.025);border:2px solid var(--accent);
   backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
   transition:transform .4s var(--ease-out),border-color .4s var(--ease-out),box-shadow .4s var(--ease-out);
 }
-.gsys .media-slot{border-radius:0}
+.gsys .media-slot{padding:16px 16px 8px;background-color:transparent;background-image:none;border-radius:0}
+.gsys .media-slot img{position:static;inset:auto;width:100%;height:100%;object-fit:contain;background:#fff;border-radius:8px}
 .gsys-body{display:flex;flex-direction:column;gap:16px;flex:1;padding:clamp(20px,2.4vw,26px)}
-.gsys:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.22);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.gsys:hover{transform:translateY(-6px);border-color:var(--accent-hover);box-shadow:0 24px 50px rgba(185,28,28,.28)}
 .gsys-tag{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 10px;border-radius:999px}
 .gsys-name{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,34px);letter-spacing:-.01em;color:var(--text-on-dark-bright)}
 .gsys-specs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
@@ -1074,7 +1075,7 @@ const PRODUCTS = [
    Двухуровневая навигация: категория «Водосточная система DOCKE» → 3 карточки-системы → товары серии.
    Цвета, состав и цены — с официального docke.ru (цена = «от» по нижней границе диапазона, т.к. зависит от цвета). */
 const GUTTER_SYSTEMS = [
-  { id:'Стандарт', name:'Стандарт', tagline:'до 150 м²', flow:'5,3 л/сек', wall:'1,7 мм',
+  { id:'Стандарт', name:'Стандарт', photo:'assets/docke_gutter_standart.png', tagline:'до 150 м²', flow:'5,3 л/сек', wall:'1,7 мм',
     specs:[['Для кровли','до 150 м²'],['Диаметр трубы','80 мм'],['Ширина жёлоба','120 мм'],['Глубина жёлоба','70 мм'],['Толщина стенок','1,65 мм']],
     colors:[{name:'Серый',hex:'#4a4d52'},{name:'Белый',hex:'#f1f2ee'},{name:'Тёмно-коричневый',hex:'#352721'},{name:'Светло-коричневый',hex:'#5a3a2a'},{name:'Зелёный',hex:'#2e4a36'},{name:'Красный',hex:'#7a2226'}],
     products:[
@@ -1087,7 +1088,7 @@ const GUTTER_SYSTEMS = [
       {name:'Хомут универсальный', price:73}, {name:'Шпилька специальная с гайкой', price:231},
       {name:'Уплотнитель резиновый', price:27} ] },
 
-  { id:'Премиум', name:'Премиум', tagline:'150…250 м²', flow:'6,4 л/сек', wall:'1,8 мм',
+  { id:'Премиум', name:'Премиум', photo:'assets/docke_gutter_premium.png', tagline:'150…250 м²', flow:'6,4 л/сек', wall:'1,8 мм',
     specs:[['Для кровли','150…250 м²'],['Диаметр трубы','85 мм'],['Ширина жёлоба','120 мм'],['Глубина жёлоба','76 мм'],['Толщина стенок','1,75 мм']],
     colors:[{name:'Графит',hex:'#383b3e'},{name:'Пломбир',hex:'#f1efe8'},{name:'Каштан',hex:'#5a3a2a'},{name:'Шоколад',hex:'#352721'},{name:'Карбон',hex:'#1c1c1e'}],
     products:[
@@ -1100,7 +1101,7 @@ const GUTTER_SYSTEMS = [
       {name:'Сетка защитная', price:91}, {name:'Хомут универсальный', price:109},
       {name:'Шпилька с гайкой', price:231}, {name:'Уплотнитель резиновый', price:36} ] },
 
-  { id:'Люкс', name:'Люкс', tagline:'250 м² и выше', flow:'9,3 л/сек', wall:'1,9 мм', tag:'Премиум',
+  { id:'Люкс', name:'Люкс', photo:'assets/docke_gutter_lux.png', tagline:'250 м² и выше', flow:'9,3 л/сек', wall:'1,9 мм', tag:'Премиум',
     specs:[['Для кровли','250 м² и выше'],['Диаметр трубы','100 мм'],['Ширина жёлоба','141 мм'],['Глубина жёлоба','82 мм'],['Толщина стенок','1,9 мм']],
     colors:[{name:'Графит',hex:'#383b3e'},{name:'Пломбир',hex:'#f1efe8'},{name:'Шоколад',hex:'#352721'},{name:'Латте',hex:'#ddd0b4'},{name:'Карбон',hex:'#1c1c1e'}],
     products:[
@@ -1121,13 +1122,13 @@ const GUTTER_SYSTEMS = [
    Двухуровневая навигация: категория → 3 системы → карточка с выбором «Вид» (перфорация) + цвет.
    Цвета/виды/цены — с docke.ru (/siding/soffits/...). Цена = «от» (нижняя граница, зависит от цвета). */
 const SOFFIT_SYSTEMS = [
-  { id:'Стандарт', name:'Стандарт', photo:'assets/gen_soffit.png', tagline:'Базовая серия для подшивки кровли', price:448,
+  { id:'Стандарт', name:'Стандарт', photo:'assets/docke_soffit.png', tagline:'Базовая серия для подшивки кровли', price:448,
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
     colors:[{name:'Пломбир',hex:'#f1efe8',price:448},{name:'Шоколад',hex:'#352721',price:495},{name:'Графит',hex:'#383b3e',price:495},{name:'Каштан',hex:'#5a3a2a',price:495}] },
-  { id:'Премиум', name:'Премиум', photo:'assets/gen_soffit.png', tagline:'Усиленная серия, расширенная палитра', price:509,
+  { id:'Премиум', name:'Премиум', photo:'assets/docke_soffit.png', tagline:'Усиленная серия, расширенная палитра', price:509,
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
     colors:[{name:'Пломбир',hex:'#f1efe8',price:509},{name:'Шоколад',hex:'#352721',price:600},{name:'Графит',hex:'#383b3e',price:600},{name:'Карбон',hex:'#1c1c1e',price:600},{name:'Каштан',hex:'#5a3a2a',price:600}] },
-  { id:'Люкс', name:'Люкс', photo:'assets/gen_soffit.png', tagline:'Древесные текстуры под Lux-сайдинг', price:846, tag:'Премиум',
+  { id:'Люкс', name:'Люкс', photo:'assets/docke_soffit.png', tagline:'Древесные текстуры под Lux-сайдинг', price:846, tag:'Премиум',
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
     colors:[{name:'Зрелый каштан',hex:'#4a2e22',price:846},{name:'Миндаль',hex:'#c9a877',price:846},{name:'Орех',hex:'#6b4327',price:846},{name:'Фундук',hex:'#8a5a36',price:846}] },
 ];
@@ -1821,7 +1822,7 @@ function gutterSystemCardHTML(s){
   return `
     <button type="button" class="gsys pat-gutter" data-sys="${s.id}">
       ${s.tag ? `<span class="gsys-tag">${s.tag}</span>` : ''}
-      <span class="media-slot"><span class="media-hint">фото</span></span>
+      <span class="media-slot"><img src="${s.photo}" alt="Водосточная система DOCKE ${s.name}" loading="lazy"></span>
       <span class="gsys-body">
         <span class="gsys-name">${s.name}</span>
         <ul class="gsys-specs">
@@ -1890,6 +1891,10 @@ function renderSoffit($toolbar){
   $count.textContent = `— ${list.length} ${pluralize(list.length,'система','системы','систем')}`;
   $grid.innerHTML = `<div class="soffit-grid">${list.map(soffitProductCardHTML).join('')}</div>` + customBannerHTML();
 
+  // перекраска фото-рендера (графит DOCKE) в дефолтный цвет каждой системы
+  const sfCards = $grid.querySelectorAll('.sf-card');
+  list.forEach((s,i) => { const img = sfCards[i] && sfCards[i].querySelector('.media-slot img'); if (img) recolorProductImg(img, s.colors[0].hex); });
+
   // выбор цвета — через делегированный обработчик $grid (colorName + цена по data-price)
 
   // в заявку
@@ -1913,7 +1918,7 @@ function soffitProductCardHTML(s){
   return `
     <div class="gp-card sf-card pat-soffit" data-item="${itemJSON}">
       ${s.tag ? `<span class="sf-tag">${s.tag}</span>` : ''}
-      <div class="media-slot">${s.photo ? `<img src="${s.photo}" data-base="assets/gen_soffit_panel.png" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
+      <div class="media-slot">${s.photo ? `<img src="${s.photo}" data-base="assets/docke_soffit.png" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name"><span class="sf-eyebrow">Софит DOCKE</span>${s.name}</div>
         <div class="dropdowns">
