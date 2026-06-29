@@ -66,10 +66,15 @@
   font-family:var(--f-mono,"JetBrains Mono");font-size:16px;color:var(--text-on-dark-bright,#f3f4f6);
   letter-spacing:.04em;padding:8px 0;
 }
-.mobile-menu-foot a.addr{
-  font-family:var(--f-mono,"JetBrains Mono");font-size:12px;
-  color:var(--text-on-dark-dim,#7d828a);letter-spacing:.08em;
+.mobile-menu-foot .addr{
+  font-family:var(--f-mono,"JetBrains Mono");font-size:12.5px;
+  color:var(--text-on-dark-dim,#7d828a);letter-spacing:.06em;line-height:1.5;
 }
+.mobile-menu-foot .hours{
+  font-family:var(--f-mono,"JetBrains Mono");font-size:12.5px;letter-spacing:.06em;
+  color:var(--text-on-dark,#c9ccd2);
+}
+.mobile-menu-foot .hours b{color:var(--text-on-dark-bright,#f3f4f6);font-weight:600}
 
 /* ═══ STICKY-BAR ON MOBILE ═══ */
 .sticky-bar{
