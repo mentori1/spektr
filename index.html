@@ -390,15 +390,8 @@ p{margin:0}
 }
 .hero-actions .btn-long{display:inline}
 .hero-actions .btn-short{display:none}
-/* подсветка главной CTA «Получить расчёт» — мягкая пульсация */
-.btn-pulse{box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);animation:btnPulse 2.4s ease-out infinite}
-.btn-pulse:hover{animation-play-state:paused}
-@keyframes btnPulse{
-  0%   {box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent)}
-  70%  {box-shadow:0 0 0 16px color-mix(in srgb, var(--accent) 0%, transparent)}
-  100% {box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent)}
-}
-@media (prefers-reduced-motion:reduce){.btn-pulse{animation:none}}
+/* подсветка главной CTA «Получить расчёт» — статичное мягкое свечение (без пульсации) */
+.btn-pulse{box-shadow:inset 0 1px 0 rgba(255,255,255,.18), 0 10px 34px color-mix(in srgb, var(--accent) 42%, transparent)}
 
 .hero-info{
   margin-top:64px;padding-top:24px;
