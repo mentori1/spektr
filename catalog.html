@@ -305,6 +305,8 @@ p{margin:0}
 /* ── Интерактивный селектор «вид покрытия» / «толщина» (variant-товары) ── */
 .dropdown--interactive{cursor:pointer;user-select:none}
 .dropdown:not(.dropdown--interactive) .val::after{display:none}      /* статичный — без стрелки */
+.dropdown:not(.dropdown--interactive){cursor:default}                /* статичный — не кликается */
+.dropdown:not(.dropdown--interactive):hover{border-color:rgba(255,255,255,.08);background:rgba(255,255,255,.03)}
 .dropdown .val::after{transition:transform .2s var(--ease)}
 .dropdown--interactive.open .val::after{transform:rotate(180deg)}
 .dropdown-menu{
@@ -1164,7 +1166,7 @@ const JALUZI_PRODUCTS = [
    Карточки с выбором покрытия (→ меняет цвета) + размеры; цена = f(покрытие × размеры).
    Данные/цвета/цены — с реального конфигуратора sib-profil (Bitrix-офферы). Ключ цены = значения dims через "|". */
 const GARDEN_PRODUCTS = [
-  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', photo:'assets/gen_gryadka.png', spec:'Высота 190 мм · толщина 0,45–0,5 мм', meta:'Грядка металлическая фактурная',
+  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', photo:'assets/gen_gryadka.png', statics:[{label:'Высота грядки',value:'190 мм'},{label:'Толщина',value:'0,45–0,5 мм'}], meta:'Грядка металлическая фактурная',
     dims:[
       {kind:'width',  label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
       {kind:'length', label:'Длина',  options:[{value:'1000',label:'1000 мм'},{value:'1840',label:'1840 мм'},{value:'2000',label:'2000 мм'}]},
@@ -1173,7 +1175,7 @@ const GARDEN_PRODUCTS = [
       {name:'Полимер', colors:['6005','7024','8017'], price:{'400|1000':848,'400|1840':1249,'400|2000':1319,'600|1000':942,'600|1840':1343,'600|2000':1413,'800|1000':1030,'800|1840':1432,'800|2000':1502,'1000|1000':1125,'1000|1840':1526,'1000|2000':1596}},
       {name:'Под дерево', colors:['Дуб 3D Атланта','Дуб 3D Бренди','Дуб 3D (W001)','Золотой орех 3D (W003)','Античный дуб R (W004)','Орех (W005)'], price:{'400|1000':1147,'400|1840':1697,'400|2000':1792,'600|1000':1276,'600|1840':1826,'600|2000':1921,'800|1000':1397,'800|1840':1947,'800|2000':2043,'1000|1000':1526,'1000|1840':2076,'1000|2000':2172}},
     ] },
-  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', photo:'assets/gen_klumba.png', spec:'Круглая · толщина 0,45–0,5 мм', meta:'Клумба металлическая фактурная',
+  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', photo:'assets/gen_klumba.png', statics:[{label:'Форма',value:'Круглая'},{label:'Толщина',value:'0,45–0,5 мм'}], meta:'Клумба металлическая фактурная',
     dims:[
       {kind:'width', label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
     ],
@@ -2043,14 +2045,14 @@ function gardenCardHTML(p){
   const gardenJSON = JSON.stringify({ coatings, dims: p.dims.map(d => ({kind:d.kind})) }).replace(/"/g,'&quot;');
   const coatDD = dropdownHTML('coating','Вид покрытия', coatings.map(c=>({value:c.name,label:c.name})), c0.name);
   const dimDDs = p.dims.map(d => dropdownHTML(d.kind, d.label, d.options, d.options[0].value)).join('');
+  const statRows = (p.statics||[]).map(s => `<span class="dropdown"><span class="key">${s.label}</span><span class="val">${s.value}</span></span>`).join('');
   const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card jz-card gd-card pat-garden" data-item="${itemJSON}" data-garden="${gardenJSON}">
       <div class="media-slot">${p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name">${p.name}</div>
-        ${p.spec ? `<div class="gd-spec">${p.spec}</div>` : ''}
-        <div class="dropdowns">${coatDD}${dimDDs}</div>
+        <div class="dropdowns">${coatDD}${dimDDs}${statRows}</div>
         <div class="gp-colors">
           <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${col0.name}</span></div>
           <div class="gp-swatches">${swatches}</div>
