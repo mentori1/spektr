@@ -1055,6 +1055,7 @@ p{margin:0}
 .reveal{
   opacity:0;transform:translateY(28px);
   transition:opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+  will-change:opacity, transform;
 }
 .reveal.in{opacity:1;transform:translateY(0)}
 .reveal.d1{transition-delay:.12s}
@@ -1134,6 +1135,9 @@ p{margin:0}
   }
   .hero-title .line span{transform:translateY(0)}
   .hero-desc,.hero-actions,.hero-info,.hero-product,.hp-card{opacity:1;animation:none}
+  /* мягкое появление блоков оставляем даже при reduce-motion — без сдвига, только прозрачность */
+  .reveal{transform:none !important;transition:opacity .5s ease !important}
+  .reveal.in{opacity:1}
 }
 
 /* ════════ DARK MODE OVERRIDES — главная в едином тёмном стиле ════════ */
@@ -1949,7 +1953,7 @@ const io = new IntersectionObserver((entries)=>{
   for(const e of entries){
     if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
   }
-}, {threshold:0, rootMargin:'0px 0px 40px 0px'});
+}, {threshold:0, rootMargin:'0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 // FAQ smooth-open handled by assets/site.js?v=86
