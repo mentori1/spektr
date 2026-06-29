@@ -407,6 +407,10 @@ p{margin:0}
 .sf-card .gp-body{padding:24px;gap:18px}
 .sf-card .gp-name{display:flex;flex-direction:column;gap:5px;font-size:clamp(22px,2.2vw,28px);line-height:1.05}
 .sf-eyebrow{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-on-dark-dim);font-weight:400}
+.sf-desc{font-family:var(--f-body);font-size:13.5px;line-height:1.5;color:var(--text-on-dark-dim);margin-top:-6px}
+.sf-specs{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.sf-specs li{position:relative;padding-left:18px;font-family:var(--f-body);font-size:13px;line-height:1.35;color:var(--text-on-dark-bright)}
+.sf-specs li::before{content:"";position:absolute;left:0;top:6px;width:7px;height:7px;background:var(--accent);border-radius:2px}
 .sf-tag{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 10px;border-radius:999px}
 .gp-card:has(.dropdown--interactive.open){overflow:visible;z-index:6}
 
@@ -1124,13 +1128,19 @@ const GUTTER_SYSTEMS = [
    Двухуровневая навигация: категория → 3 системы → карточка с выбором «Вид» (перфорация) + цвет.
    Цвета/виды/цены — с docke.ru (/siding/soffits/...). Цена = «от» (нижняя граница, зависит от цвета). */
 const SOFFIT_SYSTEMS = [
-  { id:'Стандарт', name:'Стандарт', photo:'assets/docke_soffit.png', tagline:'Базовая серия для подшивки кровли', price:448,
+  { id:'Стандарт', name:'Стандарт', photo:'assets/docke_soffit_standard.jpg', price:448,
+    desc:'Практичная серия софитов для отделки свесов кровельных скатов и фронтонов, потолков открытых террас и беседок',
+    specs:['Толщина 1 мм','Гарантия 30 лет на отсутствие деформаций','Гарантия 3 года на стойкость цвета'],
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
-    colors:[{name:'Пломбир',hex:'#f1efe8',price:448},{name:'Шоколад',hex:'#352721',price:495},{name:'Графит',hex:'#383b3e',price:495},{name:'Каштан',hex:'#5a3a2a',price:495}] },
-  { id:'Премиум', name:'Премиум', photo:'assets/docke_soffit.png', tagline:'Усиленная серия, расширенная палитра', price:509,
+    colors:[{name:'Пломбир',hex:'#f1efe8',price:448},{name:'Шоколад',hex:'#352721',price:495}] },
+  { id:'Премиум', name:'Премиум', photo:'assets/docke_soffit_premium.jpg', price:509,
+    desc:'Серия включает гладкие софиты, панели с полной перфорацией и перфорацией по центру',
+    specs:['Толщина 1.1 мм','Гарантия 50 лет на отсутствие деформаций','Гарантия 7 лет на стойкость цвета'],
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
-    colors:[{name:'Пломбир',hex:'#f1efe8',price:509},{name:'Шоколад',hex:'#352721',price:600},{name:'Графит',hex:'#383b3e',price:600},{name:'Карбон',hex:'#1c1c1e',price:600},{name:'Каштан',hex:'#5a3a2a',price:600}] },
-  { id:'Люкс', name:'Люкс', photo:'assets/docke_soffit.png', tagline:'Древесные текстуры под Lux-сайдинг', price:846, tag:'Премиум',
+    colors:[{name:'Пломбир',hex:'#f1efe8',price:509},{name:'Шоколад',hex:'#352721',price:600},{name:'Графит',hex:'#383b3e',price:600}] },
+  { id:'Люкс', name:'Люкс', photo:'assets/docke_soffit_lux.jpg', price:846, tag:'Премиум',
+    desc:'Идеальное сочетание дизайна и качества',
+    specs:['Толщина 1.2 мм','Гарантия 50 лет на отсутствие деформаций','Гарантия 10 лет на стойкость цвета'],
     views:['Центральная перфорация','Полная перфорация','Сплошной'],
     colors:[{name:'Зрелый каштан',hex:'#4a2e22',price:846},{name:'Миндаль',hex:'#c9a877',price:846},{name:'Орех',hex:'#6b4327',price:846},{name:'Фундук',hex:'#8a5a36',price:846}] },
 ];
@@ -1501,7 +1511,7 @@ $grid.addEventListener('click', e => {
     sw.classList.add('active');
     // перекраска фото под выбранный цвет (media-slot) — кроме грядок/клумб (трава/земля → фото не трогаем)
     const gimg = card.querySelector('.media-slot img');
-    if (gimg && sw.dataset.hex && !card.classList.contains('gd-card')) recolorProductImg(gimg, sw.dataset.hex);
+    if (gimg && sw.dataset.hex && !card.classList.contains('gd-card') && !card.classList.contains('sf-card')) recolorProductImg(gimg, sw.dataset.hex);
     const nameEl = card.querySelector('.gp-color-name');
     if (nameEl) nameEl.textContent = sw.dataset.name;
     // цена зависит от цвета (софиты) — если у свотча есть data-price
@@ -1893,10 +1903,6 @@ function renderSoffit($toolbar){
   $count.textContent = `— ${list.length} ${pluralize(list.length,'система','системы','систем')}`;
   $grid.innerHTML = `<div class="soffit-grid">${list.map(soffitProductCardHTML).join('')}</div>` + customBannerHTML();
 
-  // перекраска фото-рендера (графит DOCKE) в дефолтный цвет каждой системы
-  const sfCards = $grid.querySelectorAll('.sf-card');
-  list.forEach((s,i) => { const img = sfCards[i] && sfCards[i].querySelector('.media-slot img'); if (img) recolorProductImg(img, s.colors[0].hex); });
-
   // выбор цвета — через делегированный обработчик $grid (colorName + цена по data-price)
 
   // в заявку
@@ -1920,9 +1926,11 @@ function soffitProductCardHTML(s){
   return `
     <div class="gp-card sf-card pat-soffit" data-item="${itemJSON}">
       ${s.tag ? `<span class="sf-tag">${s.tag}</span>` : ''}
-      <div class="media-slot">${s.photo ? `<img src="${s.photo}" data-base="assets/docke_soffit.png" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
+      <div class="media-slot">${s.photo ? `<img src="${s.photo}" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name"><span class="sf-eyebrow">Софит DOCKE</span>${s.name}</div>
+        ${s.desc ? `<div class="sf-desc">${s.desc}</div>` : ''}
+        ${s.specs ? `<ul class="sf-specs">${s.specs.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
         <div class="dropdowns">
           <span class="dropdown dropdown--interactive" data-kind="view" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
             <span class="key">Вид</span><span class="val" data-value="${initView}">${initView}</span>
