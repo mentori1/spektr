@@ -95,7 +95,7 @@
         const qty = it.qty || 1;
         const hasPrice = !(it.custom || it.price == null);
         const priceLine = hasPrice
-          ? formatPrice(it.price) + ' ₽ / ' + escapeHtml(it.unit || 'шт') + (qty > 1 ? ` · <b>${formatPrice(it.price * qty)} ₽</b> за ${qty}` : '')
+          ? formatPrice(it.price) + ' ₽ / ' + escapeHtml(it.unit || 'шт') + (qty > 1 ? ` · <b>${formatPrice(it.price * qty)} ₽</b> <span class="cart-price-for">за</span> ${qty}` : '')
           : 'Цена по запросу';
         return `
         <div class="cart-item">

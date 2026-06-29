@@ -204,6 +204,7 @@
 .cart-item-color{font-family:var(--f-mono,"JetBrains Mono");font-size:11px;color:var(--text-on-dark,#c9ccd2);letter-spacing:.04em;margin-top:4px;line-height:1.4}
 .cart-item-color-label{color:var(--text-on-dark-dim,#7d828a)}
 .cart-item-price{font-family:var(--f-display,"Big Shoulders Display");font-weight:700;font-size:14px;color:var(--accent,#b91c1c);letter-spacing:-.005em;margin-top:6px}
+.cart-price-for{color:#f3f4f6;font-weight:600}
 .cart-item-remove{
   background:none;border:none;color:var(--text-on-dark-dim,#7d828a);cursor:pointer;
   padding:4px;align-self:flex-start;transition:color .25s ease;
