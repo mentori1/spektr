@@ -41,8 +41,10 @@
       try { localStorage.setItem(CART_KEY, JSON.stringify(this.items)); } catch {}
     },
     add(item){
-      // не дублируем — определяем по name
-      if (this.items.find(i => i.name === item.name)) return false;
+      // та же позиция (по name) — увеличиваем количество, иначе добавляем
+      const ex = this.items.find(i => i.name === item.name);
+      if (ex) { ex.qty = (ex.qty || 1) + 1; this.save(); this.render(); return true; }
+      item.qty = 1;
       this.items.push(item);
       this.save();
       this.render();
@@ -53,9 +55,16 @@
       this.save();
       this.render();
     },
-    count(){ return this.items.length; },
+    setQty(name, qty){
+      const it = this.items.find(i => i.name === name);
+      if (!it) return;
+      it.qty = Math.max(1, qty | 0);
+      this.save();
+      this.render();
+    },
+    count(){ return this.items.reduce((s, i) => s + (i.qty || 1), 0); },
     sum(){
-      return this.items.reduce((s, i) => s + (Number(i.price) || 0), 0);
+      return this.items.reduce((s, i) => s + (Number(i.price) || 0) * (i.qty || 1), 0);
     },
     render(){
       // badge на FAB и на sticky-bar
@@ -83,39 +92,61 @@
         const colorChip = (it.color || it.colorName)
           ? `<div class="cart-item-color"><span class="cart-item-color-label">Цвет:</span> ${it.color ? 'RAL&nbsp;' + escapeHtml(it.color) + (it.colorName ? ' · ' + escapeHtml(it.colorName) : '') : escapeHtml(it.colorName)}</div>`
           : '';
+        const qty = it.qty || 1;
+        const hasPrice = !(it.custom || it.price == null);
+        const priceLine = hasPrice
+          ? formatPrice(it.price) + ' ₽ / ' + escapeHtml(it.unit || 'шт') + (qty > 1 ? ` · <b>${formatPrice(it.price * qty)} ₽</b> за ${qty}` : '')
+          : 'Цена по запросу';
         return `
         <div class="cart-item">
-          <div>
+          <div class="cart-item-info">
             <div class="cart-item-name">${escapeHtml(it.name)}</div>
             <div class="cart-item-meta">${escapeHtml(it.meta || '')}</div>
             ${colorChip}
-            <div class="cart-item-price">${(it.custom || it.price == null) ? 'Цена по запросу' : formatPrice(it.price) + ' ₽ / ' + escapeHtml(it.unit || 'шт')}</div>
+            <div class="cart-item-price">${priceLine}</div>
           </div>
-          <button class="cart-item-remove" data-remove="${escapeAttr(it.name)}" aria-label="Удалить">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-          </button>
+          <div class="cart-item-ctrl">
+            <button class="cart-item-remove" data-remove="${escapeAttr(it.name)}" aria-label="Удалить">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+            </button>
+            <div class="cart-qty">
+              <button class="cart-qty-btn" data-qty-dec="${escapeAttr(it.name)}" aria-label="Меньше" ${qty <= 1 ? 'disabled' : ''}>−</button>
+              <span class="cart-qty-n">${qty}</span>
+              <button class="cart-qty-btn" data-qty-inc="${escapeAttr(it.name)}" aria-label="Больше">+</button>
+            </div>
+          </div>
         </div>`;
       }).join('');
       $('.cart-summary b').textContent = formatPrice(this.sum()) + ' ₽';
       $$('button[data-remove]', body).forEach(b =>
         b.addEventListener('click', () => this.remove(b.dataset.remove))
       );
+      $$('button[data-qty-inc]', body).forEach(b =>
+        b.addEventListener('click', () => this.setQty(b.dataset.qtyInc, (this.items.find(i => i.name === b.dataset.qtyInc)?.qty || 1) + 1))
+      );
+      $$('button[data-qty-dec]', body).forEach(b =>
+        b.addEventListener('click', () => this.setQty(b.dataset.qtyDec, (this.items.find(i => i.name === b.dataset.qtyDec)?.qty || 1) - 1))
+      );
     },
     sendToManager(){
       if (this.count() === 0) { toast('Заявка пуста — добавьте позиции из каталога'); return; }
       const name = ($('.cart-name')?.value || '').trim();
+      const comment = ($('.cart-comment')?.value || '').trim();
       const msg = $('.cart-msg.active')?.dataset.msg || 'whatsapp';
       const order =
         (name ? `Заявка от: ${name}\n\n` : '') +
         'Здравствуйте! Хочу рассчитать заказ:\n\n' +
         this.items.map((i, idx) => {
+          const qty = i.qty || 1;
           const colorLine = i.color ? `\n   Цвет RAL ${i.color}${i.colorName ? ' (' + i.colorName + ')' : ''}` : (i.colorName ? `\n   Цвет: ${i.colorName}` : '');
           const priceLine = (i.custom || i.price == null) ? 'цена по запросу' : `${formatPrice(i.price)} ₽ / ${i.unit || 'шт'}`;
-          return `${idx+1}. ${i.name} — ${priceLine}\n   ${i.meta || ''}${colorLine}`;
+          const qtyLine = `\n   Количество: ${qty} ${i.unit || 'шт'}` + (i.custom || i.price == null ? '' : ` = ${formatPrice(i.price * qty)} ₽`);
+          return `${idx+1}. ${i.name} — ${priceLine}\n   ${i.meta || ''}${colorLine}${qtyLine}`;
         }).join('\n\n') +
-        `\n\nИтого ориентировочно: ${formatPrice(this.sum())} ₽`;
+        `\n\nИтого ориентировочно: ${formatPrice(this.sum())} ₽` +
+        (comment ? `\n\nКомментарий: ${comment}` : '');
       // WhatsApp умеет предзаполнить текст; Telegram/MAX — копируем заявку и открываем чат
-      const LINKS = { whatsapp:'https://wa.me/79236819709', telegram:'https://t.me/spectrum_metal', max:'https://max.ru/' };
+      const LINKS = { whatsapp:'https://wa.me/79293608030', telegram:'https://t.me/spectrum_metal', max:'https://max.ru/u/f9LHodD0cOIhe5qHRF9lNUFsf4JhIjgWpG4WNHoRq8horhSN66wqPt-IVD8' };
       if (msg === 'whatsapp') {
         window.open(`${LINKS.whatsapp}?text=${encodeURIComponent(order)}`, '_blank');
       } else {
