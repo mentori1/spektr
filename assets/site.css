@@ -235,6 +235,7 @@
 .cart-msg--tg.active{background:#229ED9}
 .cart-msg--max.active{background:#7b61ff}
 .cart-actions{display:grid;gap:10px}
+.cart-actions .btn{justify-content:center;text-align:center}
 .cart-consent{margin-top:12px;font-size:10.5px;line-height:1.45;color:var(--text-on-dark-dim,#7d828a);text-align:center}
 .cart-consent a{color:var(--text-on-dark,#c9ccd2);text-decoration:underline;text-underline-offset:2px}
 
