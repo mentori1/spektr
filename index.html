@@ -1062,6 +1062,14 @@ p{margin:0}
 .reveal.d3{transition-delay:.32s}
 .reveal.d4{transition-delay:.42s}
 .reveal.d5{transition-delay:.52s}
+@media (max-width:760px){
+  .reveal{transition-duration:.7s;transform:translateY(18px)}
+  .reveal.d1{transition-delay:.05s}
+  .reveal.d2{transition-delay:.1s}
+  .reveal.d3{transition-delay:.15s}
+  .reveal.d4{transition-delay:.2s}
+  .reveal.d5{transition-delay:.25s}
+}
 
 /* SCROLL PROGRESS — тонкая красная линия */
 .progress{position:fixed;top:0;left:0;right:0;height:1px;z-index:60;pointer-events:none}
@@ -1941,7 +1949,7 @@ const io = new IntersectionObserver((entries)=>{
   for(const e of entries){
     if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
   }
-}, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
+}, {threshold:0, rootMargin:'0px 0px 40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 // FAQ smooth-open handled by assets/site.js?v=86
