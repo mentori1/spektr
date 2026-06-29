@@ -423,6 +423,8 @@ p{margin:0}
 .jz-card .gp-body{padding:15px 16px 16px;gap:11px}
 .jz-card .gp-swatch{width:18px;height:18px}
 .gd-spec{font-family:var(--f-mono);font-size:11px;letter-spacing:.02em;color:var(--text-on-dark-dim);margin-top:-2px}
+.gd-note{display:flex;align-items:center;gap:7px;font-family:var(--f-body);font-size:12.5px;line-height:1.3;color:var(--accent-hover);background:color-mix(in srgb, var(--accent) 12%, transparent);border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);border-radius:10px;padding:8px 11px;margin-top:2px}
+.gd-note svg{flex:none;color:var(--accent-hover)}
 /* евроштакетник: 5 карточек, выбор покрытия→цвет, край, цена по матрице */
 .fence-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
 @media (max-width:680px){.fence-grid{grid-template-columns:1fr;max-width:420px}}
@@ -1151,6 +1153,8 @@ const SOFFIT_SYSTEMS = [
 const JALUZI_COATINGS = ['Полимер','Велюр','Под дерево','Полимер двусторонний','Под дерево двусторонний'];
 /* цена ламели зависит от покрытия (толщина 0,5; прайс клиента) */
 const JALUZI_PRICES = { 'Полимер':176, 'Велюр':184, 'Под дерево':189, 'Полимер двусторонний':184, 'Под дерево двусторонний':242 };
+// П-профиль: полимер 270, все остальные покрытия — 334
+const PPROFILE_PRICES = { 'Полимер':270, 'Велюр':334, 'Под дерево':334, 'Полимер двусторонний':334, 'Под дерево двусторонний':334 };
 /* обычные цвета (полимер/велюр) — палитра sib-profil для еврожалюзи */
 const JALUZI_COLORS_RAL = COLORS.filter(c => c.ral !== '8016'); // 20 цветов RAL (8016 уже удалён)
 /* «под дерево» — SteelWood (Дуб 3D) + SteelArt (hex — ориентир текстуры дерева) */
@@ -1169,29 +1173,28 @@ function swatchBg(c){
 
 const JALUZI_PRODUCTS = [
   { id:'lamel',    name:'Еврожалюзи (ламель)',   thickness:'0,5',  prices:JALUZI_PRICES, price:176, unit:'м.п.', photo:'assets/gen_jaluzi_lamel.png', coatings:JALUZI_COATINGS },
-  { id:'pprofile', name:'П-профиль-Еврожалюзи',  thickness:'0,45', price:270, unit:'м.п.', photo:'assets/gen_jaluzi_pprofile.png', coatings:JALUZI_COATINGS },
+  { id:'pprofile', name:'П-профиль-Еврожалюзи',  thickness:'0,45', prices:PPROFILE_PRICES, price:270, unit:'м.п.', photo:'assets/gen_jaluzi_pprofile.png', coatings:JALUZI_COATINGS },
 ];
 
 /* ═══ ГРЯДКИ И КЛУМБЫ ═══
    Карточки с выбором покрытия (→ меняет цвета) + размеры; цена = f(покрытие × размеры).
    Данные/цвета/цены — с реального конфигуратора sib-profil (Bitrix-офферы). Ключ цены = значения dims через "|". */
 const GARDEN_PRODUCTS = [
-  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', photo:'assets/gen_gryadka.png', statics:[{label:'Высота грядки',value:'190 мм'},{label:'Толщина',value:'0,45 мм'}], meta:'Грядка металлическая фактурная',
+  { sub:'Грядка', name:'Грядка «Фактурная»', unit:'шт', photo:'assets/gen_gryadka.png', statics:[{label:'Длина',value:'2000 мм'},{label:'Высота грядки',value:'190 мм'},{label:'Толщина',value:'0,45 мм'}], meta:'Грядка металлическая фактурная', customNote:true,
     dims:[
-      {kind:'width',  label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
-      {kind:'length', label:'Длина',  options:[{value:'1000',label:'1000 мм'},{value:'1840',label:'1840 мм'},{value:'2000',label:'2000 мм'}]},
+      {kind:'width',  label:'Ширина', options:[{value:'600',label:'600 мм'},{value:'800',label:'800 мм'}]},
     ],
     coatings:[
-      {name:'Полимер', photo:'assets/gen_gryadka.png', colors:['6005','7024','8017'], price:{'400|1000':848,'400|1840':1249,'400|2000':1319,'600|1000':942,'600|1840':1343,'600|2000':1413,'800|1000':1030,'800|1840':1432,'800|2000':1502,'1000|1000':1125,'1000|1840':1526,'1000|2000':1596}},
-      {name:'Под дерево', photo:'assets/gen_gryadka_wood.png', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400|1000':1147,'400|1840':1697,'400|2000':1792,'600|1000':1276,'600|1840':1826,'600|2000':1921,'800|1000':1397,'800|1840':1947,'800|2000':2043,'1000|1000':1526,'1000|1840':2076,'1000|2000':2172}},
+      {name:'Полимер', photo:'assets/gen_gryadka.png', colors:['6005','7024','8017'], price:{'600':2155,'800':2288}},
+      {name:'Под дерево', photo:'assets/gen_gryadka_wood.png', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'600':2928,'800':3112}},
     ] },
-  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', photo:'assets/gen_klumba.png', statics:[{label:'Форма',value:'Круглая'},{label:'Толщина',value:'0,50 мм'}], meta:'Клумба металлическая фактурная',
+  { sub:'Клумба', name:'Клумба «Фактурная»', unit:'шт', photo:'assets/gen_klumba.png', statics:[{label:'Форма',value:'Круглая'},{label:'Толщина',value:'0,50 мм'}], meta:'Клумба металлическая фактурная', customNote:true,
     dims:[
       {kind:'width', label:'Ширина', options:[{value:'400',label:'400 мм'},{value:'600',label:'600 мм'},{value:'800',label:'800 мм'},{value:'1000',label:'1000 мм'}]},
     ],
     coatings:[
-      {name:'Полимер', colors:['6005','7024','8017'], price:{'400':856,'600':1139,'800':1404,'1000':1687}},
-      {name:'Под дерево', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400':1151,'600':1538,'800':1902,'1000':2289}},
+      {name:'Полимер', colors:['6005','7024','8017'], price:{'400':1305,'600':1736,'800':2140,'1000':2570}},
+      {name:'Под дерево', colors:['Дуб 3D Атланта','Дуб 3D Бренди'], price:{'400':1754,'600':2344,'800':2898,'1000':3488}},
     ] },
 ];
 
@@ -2061,6 +2064,7 @@ function gardenCardHTML(p){
       <div class="gp-body">
         <div class="gp-name">${p.name}</div>
         <div class="dropdowns">${coatDD}${dimDDs}${statRows}</div>
+        ${p.customNote ? `<div class="gd-note"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Изготовим по вашим размерам</div>` : ''}
         <div class="gp-colors">
           <div class="gp-colors-head"><span class="gp-colors-label">Цвет</span><span class="gp-color-name">${col0.name}</span></div>
           <div class="gp-swatches">${swatches}</div>
