@@ -432,6 +432,13 @@ p{margin:0}
 /* евроштакетник: 5 карточек, выбор покрытия→цвет, край, цена по матрице */
 .fence-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
 @media (max-width:680px){.fence-grid{grid-template-columns:1fr;max-width:420px}}
+/* ФИКС ширины на мобиле: вложенные сетки внутри .products не сжимались бы от justify-items:center —
+   принудительно тянем на всю ширину родителя (иначе грядки/водосточка/жалюзи/штакетник/софиты узкие) */
+@media (max-width:760px){
+  .jaluzi-grid, .garden-grid, .gutter-systems, .soffit-grid, .fence-grid{
+    width:100%; max-width:100%; justify-self:stretch;
+  }
+}
 /* универсальный слот под фото — еврожалюзи / софиты / водосток (паттерн = заглушка до реального фото) */
 .media-slot{
   position:relative;aspect-ratio:16/8;border-radius:var(--r-md) var(--r-md) 0 0;overflow:hidden;
