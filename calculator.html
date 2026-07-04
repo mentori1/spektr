@@ -208,7 +208,7 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
 }
 </style>
 
-<link rel="stylesheet" href="assets/site.css?v=92">
+<link rel="stylesheet" href="assets/site.css?v=93">
 
 <!-- Schema.org Organization + LocalBusiness -->
 <script type="application/ld+json">
@@ -493,7 +493,12 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
   <div class="cart-foot">
     <div class="cart-summary"><span>Итого ориентировочно</span><b>0 ₽</b></div>
     <input class="cart-name" type="text" placeholder="Ваше имя" autocomplete="name" aria-label="Ваше имя">
-    <input class="cart-contact" type="text" placeholder="Телефон или @username" autocomplete="tel" aria-label="Телефон или username для связи">
+    <div class="cart-contact-mode" role="group" aria-label="Контакт для связи">
+      <button type="button" class="cart-contact-tab active" data-contact-mode="phone" aria-pressed="true">Телефон</button>
+      <button type="button" class="cart-contact-tab" data-contact-mode="username" aria-pressed="false">@username</button>
+    </div>
+    <input class="cart-contact cart-contact-phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel" aria-label="Телефон для связи">
+    <input class="cart-contact cart-contact-username" type="text" placeholder="@username или ссылка" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="Username или ссылка для связи">
     <textarea class="cart-comment" rows="2" placeholder="Комментарий к заявке (необязательно)" aria-label="Комментарий к заявке"></textarea>
     <div class="cart-messengers">
       <span class="cart-msg-label">Удобный способ связи</span>
@@ -620,7 +625,7 @@ fillFenceCoat(); calcFence();
 
 </script>
 
-<script src="assets/site.js?v=92" defer></script>
+<script src="assets/site.js?v=93" defer></script>
 
 </body>
 </html>

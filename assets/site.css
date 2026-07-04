@@ -242,7 +242,17 @@ body.cart-lock{height:100%;}
 .cart-name,.cart-contact{width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#f3f4f6;font-family:var(--f-body,"Manrope");font-size:14px;margin-bottom:14px}
 .cart-name::placeholder,.cart-contact::placeholder{color:#7d828a}
 .cart-name:focus,.cart-contact:focus{outline:none;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06)}
+.cart-contact-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.cart-contact-tab{display:flex;align-items:center;justify-content:center;min-height:38px;padding:9px 10px;border-radius:11px;border:1.5px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);color:#c9ccd2;font-family:var(--f-body,"Manrope");font-size:13px;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.cart-contact-tab:hover{border-color:rgba(255,255,255,.35);color:#f3f4f6}
+.cart-contact-tab.active{background:#b91c1c;border-color:#b91c1c;color:#fff}
+.cart-contact-username{display:none}
+.cart-panel.contact-mode-username .cart-contact-phone{display:none}
+.cart-panel.contact-mode-username .cart-contact-username{display:block}
+.cart-panel.contact-mode-phone .cart-contact-phone{display:block}
+.cart-panel.contact-mode-phone .cart-contact-username{display:none}
 .cart-panel:not(.checkout-open) .cart-name,
+.cart-panel:not(.checkout-open) .cart-contact-mode,
 .cart-panel:not(.checkout-open) .cart-contact,
 .cart-panel:not(.checkout-open) .cart-comment,
 .cart-panel:not(.checkout-open) .cart-messengers,
@@ -277,6 +287,7 @@ body.cart-lock{height:100%;}
   .cart-foot{padding:14px 18px;max-height:64vh}
   .cart-item{padding:12px 0;gap:10px}
   .cart-name,.cart-contact,.cart-comment{font-size:16px;padding:10px 12px}
+  .cart-contact-tab{font-size:13px;min-height:38px}
   .cart-msg{padding:9px 5px;font-size:12px}
   .cart-actions{grid-template-columns:1fr 1fr;gap:8px}
   .cart-actions .btn{padding:12px 10px;font-size:11px;white-space:normal;line-height:1.2}

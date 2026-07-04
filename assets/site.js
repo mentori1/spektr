@@ -133,11 +133,12 @@
       if (this.count() === 0) { toast('Заявка пуста — добавьте позиции из каталога'); return; }
       if (!$('.cart-panel')?.classList.contains('checkout-open')) { openCheckout(); return; }
       const name = ($('.cart-name')?.value || '').trim();
-      const contact = ($('.cart-contact')?.value || '').trim();
+      const contactCheck = validateCartContact();
       const comment = ($('.cart-comment')?.value || '').trim();
       const msg = $('.cart-msg.active')?.dataset.msg || 'whatsapp';
       const msgNames = { whatsapp:'WhatsApp', telegram:'Telegram', max:'MAX' };
-      if (!contact) { toast('Укажите телефон или @username для связи'); $('.cart-contact')?.focus(); return; }
+      if (!contactCheck.ok) { toast(contactCheck.msg); contactCheck.input?.focus(); return; }
+      const contact = contactCheck.value;
       const order = this.items.map((i, idx) => {
         const qty = i.qty || 1;
         const colorLine = i.color ? `\n   Цвет RAL ${i.color}${i.colorName ? ' (' + i.colorName + ')' : ''}` : (i.colorName ? `\n   Цвет: ${i.colorName}` : '');
@@ -157,8 +158,9 @@
             kind: 'cart',
             source: 'Корзина сайта',
             name: name || 'Не указано',
-            phone: contact,
+            phone: contactCheck.mode === 'Телефон' ? contact : '',
             contact,
+            contactType: contactCheck.mode,
             messenger: msgNames[msg] || msg,
             message: order,
             total: this.sum(),
@@ -172,7 +174,7 @@
         toast('Заявка отправлена. Менеджер свяжется с вами');
         this.items = []; this.save(); this.render();
         $('.cart-name') && ($('.cart-name').value = '');
-        $('.cart-contact') && ($('.cart-contact').value = '');
+        $$('.cart-contact').forEach(i => { i.value = ''; });
         $('.cart-comment') && ($('.cart-comment').value = '');
         if (typeof window.SMGoal === 'function') window.SMGoal('cart_send', {messenger: msgNames[msg] || msg});
         if (btn) btn.textContent = '✓ Отправлено';
@@ -196,6 +198,17 @@
     $('.cart-close')?.addEventListener('click', closeCart);
     $('.cart-send')?.addEventListener('click', () => cart.sendToManager());
     $('.cart-clear')?.addEventListener('click', () => { cart.items = []; cart.save(); closeCheckout(); cart.render(); toast('Заявка очищена'); });
+    $('.cart-panel')?.classList.add('contact-mode-phone');
+    $$('.cart-contact-tab').forEach(b => b.addEventListener('click', () => {
+      const mode = b.dataset.contactMode || 'phone';
+      $$('.cart-contact-tab').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
+      b.classList.add('active');
+      b.setAttribute('aria-pressed', 'true');
+      const panel = $('.cart-panel');
+      panel?.classList.toggle('contact-mode-username', mode === 'username');
+      panel?.classList.toggle('contact-mode-phone', mode !== 'username');
+      activeCartContactInput()?.focus();
+    }));
     // выбор мессенджера для заявки (радио — один активный)
     $$('.cart-msg').forEach(b => b.addEventListener('click', () => {
       $$('.cart-msg').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
@@ -242,7 +255,7 @@
     panel.classList.add('checkout-open');
     const btn = $('.cart-send');
     if (btn) btn.textContent = 'Отправить заявку';
-    setTimeout(() => ($('.cart-contact') || $('.cart-name'))?.focus(), 80);
+    setTimeout(() => activeCartContactInput()?.focus(), 80);
   }
   function closeCheckout(){
     $('.cart-panel')?.classList.remove('checkout-open');
@@ -428,6 +441,32 @@
     if (d.length > 7) out += '-' + d.slice(7, 9);
     if (d.length > 9) out += '-' + d.slice(9, 11);
     return out;
+  }
+  function cartContactMode(){
+    return $('.cart-contact-tab.active')?.dataset.contactMode || 'phone';
+  }
+  function activeCartContactInput(){
+    return cartContactMode() === 'username' ? $('.cart-contact-username') : $('.cart-contact-phone');
+  }
+  function normalizeRuPhone(value){
+    let d = String(value || '').replace(/\D/g, '');
+    if (d.startsWith('8')) d = '7' + d.slice(1);
+    if (d && d[0] !== '7') d = '7' + d;
+    return d.slice(0, 11);
+  }
+  function validateCartContact(){
+    const mode = cartContactMode();
+    const input = activeCartContactInput();
+    const raw = (input?.value || '').trim();
+    if (mode === 'phone') {
+      const digits = normalizeRuPhone(raw);
+      if (digits.length !== 11) return { ok:false, msg:'Введите телефон полностью: +7 (___) ___-__-__', input };
+      return { ok:true, mode:'Телефон', value:formatPhone(digits) };
+    }
+    const isProfileLink = /^https?:\/\/(t\.me|telegram\.me|wa\.me|max\.ru)\/[^\s]+$/i.test(raw);
+    const isUsername = /^@?[a-zA-Z0-9_.]{3,32}$/.test(raw);
+    if (!isProfileLink && !isUsername) return { ok:false, msg:'Введите @username или ссылку на профиль', input };
+    return { ok:true, mode:'Username/ссылка', value:isProfileLink ? raw : (raw.startsWith('@') ? raw : '@' + raw) };
   }
   function initLeadForms(){
     $$('form[data-lead-form]').forEach(form => {

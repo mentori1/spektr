@@ -40,13 +40,36 @@ $page = $clean($data['page'] ?? '', 300);
 $kind = $clean($data['kind'] ?? 'lead', 40);
 $messenger = $clean($data['messenger'] ?? '', 80);
 $contact = $clean($data['contact'] ?? $phone, 160);
+$contactType = $clean($data['contactType'] ?? '', 80);
 $total = $clean($data['total'] ?? '', 80);
+
+$normalizeRuPhone = static function (string $value): string {
+    $digits = preg_replace('/\D+/', '', $value) ?? '';
+    if (substr($digits, 0, 1) === '8') $digits = '7' . substr($digits, 1);
+    if ($digits !== '' && $digits[0] !== '7') $digits = '7' . $digits;
+    return substr($digits, 0, 11);
+};
 
 if ($kind === 'cart') {
     if ($contact === '') {
         http_response_code(422);
         echo json_encode(['ok' => false, 'error' => 'required_contact'], JSON_UNESCAPED_UNICODE);
         exit;
+    }
+    if ($contactType === 'Телефон') {
+        if (strlen($normalizeRuPhone($contact)) !== 11) {
+            http_response_code(422);
+            echo json_encode(['ok' => false, 'error' => 'bad_phone'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+    } elseif ($contactType === 'Username/ссылка') {
+        $isLink = (bool)preg_match('~^https?://(t\.me|telegram\.me|wa\.me|max\.ru)/\S+$~iu', $contact);
+        $isUsername = (bool)preg_match('~^@?[a-zA-Z0-9_.]{3,32}$~', $contact);
+        if (!$isLink && !$isUsername) {
+            http_response_code(422);
+            echo json_encode(['ok' => false, 'error' => 'bad_contact'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
     }
 } else {
     if ($name === '' || $phone === '') {
