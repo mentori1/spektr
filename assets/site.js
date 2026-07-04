@@ -136,19 +136,13 @@
       const msg = $('.cart-msg.active')?.dataset.msg || 'whatsapp';
       const msgNames = { whatsapp:'WhatsApp', telegram:'Telegram', max:'MAX' };
       if (!contact) { toast('Укажите телефон или @username для связи'); $('.cart-contact')?.focus(); return; }
-      const order =
-        (name ? `Заявка от: ${name}\n` : '') +
-        `Удобный способ связи: ${msgNames[msg] || msg}\n` +
-        `Контакт клиента: ${contact}\n\n` +
-        'Состав заявки:\n\n' +
-        this.items.map((i, idx) => {
-          const qty = i.qty || 1;
-          const colorLine = i.color ? `\n   Цвет RAL ${i.color}${i.colorName ? ' (' + i.colorName + ')' : ''}` : (i.colorName ? `\n   Цвет: ${i.colorName}` : '');
-          const priceLine = (i.custom || i.price == null) ? 'цена по запросу' : `${formatPrice(i.price)} ₽ / ${i.unit || 'шт'}`;
-          const qtyLine = `\n   Количество: ${qty} ${i.unit || 'шт'}` + (i.custom || i.price == null ? '' : ` = ${formatPrice(i.price * qty)} ₽`);
-          return `${idx+1}. ${i.name} — ${priceLine}\n   ${i.meta || ''}${colorLine}${qtyLine}`;
-        }).join('\n\n') +
-        `\n\nИтого ориентировочно: ${formatPrice(this.sum())} ₽` +
+      const order = this.items.map((i, idx) => {
+        const qty = i.qty || 1;
+        const colorLine = i.color ? `\n   Цвет RAL ${i.color}${i.colorName ? ' (' + i.colorName + ')' : ''}` : (i.colorName ? `\n   Цвет: ${i.colorName}` : '');
+        const priceLine = (i.custom || i.price == null) ? 'цена по запросу' : `${formatPrice(i.price)} ₽ / ${i.unit || 'шт'}`;
+        const qtyLine = `\n   Количество: ${qty} ${i.unit || 'шт'}` + (i.custom || i.price == null ? '' : ` = ${formatPrice(i.price * qty)} ₽`);
+        return `${idx+1}. ${i.name} — ${priceLine}\n   ${i.meta || ''}${colorLine}${qtyLine}`;
+      }).join('\n\n') +
         (comment ? `\n\nКомментарий: ${comment}` : '');
       const btn = $('.cart-send');
       const originalText = btn ? btn.textContent : '';
