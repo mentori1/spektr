@@ -372,6 +372,47 @@
     if (d.length > 9) out += '-' + d.slice(9, 11);
     return out;
   }
+  function initLeadForms(){
+    $$('form[data-lead-form]').forEach(form => {
+      if (form.dataset.leadBound) return;
+      form.dataset.leadBound = '1';
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn ? btn.textContent : '';
+        const payload = {
+          source: form.dataset.leadSource || document.title,
+          name: form.querySelector('[name="name"], #f-name')?.value || '',
+          phone: form.querySelector('[name="phone"], #f-phone')?.value || '',
+          message: form.querySelector('[name="message"], #f-msg')?.value || '',
+          website: form.querySelector('[name="website"]')?.value || '',
+          page: location.href,
+        };
+        if (btn) { btn.disabled = true; btn.textContent = 'Отправляем...'; }
+        try {
+          const res = await fetch('send-lead.php', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json','Accept':'application/json'},
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || !data.ok) throw new Error(data.error || 'send_failed');
+          toast('Заявка отправлена. Менеджер свяжется с вами');
+          form.reset();
+          if (btn) btn.textContent = '✓ Заявка отправлена';
+          setTimeout(() => { if (btn) btn.textContent = originalText || 'Отправить'; }, 2600);
+          if (typeof window.SMGoal === 'function') window.SMGoal('form_submit', {source: payload.source});
+        } catch (err) {
+          toast('Не получилось отправить заявку. Позвоните или напишите в мессенджер');
+          if (btn) btn.textContent = 'Попробовать ещё раз';
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      });
+    });
+  }
+
   function initPhoneMask(){
     document.querySelectorAll('input[type="tel"]').forEach(inp => {
       if (inp.dataset.maskBound) return;
@@ -408,6 +449,7 @@
     initSmoothFAQ();
     initCookieBanner();
     initPhoneMask();
+    initLeadForms();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

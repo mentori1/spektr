@@ -465,7 +465,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=87">
+<link rel="stylesheet" href="assets/site.css?v=89">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -591,7 +591,7 @@ p{margin:0}
       </div>
 
       <!-- RIGHT: glass form -->
-      <form class="form-glass reveal d2" id="leadForm" onsubmit="event.preventDefault();this.querySelector('button[type=submit]').innerHTML='✓ Заявка отправлена'">
+      <form class="form-glass reveal d2" data-lead-form data-lead-source="Форма на странице контактов">
         <div class="form-glass-head">
           <h3>Получить расчёт</h3>
         </div>
@@ -599,15 +599,15 @@ p{margin:0}
 
         <div class="field">
           <label for="f-name">Имя</label>
-          <input id="f-name" type="text" placeholder="Как к Вам обращаться" required />
+          <input id="f-name" name="name" type="text" placeholder="Как к Вам обращаться" required />
         </div>
         <div class="field">
           <label for="f-phone">Телефон</label>
-          <input id="f-phone" type="tel" placeholder="+7 ___ ___-__-__" required />
+          <input id="f-phone" name="phone" type="tel" placeholder="+7 ___ ___-__-__" required />
         </div>
         <div class="field">
           <label for="f-msg">Что считаем?</label>
-          <textarea id="f-msg" placeholder="Например: профнастил С8, забор 40 м, высота 2 м, цвет RAL 6005"></textarea>
+          <textarea id="f-msg" name="message" placeholder="Например: профнастил С8, забор 40 м, высота 2 м, цвет RAL 6005"></textarea>
         </div>
         <label class="consent">
           <input type="checkbox" name="consent_pd" required>
@@ -619,6 +619,7 @@ p{margin:0}
           <a href="offer.html" target="_blank">Оферты</a>.</span>
         </label>
 
+        <input class="lead-hp" type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true">
         <button type="submit" class="btn btn-accent btn-block">
           Рассчитать стоимость
         </button>
@@ -798,7 +799,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   </div>
 </aside>
 
-<script src="assets/site.js?v=88" defer></script>
+<script src="assets/site.js?v=89" defer></script>
 
 </body>
 </html>

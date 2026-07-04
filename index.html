@@ -1349,7 +1349,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=87">
+<link rel="stylesheet" href="assets/site.css?v=89">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1863,20 +1863,20 @@ p{margin:0}
 
         </div>
 
-        <form class="form" id="leadForm" onsubmit="event.preventDefault();this.querySelector('button[type=submit]').innerHTML='✓ Заявка отправлена'">
+        <form class="form" data-lead-form data-lead-source="Главная форма расчета">
           <h3>Получить расчёт</h3>
           <p>Заполните форму — перезвоним в течение 30 минут с готовой ценой.</p>
           <div class="field">
             <label for="f-name">Имя</label>
-            <input id="f-name" type="text" placeholder="Как к Вам обращаться" required />
+            <input id="f-name" name="name" type="text" placeholder="Как к Вам обращаться" required />
           </div>
           <div class="field">
             <label for="f-phone">Телефон</label>
-            <input id="f-phone" type="tel" placeholder="+7 ___ ___-__-__" required />
+            <input id="f-phone" name="phone" type="tel" placeholder="+7 ___ ___-__-__" required />
           </div>
           <div class="field">
             <label for="f-msg">Что считаем?</label>
-            <textarea id="f-msg" placeholder="Например: профнастил С8, забор 40 м, высота 2 м, RAL 6005"></textarea>
+            <textarea id="f-msg" name="message" placeholder="Например: профнастил С8, забор 40 м, высота 2 м, RAL 6005"></textarea>
           </div>
           <label class="consent">
             <input type="checkbox" name="consent_pd" required>
@@ -1887,6 +1887,7 @@ p{margin:0}
             <span>Принимаю условия
             <a href="offer.html" target="_blank">Оферты</a>.</span>
           </label>
+          <input class="lead-hp" type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true">
           <button type="submit" class="btn btn-accent btn-block">
             Рассчитать стоимость
           </button>
@@ -1954,7 +1955,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:0, rootMargin:'0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// FAQ smooth-open handled by assets/site.js?v=88
+// FAQ smooth-open handled by assets/site.js?v=89
 
 /* плавный скролл к якорю с учётом высоты header */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2075,7 +2076,7 @@ document.querySelectorAll('.cat').forEach(card=>{
   </div>
 </aside>
 
-<script src="assets/site.js?v=88" defer></script>
+<script src="assets/site.js?v=89" defer></script>
 
 </body>
 </html>
