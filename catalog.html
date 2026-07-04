@@ -210,12 +210,13 @@ p{margin:0}
   border:1px solid rgba(255,255,255,.08);
   transition:transform .45s var(--ease-out), border-color .45s var(--ease-out), box-shadow .45s var(--ease-out);
 }
-.product:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.20);box-shadow:0 24px 50px rgba(0,0,0,.45)}
-.product:has(.product-divider){border:2px solid var(--accent)}
-.product:has(.product-divider):hover{border-color:var(--accent-hover);box-shadow:0 24px 50px rgba(185,28,28,.28)}
+.product--divider{border:2px solid var(--accent)}
 /* вариант «в рамке»: красная обводка + фото с отступами по бокам/сверху + сильнее скругление */
 .product--framed{border:2px solid var(--accent);border-radius:18px}
-.product--framed:hover{border-color:var(--accent-hover);box-shadow:0 24px 50px rgba(185,28,28,.28)}
+@media (hover:hover) and (pointer:fine){
+  .product:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.20);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+  .product--divider:hover,.product--framed:hover{border-color:var(--accent-hover);box-shadow:0 24px 50px rgba(185,28,28,.28)}
+}
 .product--framed .product-image{padding:16px 16px 8px;display:flex;align-items:center;justify-content:center;background:transparent}
 .product--framed .product-image img{position:static !important;inset:auto !important;width:100% !important;height:100% !important;object-fit:contain !important;background:#fff !important;border-radius:8px}
 .product--framed .product-image::before,.product--framed .product-image::after{display:none !important}
@@ -227,7 +228,7 @@ p{margin:0}
   background-image:var(--pattern,none);background-size:var(--pattern-size,60px 60px);background-position:center;
   opacity:.45;transition:transform .8s var(--ease-out), opacity .6s var(--ease);
 }
-.product:hover .product-image::before{transform:scale(1.06);opacity:.65}
+@media (hover:hover) and (pointer:fine){.product:hover .product-image::before{transform:scale(1.06);opacity:.65}}
 .product-image::after{
   content:"";position:absolute;inset:0;
   background:linear-gradient(135deg, color-mix(in srgb, var(--card-tint, #2a2c30) 30%, transparent), transparent 60%);
@@ -329,9 +330,17 @@ p{margin:0}
 }
 .dropdown-option:hover{background:rgba(255,255,255,.07);color:var(--text-on-dark-bright)}
 .dropdown-option.active{color:var(--accent);font-weight:600}
+
+@media (hover:none), (pointer:coarse){
+  .product,.gp-card{transform:none !important;transition:border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease)}
+  .product:hover,.product--framed:hover,.product--divider:hover,.gp-card:hover{transform:none !important;box-shadow:none}
+  .product:hover .product-image::before{transform:none;opacity:.45}
+  .color-swatch:hover,.gp-swatch:hover,.add-to-cart-btn:hover{transform:none}
+  .product,.gp-card,.dropdown-menu{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+}
 /* округлить верх картинки + дать поповеру вылезти за карточку, когда он открыт */
 .product-image{border-radius:var(--r-md) var(--r-md) 0 0}
-.product:has(.dropdown--interactive.open){overflow:visible;z-index:6}
+.product.dropdown-open{overflow:visible;z-index:20}
 
 /* ════════ ВОДОСТОЧНЫЕ СИСТЕМЫ DOCKE (категория → 3 системы → товары) ════════ */
 /* уровень 1 — карточки систем */
@@ -385,7 +394,7 @@ p{margin:0}
 .gp-card:hover{border-color:var(--accent-hover);transform:translateY(-3px);box-shadow:0 24px 50px rgba(185,28,28,.28)}
 /* все gp-карточки в рамке (как профнастил С10): фото-тайл с отступами на цвете карточки */
 .gp-card .media-slot{padding:16px 16px 8px;background-color:transparent;background-image:none;border-radius:0}
-.gp-card .media-slot:has(img){background-color:transparent}
+.gp-card .media-slot--image{background-color:transparent}
 .gp-card .media-slot img{position:static;inset:auto;width:100%;height:100%;object-fit:contain;background:#fff;border-radius:8px}
 .gp-body{padding:18px;display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}
 .gp-name{font-family:var(--f-display);font-weight:700;font-size:16px;line-height:1.15;color:var(--text-on-dark-bright)}
@@ -416,7 +425,7 @@ p{margin:0}
 .sf-specs li{position:relative;padding-left:18px;font-family:var(--f-body);font-size:13px;line-height:1.35;color:var(--text-on-dark-bright)}
 .sf-specs li::before{content:"";position:absolute;left:0;top:6px;width:7px;height:7px;background:var(--accent);border-radius:2px}
 .sf-tag{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:4px 10px;border-radius:999px}
-.gp-card:has(.dropdown--interactive.open){overflow:visible;z-index:6}
+.gp-card.dropdown-open{overflow:visible;z-index:20}
 
 /* еврожалюзи: 2 карточки с фото-слотом + выбор покрытия (меняет палитру) + цвет */
 .jaluzi-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,360px));justify-content:start;gap:16px}
@@ -449,7 +458,7 @@ p{margin:0}
   background-size:var(--pattern-size,40px 40px);background-position:center;
 }
 .media-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.media-slot:has(img){aspect-ratio:4/3;background-color:#fff;background-image:none}
+.media-slot--image{aspect-ratio:4/3;background-color:#fff;background-image:none}
 .media-hint{font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-on-dark-deep);position:relative;z-index:1}
 
 .product-price{display:flex;align-items:baseline;gap:10px;padding-top:14px;border-top:1px solid var(--line);margin-top:auto}
@@ -775,7 +784,7 @@ p{margin:0}
   "sameAs": []
 }
 </script>
-<link rel="stylesheet" href="assets/site.css?v=89">
+<link rel="stylesheet" href="assets/site.css?v=90">
 <!-- ═══ end SEO ═══ -->
 </head>
 <body>
@@ -1491,13 +1500,29 @@ function refreshCardPrice(card){
   card.dataset.item = JSON.stringify(item);
 }
 // закрытие открытых дропдаунов по клику вне / Escape (один раз)
+function setDropdownOpen(dd, open){
+  dd.classList.toggle('open', open);
+  dd.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const card = dd.closest('.product, .gp-card');
+  if (card) {
+    const hasOpen = open || !!card.querySelector('.dropdown--interactive.open');
+    card.classList.toggle('dropdown-open', hasOpen);
+  }
+}
+function closeDropdown(dd){
+  dd.classList.remove('open');
+  dd.setAttribute('aria-expanded','false');
+  const card = dd.closest('.product, .gp-card');
+  if (card && !card.querySelector('.dropdown--interactive.open')) card.classList.remove('dropdown-open');
+}
+function closeDropdowns(root=document){
+  root.querySelectorAll('.dropdown--interactive.open').forEach(closeDropdown);
+}
 document.addEventListener('click', e => {
-  if (!e.target.closest('.dropdown--interactive'))
-    document.querySelectorAll('.dropdown--interactive.open').forEach(o => { o.classList.remove('open'); o.setAttribute('aria-expanded','false'); });
+  if (!e.target.closest('.dropdown--interactive')) closeDropdowns();
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape')
-    document.querySelectorAll('.dropdown--interactive.open').forEach(o => { o.classList.remove('open'); o.setAttribute('aria-expanded','false'); });
+  if (e.key === 'Escape') closeDropdowns();
 });
 // делегированный обработчик дропдаунов (один раз; работает и после пересборки списка толщин)
 $grid.addEventListener('click', e => {
@@ -1556,7 +1581,7 @@ $grid.addEventListener('click', e => {
     valEl.textContent = opt.textContent.trim(); // показываем ярлык опции (мм / Ø / название)
     dd.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('active'));
     opt.classList.add('active');
-    dd.classList.remove('open'); dd.setAttribute('aria-expanded','false');
+    closeDropdown(dd);
     if (dd.dataset.kind === 'coating') { rebuildThickness(card); rebuildVariantColors(card); }
     refreshCardPrice(card);
     // не-variant карточки (напр. софит «Вид») — синхронизируем выбор в data-item
@@ -1581,8 +1606,8 @@ $grid.addEventListener('click', e => {
   if (dd) {
     e.stopPropagation();
     const wasOpen = dd.classList.contains('open');
-    $grid.querySelectorAll('.dropdown--interactive.open').forEach(o => { o.classList.remove('open'); o.setAttribute('aria-expanded','false'); });
-    if (!wasOpen) { dd.classList.add('open'); dd.setAttribute('aria-expanded','true'); }
+    closeDropdowns($grid);
+    if (!wasOpen) setDropdownOpen(dd, true);
   }
 });
 
@@ -1695,7 +1720,7 @@ function productCard(p, pat){
         </div>`;
 
   return `
-    <div class="product ${pat} product--framed" data-item="${itemJSON}"${variantsAttr}>
+    <div class="product ${pat} product--framed${p.divider ? ' product--divider' : ''}" data-item="${itemJSON}"${variantsAttr}>
       <div class="product-image">
         ${photoHTML}
         ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
@@ -1853,7 +1878,7 @@ function gutterSystemCardHTML(s){
   return `
     <button type="button" class="gsys pat-gutter" data-sys="${s.id}">
       ${s.tag ? `<span class="gsys-tag">${s.tag}</span>` : ''}
-      <span class="media-slot"><img src="${s.photo}" alt="Водосточная система DOCKE ${s.name}" loading="lazy"></span>
+      <span class="media-slot media-slot--image"><img src="${s.photo}" alt="Водосточная система DOCKE ${s.name}" loading="lazy"></span>
       <span class="gsys-body">
         <span class="gsys-name">${s.name}</span>
         <ul class="gsys-specs">
@@ -1945,7 +1970,7 @@ function soffitProductCardHTML(s){
   return `
     <div class="gp-card sf-card pat-soffit" data-item="${itemJSON}">
       ${s.tag ? `<span class="sf-tag">${s.tag}</span>` : ''}
-      <div class="media-slot">${s.photo ? `<img src="${s.photo}" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
+      <div class="media-slot${s.photo ? ' media-slot--image' : ''}">${s.photo ? `<img src="${s.photo}" alt="Софит DOCKE ${s.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name"><span class="sf-eyebrow">Софит DOCKE</span>${s.name}</div>
         ${s.desc ? `<div class="sf-desc">${s.desc}</div>` : ''}
@@ -2002,7 +2027,7 @@ function jaluziProductCardHTML(p){
   const photoHTML = p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>';
   return `
     <div class="gp-card jz-card pat-fence-jal" data-item="${itemJSON}"${pricesAttr}>
-      <div class="media-slot">${photoHTML}</div>
+      <div class="media-slot${p.photo ? ' media-slot--image' : ''}">${photoHTML}</div>
       <div class="gp-body">
         <div class="gp-name">${p.name}</div>
         <div class="dropdowns">
@@ -2076,7 +2101,7 @@ function gardenCardHTML(p){
   const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card jz-card gd-card pat-garden" data-item="${itemJSON}" data-garden="${gardenJSON}">
-      <div class="media-slot">${p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
+      <div class="media-slot${p.photo ? ' media-slot--image' : ''}">${p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name">${p.name}</div>
         <div class="dropdowns">${coatDD}${dimDDs}${statRows}</div>
@@ -2156,7 +2181,7 @@ function fenceCardHTML(m){
   const swatches = c0.colors.map((c,i)=>`<button type="button" class="gp-swatch${i===0?' active':''}" style="background:${swatchBg(c)}" data-name="${c.name}" data-hex="${c.hex}" title="${c.name}" aria-label="Цвет ${c.name}"></button>`).join('');
   return `
     <div class="gp-card jz-card fence-card pat-fence" data-item="${itemJSON}" data-fence="${fenceJSON}">
-      <div class="media-slot">${m.photo ? `<img src="${m.photo}" alt="${m.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
+      <div class="media-slot${m.photo ? ' media-slot--image' : ''}">${m.photo ? `<img src="${m.photo}" alt="${m.name}" loading="lazy">` : '<span class="media-hint">фото</span>'}</div>
       <div class="gp-body">
         <div class="gp-name">${m.name.replace(/(Ш\d+)/, '<span class="fence-code">$1</span>')}</div>
         <div class="dropdowns">
@@ -2420,7 +2445,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </div>
 </aside>
 
-<script src="assets/site.js?v=89" defer></script>
+<script src="assets/site.js?v=90" defer></script>
 
 </body>
 </html>
