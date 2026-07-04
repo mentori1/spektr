@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#06070a" />
 <title>Калькулятор стоимости · Спектр Металла</title>
-<meta name="description" content="Калькуляторы кровли, забора и водосточной системы. Рассчитайте ориентировочную стоимость онлайн и получите точный расчёт от менеджера за 30 минут." />
+<meta name="description" content="Калькуляторы кровли и забора. Рассчитайте ориентировочную стоимость онлайн и получите точный расчёт от менеджера за 30 минут." />
 
 <!-- canonical + Open Graph -->
 <link rel="canonical" href="https://spectr-metalla.ru/calculator.html" />
@@ -17,7 +17,7 @@
 <meta property="og:locale" content="ru_RU" />
 <meta property="og:site_name" content="Спектр Металла" />
 <meta property="og:title" content="Калькулятор стоимости — Спектр Металла, Омск" />
-<meta property="og:description" content="Рассчитайте кровлю, забор или водосток онлайн. Цена с доставкой по Омску." />
+<meta property="og:description" content="Рассчитайте кровлю или забор онлайн. Цена с доставкой по Омску." />
 <meta property="og:url" content="https://spectr-metalla.ru/calculator.html" />
 
 <link rel="stylesheet" href="assets/fonts.css">
@@ -264,7 +264,7 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
   <section class="hero">
     <div class="container hero-inner">
       <h1>Кальку<em>лятор.</em></h1>
-      <p class="hero-desc">Посчитайте ориентировочную стоимость кровли, забора или водосточной системы. Менеджер подтвердит точную цену с учётом доставки за 30 минут.</p>
+      <p class="hero-desc">Посчитайте ориентировочную стоимость кровли или забора. Менеджер подтвердит точную цену с учётом доставки за 30 минут.</p>
     </div>
   </section>
 
@@ -274,7 +274,6 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
       <div class="calc-tabs">
         <button class="calc-tab active" data-calc="roof">Кровля</button>
         <button class="calc-tab" data-calc="fence">Забор</button>
-        <button class="calc-tab" data-calc="gutter">Водосток</button>
       </div>
 
       <!-- ═══ КРОВЛЯ ═══ -->
@@ -420,62 +419,6 @@ h2{font-family:var(--f-display);font-weight:800;font-size:clamp(24px,2.8vw,38px)
         </div>
       </div>
 
-      <!-- ═══ ВОДОСТОК ═══ -->
-      <div class="calc-card" data-panel="gutter" style="display:none">
-        <div class="calc-form">
-          <h3>Водосточная система</h3>
-          <p>Введите длину карнизов и высоту дома. Подберём комплект — желоба, трубы, воронки.</p>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="g-eaves">Карниз — общая длина, м</label>
-              <input id="g-eaves" type="number" value="24" min="1" step="0.5">
-            </div>
-            <div class="field">
-              <label for="g-height">Высота дома, м</label>
-              <input id="g-height" type="number" value="6" min="2" step="0.5">
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="g-down">Количество стояков</label>
-              <select id="g-down">
-                <option value="2" selected>2 (стандарт)</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="g-mat">Система Döcke</label>
-              <select id="g-mat">
-                <option value="Стандарт" selected>Стандарт — до 150 м²</option>
-                <option value="Премиум">Премиум — 150…250 м²</option>
-                <option value="Люкс">Люкс — 250 м² и выше</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="calc-result" id="g-result">
-          <div>
-            <div class="label">Ориентировочная стоимость</div>
-            <div class="price"><em id="g-price">12 040</em> ₽</div>
-            <div class="unit">комплект · без монтажа</div>
-          </div>
-          <div class="calc-breakdown">
-            <div class="calc-row"><span class="key">Желоб + воронки</span><span class="val" id="g-gutters">6 960 ₽</span></div>
-            <div class="calc-row"><span class="key">Трубы стояков</span><span class="val" id="g-pipes">3 480 ₽</span></div>
-            <div class="calc-row"><span class="key">Кронштейны + хомуты</span><span class="val" id="g-mounts">1 600 ₽</span></div>
-          </div>
-          <p class="calc-note">В комплект входят желоба, трубы, воронки, кронштейны и крепления. Цвет — в тон кровли.</p>
-          <div class="calc-actions">
-            <a href="https://wa.me/79293608030?text=Здравствуйте,%20хочу%20уточнить%20расчёт%20водостока" target="_blank" rel="noopener" class="btn btn-accent btn-block">Уточнить расчёт</a>
-            <a href="contacts.html" class="btn btn-ghost btn-block">Оставить заявку</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -605,12 +548,6 @@ const CALC = {
     'Ш18 «Баррера»': {w:118, c:{'Полимер':123,'Полимер двусторонний':144,'Велюр':146,'Под дерево':163}},
     'Ш19 «Эллипс»':  {w:126, c:{'Полимер':123,'Полимер двусторонний':144,'Велюр':146,'Под дерево':163}},
   },
-  // водосток Döcke: за м.п. (жёлоб/труба) и за шт (воронка/кронштейн)
-  gutter: {
-    'Стандарт': {gutter:142, pipe:172, funnel:292, bracket:55},
-    'Премиум':  {gutter:215, pipe:259, funnel:435, bracket:78},
-    'Люкс':     {gutter:365, pipe:434, funnel:857, bracket:151},
-  },
   postPriceMp: 298, // труба 60×60×2.0, ₽/м.п. (столб = высота + 0.8 м в грунт)
 };
 function pickCoat(sel, obj, prev){
@@ -680,24 +617,6 @@ fCoat.addEventListener('change', calcFence);
 ['f-per','f-hgt','f-post'].forEach(id => document.getElementById(id).addEventListener('input', calcFence));
 fillFenceCoat(); calcFence();
 
-/* ── ВОДОСТОК ── */
-const gMat = document.getElementById('g-mat');
-function calcGutter(){
-  const eaves = +document.getElementById('g-eaves').value || 0;
-  const hgt = +document.getElementById('g-height').value || 0;
-  const down = +document.getElementById('g-down').value;
-  const s = CALC.gutter[gMat.value];
-  const guttersCost = eaves * s.gutter + down * s.funnel;   // жёлоб + воронки
-  const pipesLen = down * hgt;
-  const pipesCost = pipesLen * s.pipe;
-  const mounts = (Math.ceil(eaves / 0.6) + down * Math.ceil(hgt / 1.5)) * s.bracket;
-  document.getElementById('g-gutters').textContent = fmt(guttersCost) + ' ₽';
-  document.getElementById('g-pipes').textContent = `${fmt(pipesLen)} м · ${fmt(pipesCost)} ₽`;
-  document.getElementById('g-mounts').textContent = fmt(mounts) + ' ₽';
-  document.getElementById('g-price').textContent = fmt(guttersCost + pipesCost + mounts);
-}
-['g-eaves','g-height','g-down','g-mat'].forEach(id => document.getElementById(id).addEventListener('input', calcGutter));
-calcGutter();
 </script>
 
 <script src="assets/site.js?v=86" defer></script>
