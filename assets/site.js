@@ -145,16 +145,27 @@
         }).join('\n\n') +
         `\n\nИтого ориентировочно: ${formatPrice(this.sum())} ₽` +
         (comment ? `\n\nКомментарий: ${comment}` : '');
-      // WhatsApp умеет предзаполнить текст; Telegram/MAX — копируем заявку и открываем чат
-      const LINKS = { whatsapp:'https://wa.me/79293608030', telegram:'https://t.me/spectrum_metal', max:'https://max.ru/u/f9LHodD0cOIhe5qHRF9lNUFsf4JhIjgWpG4WNHoRq8horhSN66wqPt-IVD8' };
-      if (msg === 'whatsapp') {
-        window.open(`${LINKS.whatsapp}?text=${encodeURIComponent(order)}`, '_blank');
-      } else {
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(order).then(() => toast('Заявка скопирована — вставьте в чат и отправьте')).catch(() => toast('Открываю чат — продиктуйте заявку менеджеру'));
-        } else { toast('Открываю чат — продиктуйте заявку менеджеру'); }
-        window.open(LINKS[msg] || LINKS.whatsapp, '_blank');
+      const encodedOrder = encodeURIComponent(order);
+      const LINKS = {
+        whatsapp: `https://api.whatsapp.com/send?phone=79293608030&text=${encodedOrder}`,
+        telegram: `https://t.me/share/url?url=${encodeURIComponent('https://spectr-metalla.ru/')}&text=${encodedOrder}`,
+        max: 'https://max.ru/u/f9LHodD0cOIhe5qHRF9lNUFsf4JhIjgWpG4WNHoRq8horhSN66wqPt-IVD8'
+      };
+      const openLink = (url) => {
+        const w = window.open(url, '_blank', 'noopener');
+        if (!w) window.location.href = url;
+      };
+      const copyOrder = (okText) => {
+        if (!navigator.clipboard) { toast('Открываю чат — заявка сформирована в корзине'); return; }
+        navigator.clipboard.writeText(order).then(() => toast(okText)).catch(() => toast('Открываю чат — заявка сформирована в корзине'));
+      };
+      if (msg === 'max') {
+        copyOrder('Заявка скопирована — вставьте её в чат MAX');
+        openLink(LINKS.max);
+        return;
       }
+      if (msg === 'telegram') toast('Откроется Telegram с готовым текстом — выберите чат');
+      openLink(LINKS[msg] || LINKS.whatsapp);
     },
   };
 
@@ -414,7 +425,7 @@
      • click_whatsapp     — клик в WhatsApp
      • click_calc         — клик в калькулятор
      • cart_add           — добавление в заявку
-     • cart_send          — отправка заявки в WhatsApp
+     • cart_send          — отправка заявки в мессенджер
      • download_price     — клик «Скачать прайс»
      • form_submit        — отправка формы расчёта
    ════════════════════════════════════════════════════════════════ */

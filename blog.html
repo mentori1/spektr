@@ -314,7 +314,7 @@ const bar=document.getElementById('progressBar'),hd=document.getElementById('hea
 addEventListener('scroll',()=>{const h=document.documentElement,m=h.scrollHeight-h.clientHeight,p=m>0?h.scrollTop/m:0;bar.style.width=(p*100).toFixed(2)+'%';hd.classList.toggle('scrolled',h.scrollTop>20)},{passive:true});
 document.querySelectorAll('.article[data-coming]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();SMToast?.('Статья скоро будет опубликована')}));
 </script>
-<script src="assets/site.js?v=86" defer></script>
+<script src="assets/site.js?v=88" defer></script>
 
 </body>
 </html>
