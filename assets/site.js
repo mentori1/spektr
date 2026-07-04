@@ -80,6 +80,7 @@
       const body = $('.cart-body');
       if (!body) return;
       if (c === 0) {
+        closeCheckout();
         body.innerHTML = `
           <div class="cart-empty">
             <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></div>
@@ -130,6 +131,7 @@
     },
     async sendToManager(){
       if (this.count() === 0) { toast('Заявка пуста — добавьте позиции из каталога'); return; }
+      if (!$('.cart-panel')?.classList.contains('checkout-open')) { openCheckout(); return; }
       const name = ($('.cart-name')?.value || '').trim();
       const contact = ($('.cart-contact')?.value || '').trim();
       const comment = ($('.cart-comment')?.value || '').trim();
@@ -174,7 +176,7 @@
         $('.cart-comment') && ($('.cart-comment').value = '');
         if (typeof window.SMGoal === 'function') window.SMGoal('cart_send', {messenger: msgNames[msg] || msg});
         if (btn) btn.textContent = '✓ Отправлено';
-        setTimeout(() => { if (btn) btn.textContent = originalText || 'Отправить'; }, 2200);
+        setTimeout(() => { if (btn) btn.textContent = 'Оформить заявку'; }, 2200);
       } catch (err) {
         toast('Не получилось отправить заявку. Позвоните или напишите в мессенджер');
         if (btn) btn.textContent = 'Попробовать ещё раз';
@@ -193,7 +195,7 @@
     $('.cart-overlay')?.addEventListener('click', closeCart);
     $('.cart-close')?.addEventListener('click', closeCart);
     $('.cart-send')?.addEventListener('click', () => cart.sendToManager());
-    $('.cart-clear')?.addEventListener('click', () => { cart.items = []; cart.save(); cart.render(); toast('Заявка очищена'); });
+    $('.cart-clear')?.addEventListener('click', () => { cart.items = []; cart.save(); closeCheckout(); cart.render(); toast('Заявка очищена'); });
     // выбор мессенджера для заявки (радио — один активный)
     $$('.cart-msg').forEach(b => b.addEventListener('click', () => {
       $$('.cart-msg').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
@@ -211,13 +213,53 @@
       get: () => cart.items,
     };
   }
+  let cartScrollY = 0;
+  function lockPageScroll(){
+    if (document.body.classList.contains('cart-lock')) return;
+    cartScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.documentElement.classList.add('cart-lock');
+    document.body.classList.add('cart-lock');
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${cartScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  }
+  function unlockPageScroll(){
+    if (!document.body.classList.contains('cart-lock')) return;
+    document.documentElement.classList.remove('cart-lock');
+    document.body.classList.remove('cart-lock');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, cartScrollY);
+  }
+  function openCheckout(){
+    const panel = $('.cart-panel');
+    if (!panel) return;
+    panel.classList.add('checkout-open');
+    const btn = $('.cart-send');
+    if (btn) btn.textContent = 'Отправить заявку';
+    setTimeout(() => ($('.cart-contact') || $('.cart-name'))?.focus(), 80);
+  }
+  function closeCheckout(){
+    $('.cart-panel')?.classList.remove('checkout-open');
+    const btn = $('.cart-send');
+    if (btn && !btn.disabled) btn.textContent = 'Оформить заявку';
+  }
   function openCart(){
+    lockPageScroll();
+    closeCheckout();
     $('.cart-overlay')?.classList.add('open');
     $('.cart-panel')?.classList.add('open');
   }
   function closeCart(){
     $('.cart-overlay')?.classList.remove('open');
     $('.cart-panel')?.classList.remove('open');
+    closeCheckout();
+    unlockPageScroll();
   }
 
   /* ─── TOAST ─── */
