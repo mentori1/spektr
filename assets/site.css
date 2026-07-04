@@ -233,9 +233,9 @@
   display:flex;justify-content:space-between;
 }
 .cart-summary b{font-family:var(--f-display,"Big Shoulders Display");font-size:18px;color:#f3f4f6;letter-spacing:-.005em}
-.cart-name{width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#f3f4f6;font-family:var(--f-body,"Manrope");font-size:14px;margin-bottom:14px}
-.cart-name::placeholder{color:#7d828a}
-.cart-name:focus{outline:none;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06)}
+.cart-name,.cart-contact{width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#f3f4f6;font-family:var(--f-body,"Manrope");font-size:14px;margin-bottom:14px}
+.cart-name::placeholder,.cart-contact::placeholder{color:#7d828a}
+.cart-name:focus,.cart-contact:focus{outline:none;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06)}
 .cart-comment{width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#f3f4f6;font-family:var(--f-body,"Manrope");font-size:14px;margin-bottom:14px;resize:vertical;min-height:46px;line-height:1.4}
 .cart-comment::placeholder{color:#7d828a}
 .cart-comment:focus{outline:none;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06)}

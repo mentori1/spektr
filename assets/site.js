@@ -128,14 +128,19 @@
         b.addEventListener('click', () => this.setQty(b.dataset.qtyDec, (this.items.find(i => i.name === b.dataset.qtyDec)?.qty || 1) - 1))
       );
     },
-    sendToManager(){
+    async sendToManager(){
       if (this.count() === 0) { toast('Заявка пуста — добавьте позиции из каталога'); return; }
       const name = ($('.cart-name')?.value || '').trim();
+      const contact = ($('.cart-contact')?.value || '').trim();
       const comment = ($('.cart-comment')?.value || '').trim();
       const msg = $('.cart-msg.active')?.dataset.msg || 'whatsapp';
+      const msgNames = { whatsapp:'WhatsApp', telegram:'Telegram', max:'MAX' };
+      if (!contact) { toast('Укажите телефон или @username для связи'); $('.cart-contact')?.focus(); return; }
       const order =
-        (name ? `Заявка от: ${name}\n\n` : '') +
-        'Здравствуйте! Хочу рассчитать заказ:\n\n' +
+        (name ? `Заявка от: ${name}\n` : '') +
+        `Удобный способ связи: ${msgNames[msg] || msg}\n` +
+        `Контакт клиента: ${contact}\n\n` +
+        'Состав заявки:\n\n' +
         this.items.map((i, idx) => {
           const qty = i.qty || 1;
           const colorLine = i.color ? `\n   Цвет RAL ${i.color}${i.colorName ? ' (' + i.colorName + ')' : ''}` : (i.colorName ? `\n   Цвет: ${i.colorName}` : '');
@@ -145,27 +150,43 @@
         }).join('\n\n') +
         `\n\nИтого ориентировочно: ${formatPrice(this.sum())} ₽` +
         (comment ? `\n\nКомментарий: ${comment}` : '');
-      const encodedOrder = encodeURIComponent(order);
-      const LINKS = {
-        whatsapp: `https://api.whatsapp.com/send?phone=79293608030&text=${encodedOrder}`,
-        telegram: `https://t.me/share/url?url=${encodeURIComponent('https://spectr-metalla.ru/')}&text=${encodedOrder}`,
-        max: 'https://max.ru/u/f9LHodD0cOIhe5qHRF9lNUFsf4JhIjgWpG4WNHoRq8horhSN66wqPt-IVD8'
-      };
-      const openLink = (url) => {
-        const w = window.open(url, '_blank', 'noopener');
-        if (!w) window.location.href = url;
-      };
-      const copyOrder = (okText) => {
-        if (!navigator.clipboard) { toast('Открываю чат — заявка сформирована в корзине'); return; }
-        navigator.clipboard.writeText(order).then(() => toast(okText)).catch(() => toast('Открываю чат — заявка сформирована в корзине'));
-      };
-      if (msg === 'max') {
-        copyOrder('Заявка скопирована — вставьте её в чат MAX');
-        openLink(LINKS.max);
-        return;
+      const btn = $('.cart-send');
+      const originalText = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Отправляем...'; }
+      try {
+        const res = await fetch('send-lead.php', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json','Accept':'application/json'},
+          body: JSON.stringify({
+            kind: 'cart',
+            source: 'Корзина сайта',
+            name: name || 'Не указано',
+            phone: contact,
+            contact,
+            messenger: msgNames[msg] || msg,
+            message: order,
+            total: this.sum(),
+            items: this.items,
+            page: location.href,
+            website: ''
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error(data.error || 'send_failed');
+        toast('Заявка отправлена. Менеджер свяжется с вами');
+        this.items = []; this.save(); this.render();
+        $('.cart-name') && ($('.cart-name').value = '');
+        $('.cart-contact') && ($('.cart-contact').value = '');
+        $('.cart-comment') && ($('.cart-comment').value = '');
+        if (typeof window.SMGoal === 'function') window.SMGoal('cart_send', {messenger: msgNames[msg] || msg});
+        if (btn) btn.textContent = '✓ Отправлено';
+        setTimeout(() => { if (btn) btn.textContent = originalText || 'Отправить'; }, 2200);
+      } catch (err) {
+        toast('Не получилось отправить заявку. Позвоните или напишите в мессенджер');
+        if (btn) btn.textContent = 'Попробовать ещё раз';
+      } finally {
+        if (btn) btn.disabled = false;
       }
-      if (msg === 'telegram') toast('Откроется Telegram с готовым текстом — выберите чат');
-      openLink(LINKS[msg] || LINKS.whatsapp);
     },
   };
 

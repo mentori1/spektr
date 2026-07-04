@@ -37,34 +37,59 @@ $phone = $clean($data['phone'] ?? '', 80);
 $message = $clean($data['message'] ?? '', 2000);
 $source = $clean($data['source'] ?? 'Форма сайта', 180);
 $page = $clean($data['page'] ?? '', 300);
+$kind = $clean($data['kind'] ?? 'lead', 40);
+$messenger = $clean($data['messenger'] ?? '', 80);
+$contact = $clean($data['contact'] ?? $phone, 160);
+$total = $clean($data['total'] ?? '', 80);
 
-if ($name === '' || $phone === '') {
-    http_response_code(422);
-    echo json_encode(['ok' => false, 'error' => 'required_fields'], JSON_UNESCAPED_UNICODE);
-    exit;
-}
-
-$digits = preg_replace('/\D+/', '', $phone) ?? '';
-if (strlen($digits) < 10) {
-    http_response_code(422);
-    echo json_encode(['ok' => false, 'error' => 'bad_phone'], JSON_UNESCAPED_UNICODE);
-    exit;
+if ($kind === 'cart') {
+    if ($contact === '') {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'error' => 'required_contact'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+} else {
+    if ($name === '' || $phone === '') {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'error' => 'required_fields'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    $digits = preg_replace('/\D+/', '', $phone) ?? '';
+    if (strlen($digits) < 10) {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'error' => 'bad_phone'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
 }
 
 $ip = $_SERVER['REMOTE_ADDR'] ?? '';
 $ua = $clean($_SERVER['HTTP_USER_AGENT'] ?? '', 300);
 $time = date('d.m.Y H:i:s');
 
-$subject = 'Новая заявка с сайта Спектр Металла';
-$body = "Новая заявка с сайта spectr-metalla.ru\n\n" .
-        "Источник: {$source}\n" .
-        "Имя: {$name}\n" .
-        "Телефон: {$phone}\n" .
-        ($message !== '' ? "Что считаем: {$message}\n" : "") .
-        ($page !== '' ? "Страница: {$page}\n" : "") .
-        "Дата: {$time}\n" .
-        "IP: {$ip}\n" .
-        "User-Agent: {$ua}\n";
+$subject = $kind === 'cart' ? 'Новая заявка из корзины Спектр Металла' : 'Новая заявка с сайта Спектр Металла';
+if ($kind === 'cart') {
+    $body = "Новая заявка из корзины spectr-metalla.ru\n\n" .
+            "Источник: {$source}\n" .
+            "Имя: " . ($name !== '' ? $name : 'Не указано') . "\n" .
+            "Удобный способ связи: " . ($messenger !== '' ? $messenger : 'Не указан') . "\n" .
+            "Контакт клиента: {$contact}\n" .
+            ($total !== '' ? "Итого ориентировочно: {$total} ₽\n" : "") .
+            ($page !== '' ? "Страница: {$page}\n" : "") .
+            "Дата: {$time}\n" .
+            "IP: {$ip}\n" .
+            "User-Agent: {$ua}\n\n" .
+            ($message !== '' ? $message . "\n" : '');
+} else {
+    $body = "Новая заявка с сайта spectr-metalla.ru\n\n" .
+            "Источник: {$source}\n" .
+            "Имя: {$name}\n" .
+            "Телефон: {$phone}\n" .
+            ($message !== '' ? "Что считаем: {$message}\n" : "") .
+            ($page !== '' ? "Страница: {$page}\n" : "") .
+            "Дата: {$time}\n" .
+            "IP: {$ip}\n" .
+            "User-Agent: {$ua}\n";
+}
 
 $to = 'spektrmetalla@mail.ru';
 $from = 'noreply@spectr-metalla.ru';
