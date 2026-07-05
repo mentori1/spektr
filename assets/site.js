@@ -199,20 +199,18 @@
     $('.cart-send')?.addEventListener('click', () => cart.sendToManager());
     $('.cart-clear')?.addEventListener('click', () => { cart.items = []; cart.save(); closeCheckout(); cart.render(); toast('Заявка очищена'); });
     $('.cart-panel')?.classList.add('contact-mode-phone');
+    updateCartMessengerMode(false);
     $$('.cart-contact-tab').forEach(b => b.addEventListener('click', () => {
       const mode = b.dataset.contactMode || 'phone';
-      $$('.cart-contact-tab').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
-      b.classList.add('active');
-      b.setAttribute('aria-pressed', 'true');
-      const panel = $('.cart-panel');
-      panel?.classList.toggle('contact-mode-username', mode === 'username');
-      panel?.classList.toggle('contact-mode-phone', mode !== 'username');
+      if (!isTelegramCartMessenger() && mode === 'username') return;
+      setCartContactMode(mode);
       activeCartContactInput()?.focus();
     }));
     // выбор мессенджера для заявки (радио — один активный)
     $$('.cart-msg').forEach(b => b.addEventListener('click', () => {
       $$('.cart-msg').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
       b.classList.add('active'); b.setAttribute('aria-pressed', 'true');
+      updateCartMessengerMode(true);
     }));
 
     // глобальная функция чтобы catalog мог добавлять
@@ -253,6 +251,7 @@
     const panel = $('.cart-panel');
     if (!panel) return;
     panel.classList.add('checkout-open');
+    updateCartMessengerMode(false);
     const btn = $('.cart-send');
     if (btn) btn.textContent = 'Отправить заявку';
     setTimeout(() => activeCartContactInput()?.focus(), 80);
@@ -442,7 +441,29 @@
     if (d.length > 9) out += '-' + d.slice(9, 11);
     return out;
   }
+  function isTelegramCartMessenger(){
+    return ($('.cart-msg.active')?.dataset.msg || 'whatsapp') === 'telegram';
+  }
+  function setCartContactMode(mode){
+    const next = mode === 'username' && isTelegramCartMessenger() ? 'username' : 'phone';
+    $$('.cart-contact-tab').forEach(x => {
+      const active = (x.dataset.contactMode || 'phone') === next;
+      x.classList.toggle('active', active);
+      x.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    const panel = $('.cart-panel');
+    panel?.classList.toggle('contact-mode-username', next === 'username');
+    panel?.classList.toggle('contact-mode-phone', next !== 'username');
+  }
+  function updateCartMessengerMode(shouldFocus){
+    const telegram = isTelegramCartMessenger();
+    const panel = $('.cart-panel');
+    panel?.classList.toggle('messenger-telegram', telegram);
+    if (!telegram) setCartContactMode('phone');
+    if (shouldFocus && panel?.classList.contains('checkout-open')) activeCartContactInput()?.focus();
+  }
   function cartContactMode(){
+    if (!isTelegramCartMessenger()) return 'phone';
     return $('.cart-contact-tab.active')?.dataset.contactMode || 'phone';
   }
   function activeCartContactInput(){
