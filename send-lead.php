@@ -42,6 +42,12 @@ $messenger = $clean($data['messenger'] ?? '', 80);
 $contact = $clean($data['contact'] ?? $phone, 160);
 $contactType = $clean($data['contactType'] ?? '', 80);
 $total = $clean($data['total'] ?? '', 80);
+$attributionInput = is_array($data['attribution'] ?? null) ? $data['attribution'] : [];
+$attribution = [];
+foreach (['yclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'landingPage', 'referrer', 'capturedAt'] as $key) {
+    $value = $attributionInput[$key] ?? '';
+    if (is_scalar($value)) $attribution[$key] = $clean($value, 600);
+}
 
 $normalizeRuPhone = static function (string $value): string {
     $digits = preg_replace('/\D+/', '', $value) ?? '';
@@ -85,9 +91,25 @@ if ($kind === 'cart') {
     }
 }
 
-$ip = $_SERVER['REMOTE_ADDR'] ?? '';
-$ua = $clean($_SERVER['HTTP_USER_AGENT'] ?? '', 300);
 $time = date('d.m.Y H:i:s');
+
+$attributionLabels = [
+    'utm_source' => 'Источник',
+    'utm_medium' => 'Канал',
+    'utm_campaign' => 'Кампания',
+    'utm_content' => 'Объявление',
+    'utm_term' => 'Ключевая фраза',
+    'yclid' => 'Yandex Click ID',
+    'landingPage' => 'Первая страница',
+    'referrer' => 'Переход с',
+];
+$attributionLines = [];
+foreach ($attributionLabels as $key => $label) {
+    if (($attribution[$key] ?? '') !== '') $attributionLines[] = $label . ': ' . $attribution[$key];
+}
+$attributionBlock = $attributionLines
+    ? "\nРеклама:\n" . implode("\n", $attributionLines) . "\n"
+    : '';
 
 $subject = $kind === 'cart' ? 'Новая заявка из корзины Спектр Металла' : 'Новая заявка с сайта Спектр Металла';
 if ($kind === 'cart') {
@@ -96,20 +118,22 @@ if ($kind === 'cart') {
             "Клиент: " . ($name !== '' ? $name : 'Не указано') . "\n" .
             "Связаться: " . ($messenger !== '' ? $messenger : 'Не указан') . " — {$contact}\n" .
             ($total !== '' ? "Итого: {$total} ₽\n" : "") .
-            "Дата: {$time}\n\n" .
+            ($page !== '' ? "Страница: {$page}\n" : "") .
+            "Дата: {$time}\n" .
+            $attributionBlock . "\n" .
             "Товары:\n" .
             "-------\n" .
             ($message !== '' ? $message . "\n" : 'Товары не переданы\n');
 } else {
-    $body = "Новая заявка с сайта metallomsk.ru\n\n" .
-            "Источник: {$source}\n" .
-            "Имя: {$name}\n" .
+    $body = "Новая заявка с сайта metallomsk.ru\n" .
+            "===============================\n\n" .
+            "Форма: {$source}\n" .
+            "Клиент: {$name}\n" .
             "Телефон: {$phone}\n" .
-            ($message !== '' ? "Что считаем: {$message}\n" : "") .
+            ($message !== '' ? "Запрос: {$message}\n" : "") .
             ($page !== '' ? "Страница: {$page}\n" : "") .
             "Дата: {$time}\n" .
-            "IP: {$ip}\n" .
-            "User-Agent: {$ua}\n";
+            $attributionBlock;
 }
 
 $to = 'spektrmetalla@mail.ru';

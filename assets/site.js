@@ -30,6 +30,41 @@
 
   /* ─── CART (LocalStorage) ─── */
   const CART_KEY = 'sm_cart_v1';
+  const ATTR_KEY = 'sm_attribution_v1';
+  const ATTR_PARAMS = ['yclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  let memoryAttribution = {};
+
+  function captureAttribution(){
+    const params = new URLSearchParams(location.search);
+    let stored = {};
+    try { stored = JSON.parse(sessionStorage.getItem(ATTR_KEY) || '{}'); } catch {}
+    if (!stored || typeof stored !== 'object' || Array.isArray(stored)) stored = {};
+
+    const hasAdParams = ATTR_PARAMS.some(key => params.get(key));
+    if (hasAdParams || !stored.landingPage) {
+      const next = hasAdParams ? {} : stored;
+      ATTR_PARAMS.forEach(key => {
+        const value = (params.get(key) || '').trim();
+        if (value) next[key] = value.slice(0, 300);
+      });
+      next.landingPage = location.href.slice(0, 600);
+      next.referrer = (document.referrer || '').slice(0, 600);
+      next.capturedAt = new Date().toISOString();
+      stored = next;
+      try { sessionStorage.setItem(ATTR_KEY, JSON.stringify(stored)); } catch {}
+    }
+    memoryAttribution = stored;
+  }
+
+  function attributionPayload(){
+    return ATTR_PARAMS.concat(['landingPage', 'referrer', 'capturedAt']).reduce((out, key) => {
+      if (memoryAttribution[key]) out[key] = memoryAttribution[key];
+      return out;
+    }, {});
+  }
+
+  captureAttribution();
+  window.SMAttribution = { get: attributionPayload };
 
   const cart = {
     items: [],
@@ -166,6 +201,7 @@
             total: this.sum(),
             items: this.items,
             page: location.href,
+            attribution: attributionPayload(),
             website: ''
           }),
         });
@@ -218,6 +254,9 @@
       add: (item) => {
         const ok = cart.add(item);
         toast(ok ? '✓ Добавлено в заявку' : '· Уже в заявке');
+        if (ok && typeof window.SMGoal === 'function') {
+          window.SMGoal('cart_add', {product: item.name || 'Товар'});
+        }
         return ok;
       },
       open: openCart,
@@ -266,6 +305,7 @@
     closeCheckout();
     $('.cart-overlay')?.classList.add('open');
     $('.cart-panel')?.classList.add('open');
+    if (typeof window.SMGoal === 'function') window.SMGoal('cart_open', {items: cart.count()});
   }
   function closeCart(){
     $('.cart-overlay')?.classList.remove('open');
@@ -505,6 +545,7 @@
           message: form.querySelector('[name="message"], #f-msg')?.value || '',
           website: form.querySelector('[name="website"]')?.value || '',
           page: location.href,
+          attribution: attributionPayload(),
         };
         if (btn) { btn.disabled = true; btn.textContent = 'Отправляем...'; }
         try {
@@ -582,18 +623,24 @@
    Цели для отслеживания:
      • click_phone        — клик по номеру телефона
      • click_whatsapp     — клик в WhatsApp
+     • click_telegram     — клик в Telegram
+     • click_max          — клик в MAX
+     • click_email        — клик по электронной почте
      • click_calc         — клик в калькулятор
+     • calculator_use     — изменение параметров калькулятора
      • cart_add           — добавление в заявку
-     • cart_send          — отправка заявки в мессенджер
+     • cart_open          — открытие корзины
+     • cart_send          — успешная отправка заявки из корзины
      • download_price     — клик «Скачать прайс»
      • form_submit        — отправка формы расчёта
    ════════════════════════════════════════════════════════════════ */
 /* ВНИМАНИЕ: при подключении замени значение ниже на свой ID счётчика */
-window.SM_METRIKA_ID = 'COUNTER_ID_PLACEHOLDER';
+window.SM_METRIKA_ID = window.SM_METRIKA_ID || 'COUNTER_ID_PLACEHOLDER';
 
 /* Метрика загружается ТОЛЬКО после согласия пользователя на cookies (152-ФЗ).
    Скрипт tag.js и трекеры НЕ подгружаются до клика «Принять». */
 window.SM_loadMetrika = function(){
+  if (!window.SM_METRIKA_ID || window.SM_METRIKA_ID === 'COUNTER_ID_PLACEHOLDER') return;
   if (window.__sm_metrika_loaded) return;
   window.__sm_metrika_loaded = true;
   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -622,12 +669,26 @@ window.SMGoal = function(name, params){
 
 /* Автоматические цели — подвешиваются после загрузки DOM */
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('a[href^="tel:"]').forEach(a =>
-    a.addEventListener('click', () => SMGoal('click_phone')));
-  document.querySelectorAll('a[href*="wa.me"]').forEach(a =>
-    a.addEventListener('click', () => SMGoal('click_whatsapp')));
-  document.querySelectorAll('a[href*="calculator"]').forEach(a =>
-    a.addEventListener('click', () => SMGoal('click_calc')));
-  document.querySelectorAll('a[href*=".pdf"], a[download]').forEach(a =>
-    a.addEventListener('click', () => SMGoal('download_price')));
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href') || '';
+    if (href.startsWith('tel:')) SMGoal('click_phone');
+    else if (href.startsWith('mailto:')) SMGoal('click_email');
+    else if (/wa\.me/i.test(href)) SMGoal('click_whatsapp');
+    else if (/(^|\/)t\.me\//i.test(href)) SMGoal('click_telegram');
+    else if (/max\.ru/i.test(href)) SMGoal('click_max');
+    if (/calculator\.html/i.test(href)) SMGoal('click_calc');
+    if (/\.pdf(?:$|[?#])/i.test(href) || link.hasAttribute('download')) SMGoal('download_price');
+  });
+
+  const calculatorGoals = new Set();
+  const trackCalculator = event => {
+    const panel = event.target.closest('.calc-card[data-panel]');
+    if (!panel || calculatorGoals.has(panel.dataset.panel)) return;
+    calculatorGoals.add(panel.dataset.panel);
+    SMGoal('calculator_use', {type: panel.dataset.panel});
+  };
+  document.addEventListener('input', trackCalculator);
+  document.addEventListener('change', trackCalculator);
 });
