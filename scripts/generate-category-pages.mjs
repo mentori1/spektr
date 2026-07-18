@@ -93,7 +93,7 @@ const escapeHtml = value => value
 const source = await readFile(resolve(root, 'catalog.html'), 'utf8');
 
 for (const page of pages) {
-  const url = `https://spectr-metalla.ru/${page.file}`;
+  const url = `https://metallomsk.ru/${page.file}`;
   let html = source
     .replace('<!doctype html>', '<!doctype html>\n<!-- GENERATED from catalog.html by scripts/generate-category-pages.mjs -->')
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(page.title)}</title>`)

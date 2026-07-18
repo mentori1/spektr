@@ -1,5 +1,4 @@
-# robots.txt для spectr-metalla.ru
-# Замени spectr-metalla.ru на свой реальный домен после публикации.
+# robots.txt для metallomsk.ru
 
 User-agent: *
 Allow: /
@@ -17,5 +16,5 @@ Disallow: /сайт металл/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid
 Crawl-delay: 1
 
-Sitemap: https://spectr-metalla.ru/sitemap.xml
-Host: spectr-metalla.ru
+Sitemap: https://metallomsk.ru/sitemap.xml
+Host: metallomsk.ru

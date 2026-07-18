@@ -101,7 +101,7 @@ if ($kind === 'cart') {
             "-------\n" .
             ($message !== '' ? $message . "\n" : 'Товары не переданы\n');
 } else {
-    $body = "Новая заявка с сайта spectr-metalla.ru\n\n" .
+    $body = "Новая заявка с сайта metallomsk.ru\n\n" .
             "Источник: {$source}\n" .
             "Имя: {$name}\n" .
             "Телефон: {$phone}\n" .
@@ -113,7 +113,7 @@ if ($kind === 'cart') {
 }
 
 $to = 'spektrmetalla@mail.ru';
-$from = 'noreply@spectr-metalla.ru';
+$from = 'noreply@metallomsk.ru';
 $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
 $headers = [
     'MIME-Version: 1.0',
