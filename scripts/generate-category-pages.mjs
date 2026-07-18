@@ -1,6 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { urlFor } from './site-routes.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -93,7 +94,7 @@ const escapeHtml = value => value
 const source = await readFile(resolve(root, 'catalog.html'), 'utf8');
 
 for (const page of pages) {
-  const url = `https://metallomsk.ru/${page.file}`;
+  const url = urlFor(page.file);
   let html = source
     .replace('<!doctype html>', '<!doctype html>\n<!-- GENERATED from catalog.html by scripts/generate-category-pages.mjs -->')
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(page.title)}</title>`)
@@ -110,3 +111,4 @@ for (const page of pages) {
 }
 
 console.log(`Generated ${pages.length} category pages.`);
+await import('./generate-clean-urls.mjs');

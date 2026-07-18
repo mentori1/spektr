@@ -34,19 +34,19 @@
 
 | Направление | Страница |
 |---|---|
-| Профнастил | `https://metallomsk.ru/profnastil.html` |
-| Металлочерепица | `https://metallomsk.ru/metallocherepitsa.html` |
-| Металлический сайдинг | `https://metallomsk.ru/siding.html` |
-| Евроштакетник | `https://metallomsk.ru/evroshtaketnik.html` |
-| Плоский лист | `https://metallomsk.ru/ploskiy-list.html` |
-| Черный металл | `https://metallomsk.ru/chernyy-metall.html` |
-| Забор Еврожалюзи | `https://metallomsk.ru/evrozhalyuzi.html` |
-| Доборные элементы | `https://metallomsk.ru/dobornye-elementy.html` |
-| Софиты Docke | `https://metallomsk.ru/soffity-docke.html` |
-| Водосточные системы Docke | `https://metallomsk.ru/vodostochnye-sistemy-docke.html` |
-| Грядки и клумбы | `https://metallomsk.ru/gryadki-klumby.html` |
+| Профнастил | `https://metallomsk.ru/catalog/profnastil/` |
+| Металлочерепица | `https://metallomsk.ru/catalog/metallocherepitsa/` |
+| Металлический сайдинг | `https://metallomsk.ru/catalog/siding/` |
+| Евроштакетник | `https://metallomsk.ru/catalog/evroshtaketnik/` |
+| Плоский лист | `https://metallomsk.ru/catalog/ploskiy-list/` |
+| Черный металл | `https://metallomsk.ru/catalog/chernyy-metall/` |
+| Забор Еврожалюзи | `https://metallomsk.ru/catalog/evrozhalyuzi/` |
+| Доборные элементы | `https://metallomsk.ru/catalog/dobornye-elementy/` |
+| Софиты Docke | `https://metallomsk.ru/catalog/soffity-docke/` |
+| Водосточные системы Docke | `https://metallomsk.ru/catalog/vodostochnye-sistemy-docke/` |
+| Грядки и клумбы | `https://metallomsk.ru/catalog/gryadki-klumby/` |
 
-Не вести тематическое объявление на общий `catalog.html`, если для товара есть отдельная страница.
+Не вести тематическое объявление на общий `/catalog/`, если для товара есть отдельная страница.
 
 ## 4. Параметры URL
 

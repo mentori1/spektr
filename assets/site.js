@@ -440,7 +440,7 @@
     banner.innerHTML = `
       <div class="cookie-banner-text">
         Используем cookies и Яндекс.Метрику. Аналитика — только после согласия.
-        <a href="policy-privacy.html">Подробнее</a>.
+        <a href="legal/privacy/">Подробнее</a>.
       </div>
       <div class="cookie-banner-actions">
         <button type="button" class="cookie-accept">Принять</button>
@@ -678,7 +678,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (/wa\.me/i.test(href)) SMGoal('click_whatsapp');
     else if (/(^|\/)t\.me\//i.test(href)) SMGoal('click_telegram');
     else if (/max\.ru/i.test(href)) SMGoal('click_max');
-    if (/calculator\.html/i.test(href)) SMGoal('click_calc');
+    if (/calculator(?:\.html)?(?:[/?#]|$)/i.test(href)) SMGoal('click_calc');
     if (/\.pdf(?:$|[?#])/i.test(href) || link.hasAttribute('download')) SMGoal('download_price');
   });
 

@@ -9,133 +9,133 @@
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/catalog.html</loc>
+    <loc>https://metallomsk.ru/catalog/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/profnastil.html</loc>
+    <loc>https://metallomsk.ru/catalog/profnastil/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/metallocherepitsa.html</loc>
+    <loc>https://metallomsk.ru/catalog/metallocherepitsa/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/siding.html</loc>
+    <loc>https://metallomsk.ru/catalog/siding/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/evroshtaketnik.html</loc>
+    <loc>https://metallomsk.ru/catalog/evroshtaketnik/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/ploskiy-list.html</loc>
+    <loc>https://metallomsk.ru/catalog/ploskiy-list/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/chernyy-metall.html</loc>
+    <loc>https://metallomsk.ru/catalog/chernyy-metall/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/evrozhalyuzi.html</loc>
+    <loc>https://metallomsk.ru/catalog/evrozhalyuzi/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/dobornye-elementy.html</loc>
+    <loc>https://metallomsk.ru/catalog/dobornye-elementy/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/soffity-docke.html</loc>
+    <loc>https://metallomsk.ru/catalog/soffity-docke/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/vodostochnye-sistemy-docke.html</loc>
+    <loc>https://metallomsk.ru/catalog/vodostochnye-sistemy-docke/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/gryadki-klumby.html</loc>
+    <loc>https://metallomsk.ru/catalog/gryadki-klumby/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/calculator.html</loc>
+    <loc>https://metallomsk.ru/calculator/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/buyers.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://metallomsk.ru/delivery.html</loc>
+    <loc>https://metallomsk.ru/buyers/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/blog.html</loc>
+    <loc>https://metallomsk.ru/delivery/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://metallomsk.ru/blog/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/article-roofing.html</loc>
+    <loc>https://metallomsk.ru/blog/kak-vybrat-krovelnyy-material/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/contacts.html</loc>
+    <loc>https://metallomsk.ru/contacts/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/offer.html</loc>
+    <loc>https://metallomsk.ru/legal/offer/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/return-policy.html</loc>
+    <loc>https://metallomsk.ru/legal/return/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/policy-personal-data.html</loc>
+    <loc>https://metallomsk.ru/legal/personal-data/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://metallomsk.ru/policy-privacy.html</loc>
+    <loc>https://metallomsk.ru/legal/privacy/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
