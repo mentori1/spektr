@@ -105,6 +105,12 @@
   </url>
 
   <url>
+    <loc>https://metallomsk.ru/article-roofing.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://metallomsk.ru/contacts.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

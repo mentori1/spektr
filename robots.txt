@@ -2,19 +2,13 @@
 
 User-agent: *
 Allow: /
-Disallow: /backups/
-Disallow: /сайт металл/
-Disallow: /assets/photo-*
-Disallow: /*.bak
-Disallow: /*копия*
+Disallow: /send-lead.php
 
 # Яндекс — отдельные правила
 User-agent: Yandex
 Allow: /
-Disallow: /backups/
-Disallow: /сайт металл/
+Disallow: /send-lead.php
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid
-Crawl-delay: 1
 
 Sitemap: https://metallomsk.ru/sitemap.xml
 Host: metallomsk.ru
