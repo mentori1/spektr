@@ -4,7 +4,7 @@
      • Sticky-bar — кнопка «Расчёт» открывает форму или ведёт на /contacts
      • Корзина-заявка (LocalStorage)
      • Кастомный курсор в hero
-     • Метрика-плейсхолдер (см. блок METRIKA в самом низу)
+     • Яндекс.Метрика (см. блок в самом низу)
    ════════════════════════════════════════════════════════════════ */
 
 (() => {
@@ -618,8 +618,7 @@
 
 /* ════════════════════════════════════════════════════════════════
    ЯНДЕКС.МЕТРИКА
-   Чтобы подключить — замени COUNTER_ID_PLACEHOLDER на номер
-   счётчика из https://metrika.yandex.ru (после регистрации сайта).
+   Счётчик проекта: 110926851.
    Цели для отслеживания:
      • click_phone        — клик по номеру телефона
      • click_whatsapp     — клик в WhatsApp
@@ -634,23 +633,29 @@
      • download_price     — клик «Скачать прайс»
      • form_submit        — отправка формы расчёта
    ════════════════════════════════════════════════════════════════ */
-/* ВНИМАНИЕ: при подключении замени значение ниже на свой ID счётчика */
-window.SM_METRIKA_ID = window.SM_METRIKA_ID || 'COUNTER_ID_PLACEHOLDER';
+window.SM_METRIKA_ID = window.SM_METRIKA_ID || '110926851';
 
 /* Метрика загружается ТОЛЬКО после согласия пользователя на cookies (152-ФЗ).
    Скрипт tag.js и трекеры НЕ подгружаются до клика «Принять». */
 window.SM_loadMetrika = function(){
-  if (!window.SM_METRIKA_ID || window.SM_METRIKA_ID === 'COUNTER_ID_PLACEHOLDER') return;
+  if (!window.SM_METRIKA_ID) return;
   if (window.__sm_metrika_loaded) return;
   window.__sm_metrika_loaded = true;
+  const metrikaSrc = 'https://mc.yandex.ru/metrika/tag.js?id=' + window.SM_METRIKA_ID;
   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
   m[i].l=1*new Date();
   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-  if (window.SM_METRIKA_ID && window.SM_METRIKA_ID !== 'COUNTER_ID_PLACEHOLDER') {
-    ym(window.SM_METRIKA_ID, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true });
-  }
+  (window, document, 'script', metrikaSrc, 'ym');
+  ym(window.SM_METRIKA_ID, 'init', {
+    ssr:true,
+    webvisor:true,
+    clickmap:true,
+    referrer:document.referrer,
+    url:location.href,
+    accurateTrackBounce:true,
+    trackLinks:true
+  });
 };
 
 /* Если пользователь уже дал согласие ранее — грузим Метрику сразу */
@@ -662,7 +667,7 @@ try {
 
 /* Хелпер для отправки целей в Метрику */
 window.SMGoal = function(name, params){
-  if (window.SM_METRIKA_ID && window.SM_METRIKA_ID !== 'COUNTER_ID_PLACEHOLDER') {
+  if (window.SM_METRIKA_ID) {
     try { ym(window.SM_METRIKA_ID, 'reachGoal', name, params); } catch {}
   }
 };
